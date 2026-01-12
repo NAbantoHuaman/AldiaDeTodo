@@ -27,9 +27,9 @@ async function getDynamicArticles() {
       // Transform raw API news into our "Rewritten" format
       // filter(Boolean) removes the nulls returned by restricted articles
       return data.results
-        .map(item => transformNewsItem(item))
+        .map((item: any) => transformNewsItem(item))
         .filter(Boolean)
-        .map(item => item.metadata);
+        .map((item: any) => item.metadata);
     }
     return [];
   } catch (error) {
