@@ -33,18 +33,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" data-scroll-behavior="smooth">
       <head>
-        {/* SCRIPT DE GOOGLE ADSENSE 
-            Descomenta o ajusta la estrategia de carga según necesites.
-            'afterInteractive' es ideal para no bloquear la carga inicial.
-        */}
-        <Script
+        {/* SCRIPT DE GOOGLE ADSENSE - Native Script to avoid data-nscript error */}
+        <script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT_ID}`}
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        ></script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans text-slate-900 bg-white min-h-screen flex flex-col`}

@@ -4,59 +4,32 @@ import { ARTICLES, generateArticleContent } from '@/lib/articles';
 import ArticleCard from '@/components/ArticleCard';
 import AdsBanner from '@/components/AdsBanner';
 import { transformNewsItem } from '@/lib/newsTransformer';
+import { generateArticleAnalysis } from '@/lib/ai';
+import { getCachedAnalysis, setCachedAnalysis } from '@/lib/cache';
 
 export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  return ARTICLES.map((article) => ({
-    slug: article.slug,
-  }));
-}
-
-// Helper to fetch dynamic news (Server Side)
-async function getDynamicArticleBySlug(slug) {
-  const apiKey = process.env.GNEWS_API_KEY?.trim();
-  if (!apiKey) return null;
-
-  try {
-    // We fetch a batch of top news to increase chances of finding it.
-    // In a real optimized system, we'd store these in a DB.
-    // Here we fetch the same "feed" the homepage likely used.
-    const apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&language=es&category=top,technology,science,entertainment`;
-    const res = await fetch(apiUrl, { next: { revalidate: 3600 } });
-    const data = await res.json();
-
-    if (data.results) {
-      // Find the item that generates this slug
-      for (const item of data.results) {
-        const transformed = transformNewsItem(item);
-        if (transformed && transformed.metadata.slug === slug) {
-            return transformed;
-        }
-      }
-    }
-    return null;
-  } catch (error) {
-    console.error("Error fetching dynamic article:", error);
-    return null;
-  }
-}
-
 export default async function ArticleDetailPage({ params }) {
-  const { slug } = await params; 
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
   
   // 1. Try to find in Static Content
   let article = ARTICLES.find(a => a.slug === slug);
   let htmlContent = "";
+  let isNews = false;
 
   if (article) {
     htmlContent = generateArticleContent(article.id, article.title);
   } else {
-    // 2. Try to find in Dynamic API Content
-    const dynamicArticle = await getDynamicArticleBySlug(slug);
+    // 2. Try to find in Dynamic RSS Content
+    const { getRSSNews } = await import('@/lib/rss');
+    const news = await getRSSNews();
+    const dynamicArticle = news.find((n) => n.slug === slug);
+    
     if (dynamicArticle) {
-      article = dynamicArticle.metadata;
-      htmlContent = dynamicArticle.content;
+      article = dynamicArticle;
+      htmlContent = dynamicArticle.content || "";
+      isNews = true;
     }
   }
 
@@ -72,90 +45,160 @@ export default async function ArticleDetailPage({ params }) {
     );
   }
 
+  // --- AGGREGATOR MODE (Safe for AdSense) ---
+  // We do NOT extract full content for external news to avoid copyright/AdSense issues.
+  // We strictly show the RSS summary and link to the source.
+  const NEWS_CATEGORIES = ["Actualidad", "Política", "Mundo", "Noticias", "Tecnología", "Deportes", "Entretenimiento", "Economía", "Negocios"];
+  
+  // If not already flagged as news (from dynamic), check category
+  if (!isNews && article) {
+      isNews = NEWS_CATEGORIES.includes(article.category);
+  }
+  
+  // If it's a news item, htmlContent should be the RSS summary/snippet
+  if (isNews && !htmlContent && article.excerpt) {
+      htmlContent = `<p>${article.excerpt}</p>`;
+  }
+
+  // --------------------------------------------------------
+
   return (
-    <div className="bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        {/* Breadcrumb */}
-        <div className="flex items-center text-sm text-gray-500 mb-6">
-          <Link href="/" className="cursor-pointer hover:text-indigo-600">Inicio</Link>
-          <ChevronRight className="w-4 h-4 mx-2" />
-          <Link href="/articulos" className="cursor-pointer hover:text-indigo-600">Artículos</Link>
-          <ChevronRight className="w-4 h-4 mx-2" />
-          <span className="text-indigo-600 font-medium">{article.category}</span>
+    <article className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <div className="relative h-[400px] w-full bg-gray-900 overflow-hidden group">
+        {/* 1. Blurred Background (Atmosphere) */}
+        <div className="absolute inset-0">
+             <img 
+                src={article.image || "/images/default-hero.jpg"} 
+                alt=""
+                className="w-full h-full object-cover blur-xl opacity-50 scale-110" 
+             />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          
-          {/* Main Content */}
-          <article className="lg:col-span-8">
-            <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+        {/* 2. Main Image (Sharp & Contained) */}
+        <div className="relative h-full w-full flex justify-center items-center">
+             <img 
+               src={article.image || "/images/default-hero.jpg"} 
+               alt={article.title}
+               className="h-full w-auto object-contain max-w-full z-10 shadow-lg" 
+             />
+        </div>
+
+        {/* 3. Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent flex items-end z-20">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-100 backdrop-blur-sm border border-indigo-500/30 mb-6">
+              {article.category}
+            </span>
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight tracking-tight shadow-sm">
               {article.title}
             </h1>
-            
-            <div className="flex items-center justify-between border-y border-gray-100 py-4 mb-8">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold">A</div>
-                <div>
-                  <p className="text-sm font-bold text-gray-900">Redacción Aldia</p>
-                  <p className="text-xs text-gray-500">{article.date}</p>
-                </div>
-              </div>
-              <div className="flex space-x-2">
-                <button className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition"><Facebook className="w-5 h-5"/></button>
-                <button className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition"><Twitter className="w-5 h-5"/></button>
-              </div>
+            <div className="flex items-center text-gray-300 text-sm font-medium space-x-4">
+                <span className="flex items-center">
+                    <svg className="w-4 h-4 mr-2 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    {article.date || "Fecha desconocida"}
+                </span>
+                {article.author && (
+                    <span className="flex items-center">
+                        <span className="mx-2 text-gray-500">•</span>
+                        <svg className="w-4 h-4 mr-2 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        {article.author}
+                    </span>
+                )}
             </div>
-
-            <img src={article.image} alt={article.title} className="w-full h-[400px] object-cover rounded-xl mb-10 shadow-lg" />
-
-            <AdsBanner slot="1122334455" format="article-top" label="Publicidad" />
-
-            {/* Article Body */}
-            <div 
-              className="prose prose-lg prose-indigo max-w-none text-gray-800 space-y-6 article-content"
-              dangerouslySetInnerHTML={{ __html: htmlContent }}
-            />
-
-            <div className="mt-12 pt-8 border-t border-gray-200">
-               <h3 className="font-bold text-xl mb-4">¿Te gustó este artículo?</h3>
-               <p className="text-gray-600 mb-6">Suscríbete para recibir más contenido como este.</p>
-               <AdsBanner slot="5566778899" format="horizontal" label="Publicidad Footer Artículo" />
-            </div>
-          </article>
-
-          {/* Sidebar */}
-          <aside className="lg:col-span-4 space-y-12">
-            
-            {/* Ad Widget */}
-            <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 sticky top-24">
-              <AdsBanner slot="9988776655" format="rectangle" label="Publicidad Sidebar" />
-            </div>
-
-            {/* Trending Articles */}
-            <div>
-              <div className="flex items-center gap-2 mb-6 border-b border-gray-200 pb-2">
-                <TrendingUp className="w-5 h-5 text-indigo-600" />
-                <h3 className="font-bold text-gray-900 uppercase tracking-wider text-sm">Populares</h3>
-              </div>
-              <div className="space-y-2">
-                {ARTICLES.slice(0, 5).map(item => (
-                  <ArticleCard key={item.id} article={item} variant="compact" />
-                ))}
-              </div>
-            </div>
-
-             {/* Newsletter Widget */}
-             <div className="bg-indigo-600 p-8 rounded-xl text-white">
-                <h3 className="font-bold text-xl mb-2">Únete al club</h3>
-                <p className="text-indigo-100 text-sm mb-4">Recibe consejos de productividad cada lunes.</p>
-                <input type="email" placeholder="email@ejemplo.com" className="w-full px-4 py-2 rounded text-gray-900 mb-2 focus:outline-none" />
-                <button className="w-full bg-black text-white py-2 rounded font-bold hover:bg-gray-900">Suscribirse</button>
-             </div>
-
-          </aside>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Content Section */}
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+        {/* Author/Share Bar */}  
+        <div className="flex justify-between items-center border-b border-gray-100 pb-8 mb-12">
+            <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-lg">
+                    {article.author ? article.author[0] : "A"}
+                </div>
+                <div>
+                    <p className="text-sm font-bold text-gray-900">{article.author || "Redacción Aldia"}</p>
+                    <p className="text-xs text-gray-500">{isNews ? "Fuente Externa" : "Editor Senior"}</p>
+                </div>
+            </div>
+            <div className="flex space-x-3">
+                 <button className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition"><Facebook className="w-5 h-5"/></button>
+                 <button className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition"><Twitter className="w-5 h-5"/></button>
+            </div>
+        </div>
+
+        {/* Dynamic Ad (Top) */}
+        <div className="my-10">
+           <AdsBanner slot="1122334455" format="article-top" label="Publicidad" />
+        </div>
+
+        {/* Content / Summary - Premium Editorial Design */}
+        <div className="prose prose-lg prose-indigo max-w-none text-gray-800 leading-loose space-y-8">
+            {/* If it's a News Item, show as a "Teaser" with high-end typography */}
+            {isNews && (
+                <div className="relative">
+                    {/* Editorial Text */}
+                    <div 
+                        className="font-serif text-xl md:text-2xl leading-relaxed text-gray-700 first-letter:text-5xl first-letter:font-bold first-letter:text-gray-900 first-letter:mr-3 first-letter:float-left"
+                        dangerouslySetInnerHTML={{ __html: htmlContent }} 
+                    />
+                    
+                    {/* Gradient Fade to imply more content */}
+                    <div className="h-24 w-full bg-gradient-to-b from-transparent to-white absolute bottom-0"></div>
+                </div>
+            )}
+
+            {/* If it's a Static Article, we just show the content normally */}
+            {!isNews && <div dangerouslySetInnerHTML={{ __html: htmlContent }} />}
+        </div>
+
+        {/* "Read Full Article" Call-to-Action */}
+        {isNews && article.link && (
+            <div className="mt-8 p-8 bg-gray-50 rounded-2xl border border-gray-100 text-center relative overflow-hidden group">
+                {/* Background decorative pattern */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
+                
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                    Continúa leyendo esta historia
+                </h3>
+                <p className="text-gray-600 mb-8 max-w-lg mx-auto">
+                    Este artículo se encuentra completo en la página oficial de <strong>{article.source || "la fuente original"}</strong>.
+                </p>
+
+                <a 
+                    href={article.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="inline-flex items-center px-8 py-4 bg-gray-900 text-white text-lg font-bold rounded-full hover:bg-indigo-600 transition-colors duration-300 shadow-xl shadow-indigo-500/20 group-hover:scale-105 transform"
+                >
+                    Leer artículo completo
+                    <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+                
+                <p className="mt-6 text-xs text-gray-400 uppercase tracking-widest">
+                    Fuente Externa • {article.source || "Noticias"}
+                </p>
+            </div>
+        )}
+
+        {/* Footer Ad */}
+        <div className="mt-16 pt-8 border-t border-gray-100">
+             <AdsBanner slot="5566778899" format="horizontal" label="Publicidad" />
+        </div>
+
+        {/* Navigation */}
+        <div className="mt-12 flex justify-between items-center">
+            <Link href={isNews ? "/" : "/articulos"} className="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all">
+                <svg className="h-5 w-5 mr-2 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                </svg>
+                Volver a {isNews ? "Noticias" : "Artículos"}
+            </Link>
+        </div>
+      </div>
+    </article>
   );
 }

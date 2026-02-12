@@ -1,37 +1,14 @@
+import Link from 'next/link';
 import FeaturedArticle from "../components/FeaturedArticle";
 import ArticleCard from "../components/ArticleCard";
 import AdsBanner from "../components/AdsBanner";
 import { ARTICLES } from "../lib/articles";
-import { transformNewsItem } from "../lib/newsTransformer";
+import { getRSSNews } from "../lib/rss";
 
-// Function to fetch live news server-side
+// Function to fetch live news server-side via RSS
 async function getDynamicArticles() {
-  const apiKey = process.env.GNEWS_API_KEY?.trim(); // Using the existing env var name even though it's NewsData
-  if (!apiKey) return [];
-
   try {
-    // NewsData.io Endpoint
-    // Fetches top news in Spanish, excluding specific categories if needed
-    const apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&language=es&category=top,technology,science,entertainment`;
-    
-    const res = await fetch(apiUrl, { next: { revalidate: 3600 } });
-    
-    if (!res.ok) {
-      console.error("Failed to fetch dynamic news");
-      return [];
-    }
-    
-    const data = await res.json();
-    
-    if (data.results) {
-      // Transform raw API news into our "Rewritten" format
-      // filter(Boolean) removes the nulls returned by restricted articles
-      return data.results
-        .map((item: any) => transformNewsItem(item))
-        .filter(Boolean)
-        .map((item: any) => item.metadata);
-    }
-    return [];
+    return await getRSSNews();
   } catch (error) {
     console.error("Error getting dynamic articles:", error);
     return [];
@@ -39,70 +16,92 @@ async function getDynamicArticles() {
 }
 
 export default async function Home() {
-  // 1. Get Static Articles (reversed to show newest first)
-  const staticArticles = [...ARTICLES].reverse();
-  
-  // 2. Get Dynamic Articles (Live from API)
-  const dynamicArticles = await getDynamicArticles();
-  
-  // 3. Merge: Put Dynamic news FIRST (breaking news), then Static
-  const allArticles = [...dynamicArticles, ...staticArticles];
+  // 1. Get Static Evergreen Articles (For Sidebar/Recommendations)
+  // We explicitly want "Artículos" (Evergreen) here, not News.
+  const allStatic = [...ARTICLES];
+  const evergreenArticles = allStatic.filter(a => ![ "Actualidad", "Política", "Mundo", "Noticias"].includes(a.category));
+  const recommendedArticles = evergreenArticles.slice(0, 5); // Take 5 for sidebar
 
-  // Featured is the very first one (Dynamic or Static)
-  const featuredArticle = allArticles[0];
-  // The rest for the grid: Show more articles! (API gives ~10, let's show 12 total in grid)
-  const recentArticles = allArticles.slice(1, 13);
+  // 2. Get Dynamic News (For Main Feed)
+  const newsArticles = await getDynamicArticles();
+  
+  // Featured is the latest News
+  const featuredArticle = newsArticles[0] || evergreenArticles[0]; 
+  const mainFeedNews = newsArticles.slice(1, 10); // Show 9 more news items in main feed
 
   return (
     <div className="container mx-auto px-4 py-8">
       
-      {/* Featured Section */}
+      {/* Featured Section (Full Width) */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-6 border-l-4 border-indigo-600 pl-4">
-          Noticia Principal
-        </h2>
-        <FeaturedArticle article={featuredArticle} />
+        <div className="flex items-center gap-3 mb-6">
+           <span className="w-3 h-3 bg-red-600 rounded-full animate-pulse"></span>
+           <h2 className="text-xs font-bold text-red-600 uppercase tracking-widest">Noticia Destacada</h2>
+        </div>
+        {featuredArticle && <FeaturedArticle article={featuredArticle} />}
       </section>
 
-      {/* Ad Banner */}
-      <AdsBanner slot="1234567890" format="auto" />
-
-      {/* Recent Articles Grid */}
-      <section id="noticias" className="my-12">
-        <h2 className="text-2xl font-bold mb-6 border-l-4 border-pink-500 pl-4">
-          Lo Último
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {recentArticles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
-        </div>
-      </section>
-
-      {/* Mid-page Ad */}
-      <div className="my-16">
-        <AdsBanner slot="456456456" format="horizontal" />
-      </div>
-
-      {/* Category Sections */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
-        <div className="lg:col-span-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-6 border-b pb-2">Crecimiento Personal</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {staticArticles.filter(a => a.category === "Crecimiento Personal").slice(0, 4).map(article => (
-                <ArticleCard key={article.id} article={article} />
-              ))}
-          </div>
-        </div>
+      {/* Main Layout: 2 Columns */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         
-        <div className="lg:col-span-4 space-y-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-6 border-b pb-2">Finanzas & Éxito</h2>
-            {ARTICLES.filter(a => a.category === "Finanzas").slice(0, 3).map(article => (
-              <ArticleCard key={article.id} article={article} variant="compact" />
-            ))}
-            <AdsBanner slot="sidebar-home" format="rectangle" />
+        {/* Left Column: Main News Feed (8 cols) */}
+        <div className="lg:col-span-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8 border-b-2 border-gray-900 pb-2 flex justify-between items-end">
+                <span>Actualidad</span>
+                <Link href="/noticias" className="text-sm font-normal text-indigo-600 hover:text-indigo-800">Ver todas las noticias &rarr;</Link>
+            </h2>
+
+            <div className="space-y-8">
+                {mainFeedNews.length > 0 ? (
+                    mainFeedNews.map((article) => (
+                        <ArticleCard key={article.id} article={article} variant="horizontal" />
+                    ))
+                ) : (
+                   <p className="text-gray-500 italic">Cargando noticias recientes...</p>
+                )}
+            </div>
+
+            <div className="mt-12">
+                <AdsBanner slot="feed-footer" format="horizontal" />
+            </div>
         </div>
-      </section>
+
+        {/* Right Column: Sidebar (4 cols) */}
+        <aside className="lg:col-span-4 space-y-12">
+            
+            {/* Sidebar Ad */}
+            <div className="bg-gray-50 p-4 border border-gray-100 rounded-lg">
+                <span className="text-xs text-gray-400 block mb-2 text-center">Publicidad</span>
+                <AdsBanner slot="sidebar-home" format="rectangle" />
+            </div>
+
+            {/* Recommended Articles (Evergreen) */}
+            <div>
+                <h2 className="text-xl font-bold text-gray-900 mb-6 border-l-4 border-indigo-500 pl-4">
+                    Recomendados para ti
+                </h2>
+                <div className="space-y-6">
+                     {recommendedArticles.map(article => (
+                        <div key={article.id} className="group">
+                            <ArticleCard article={article} variant="compact" />
+                        </div>
+                     ))}
+                </div>
+                <div className="mt-6 text-center">
+                    <Link href="/articulos" className="inline-block px-4 py-2 border border-indigo-600 text-indigo-600 font-medium rounded hover:bg-indigo-50 transition">
+                        Explorar más contenido
+                    </Link>
+                </div>
+            </div>
+
+            {/* Quote / Daily Tip Widget */}
+            <div className="bg-indigo-900 p-8 rounded-xl text-white text-center">
+                <h3 className="font-serif text-2xl italic mb-4">"La mejor forma de predecir el futuro es crearlo."</h3>
+                <p className="text-indigo-200 text-sm">- Peter Drucker</p>
+            </div>
+
+        </aside>
+      </div>
     </div>
   );
 }

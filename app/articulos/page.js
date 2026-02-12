@@ -9,7 +9,7 @@ export default function ArticleListPage() {
         <p className="text-gray-500 max-w-2xl mx-auto">Explora nuestra colección completa de sabiduría práctica para la vida moderna.</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {ARTICLES.map(article => (
+        {ARTICLES.filter(article => !["Actualidad", "Política", "Mundo", "Noticias", "Tecnología", "Deportes", "Entretenimiento", "Economía"].includes(article.category)).map(article => (
           <ArticleCard key={article.id} article={article} />
         ))}
       </div>
