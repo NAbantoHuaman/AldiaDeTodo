@@ -21,5 +21,5 @@ body {
 html {
   background-color: #ffffff !important;
   scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* Account for sticky header height + padding */
+  scroll-padding-top: 80px; 
 }

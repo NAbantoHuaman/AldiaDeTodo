@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Configuración de ID de Cliente AdSense (Reemplazar con el tuyo real para activar sitewide)
+
 const AD_CLIENT_ID = "ca-pub-XXXXXXXXXXXXXXXX";
 
 export const metadata: Metadata = {
