@@ -27,7 +27,7 @@ export default async function Home() {
   
   // Featured is the latest News
   const featuredArticle = newsArticles[0] || evergreenArticles[0]; 
-  const mainFeedNews = newsArticles.slice(1, 10); // Show 9 more news items in main feed
+  const mainFeedNews = newsArticles.slice(1, 10).filter(Boolean); // Show 9 more news items in main feed
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -53,7 +53,7 @@ export default async function Home() {
 
             <div className="space-y-8">
                 {mainFeedNews.length > 0 ? (
-                    mainFeedNews.map((article) => (
+                    mainFeedNews.map((article) => article && (
                         <ArticleCard key={article.id} article={article} variant="horizontal" />
                     ))
                 ) : (
