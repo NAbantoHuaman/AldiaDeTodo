@@ -1,8 +1,34 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
-import { Facebook, Twitter, Instagram } from 'lucide-react';
 import { CATEGORIES } from '../lib/articles';
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [nlStatus, setNlStatus] = useState("idle");
+
+  const handleNewsletter = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    setNlStatus("sending");
+    try {
+      const res = await fetch("https://formspree.io/f/meelalvz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ email, _subject: "Nueva suscripción al newsletter" }),
+      });
+      if (res.ok) {
+        setNlStatus("success");
+        setEmail("");
+      } else {
+        setNlStatus("error");
+      }
+    } catch {
+      setNlStatus("error");
+    }
+  };
+
   return (
     <footer className="bg-gray-900 text-white pt-12 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,11 +41,6 @@ const Footer = () => {
             <p className="text-gray-400 text-sm leading-relaxed">
               Tu dosis diaria de inspiración, consejos prácticos y crecimiento personal. Transformamos vidas un artículo a la vez.
             </p>
-            <div className="flex space-x-4 mt-6">
-              <Facebook className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer" />
-              <Twitter className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer" />
-              <Instagram className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer" />
-            </div>
           </div>
           
           <div>
@@ -44,10 +65,30 @@ const Footer = () => {
           <div>
             <h3 className="text-sm font-semibold text-gray-200 uppercase tracking-wider mb-4">Newsletter</h3>
             <p className="text-gray-400 text-sm mb-4">Recibe los mejores artículos cada semana.</p>
-            <div className="flex">
-              <input type="email" placeholder="Tu email" className="bg-gray-800 text-white px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-1 focus:ring-indigo-500" />
-              <button className="bg-indigo-600 px-4 py-2 rounded-r-md hover:bg-indigo-700 font-medium">Suscribir</button>
-            </div>
+            {nlStatus === "success" ? (
+              <p className="text-green-400 text-sm font-medium">✓ ¡Suscrito! Gracias.</p>
+            ) : (
+              <form onSubmit={handleNewsletter} className="flex">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Tu email"
+                  required
+                  className="bg-gray-800 text-white px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                />
+                <button
+                  type="submit"
+                  disabled={nlStatus === "sending"}
+                  className="bg-indigo-600 px-4 py-2 rounded-r-md hover:bg-indigo-700 font-medium whitespace-nowrap"
+                >
+                  {nlStatus === "sending" ? "..." : "Suscribir"}
+                </button>
+              </form>
+            )}
+            {nlStatus === "error" && (
+              <p className="text-red-400 text-xs mt-2">Error al suscribir. Intenta de nuevo.</p>
+            )}
           </div>
         </div>
         
