@@ -26,7 +26,7 @@ const Footer = () => {
             <h3 className="text-sm font-semibold text-gray-200 uppercase tracking-wider mb-4">Explorar</h3>
             <ul className="space-y-3">
               {CATEGORIES.slice(0, 4).map(cat => (
-                <li key={cat}><span className="text-gray-400 hover:text-white cursor-pointer text-sm">{cat}</span></li>
+                <li key={cat}><Link href={`/articulos?categoria=${encodeURIComponent(cat)}`} className="text-gray-400 hover:text-white text-sm">{cat}</Link></li>
               ))}
             </ul>
           </div>

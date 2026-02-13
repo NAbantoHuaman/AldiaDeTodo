@@ -1,11 +1,43 @@
+'use client';
+
+import { useState } from 'react';
 import { Mail, MessageSquare, Clock } from 'lucide-react';
 
-export const metadata = {
-  title: "Contacto - AldiaDeTodo",
-  description: "Ponte en contacto con el equipo de AldiaDeTodo. Estamos aquí para escucharte.",
-};
-
 export default function ContactoPage() {
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+
+  const handleChange = (e) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("sending");
+
+    try {
+      const res = await fetch("https://formspree.io/f/meelalvz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
 
@@ -22,60 +54,101 @@ export default function ContactoPage() {
         {/* Contact Form (3 cols) */}
         <div className="lg:col-span-3 bg-white border border-gray-200 rounded-2xl p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Envíanos un mensaje</h2>
-          <form className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          {status === "success" ? (
+            <div className="text-center py-12">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">¡Mensaje enviado!</h3>
+              <p className="text-gray-600 mb-6">Te responderemos en las próximas 24-48 horas.</p>
+              <button
+                onClick={() => setStatus("idle")}
+                className="text-indigo-600 font-medium hover:text-indigo-800"
+              >
+                Enviar otro mensaje
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Tu nombre"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="tu@email.com"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+                  />
+                </div>
+              </div>
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
+                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">Asunto</label>
                 <input
                   type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Tu nombre"
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  placeholder="¿Sobre qué quieres escribirnos?"
+                  required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="tu@email.com"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
-                />
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Mensaje</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={6}
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Escribe tu mensaje aquí..."
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition resize-none"
+                ></textarea>
               </div>
-            </div>
-            <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">Asunto</label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                placeholder="¿Sobre qué quieres escribirnos?"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
-              />
-            </div>
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Mensaje</label>
-              <textarea
-                id="message"
-                name="message"
-                rows={6}
-                placeholder="Escribe tu mensaje aquí..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition resize-none"
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors"
-            >
-              Enviar mensaje
-            </button>
-            <p className="text-xs text-gray-500 text-center">
-              Al enviar este formulario aceptas nuestra{" "}
-              <a href="/privacidad" className="text-indigo-600 underline">Política de Privacidad</a>.
-            </p>
-          </form>
+
+              {status === "error" && (
+                <p className="text-red-500 text-sm font-medium">Hubo un error al enviar. Intenta de nuevo o escríbenos directamente a contacto@aldiadetodo.com.</p>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className={`w-full font-bold py-3 px-6 rounded-lg transition-colors ${
+                  status === "sending"
+                    ? "bg-indigo-400 text-white cursor-not-allowed"
+                    : "bg-indigo-600 text-white hover:bg-indigo-700"
+                }`}
+              >
+                {status === "sending" ? "Enviando..." : "Enviar mensaje"}
+              </button>
+              <p className="text-xs text-gray-500 text-center">
+                Al enviar este formulario aceptas nuestra{" "}
+                <a href="/privacidad" className="text-indigo-600 underline">Política de Privacidad</a>.
+              </p>
+            </form>
+          )}
         </div>
 
         {/* Sidebar Info (2 cols) */}

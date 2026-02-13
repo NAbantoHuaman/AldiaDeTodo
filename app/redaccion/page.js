@@ -5,14 +5,40 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { transformNewsItem } from '../../lib/newsTransformer';
 
+const ADMIN_PASSWORD = "aldia2026";
+
 export default function RedaccionPage() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedDraft, setSelectedDraft] = useState(null);
 
   useEffect(() => {
-    fetchNews();
+    // Check if already authenticated this session
+    const auth = sessionStorage.getItem("redaccion-auth");
+    if (auth === "true") {
+      setAuthenticated(true);
+    }
   }, []);
+
+  useEffect(() => {
+    if (authenticated) {
+      fetchNews();
+    }
+  }, [authenticated]);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (password === ADMIN_PASSWORD) {
+      sessionStorage.setItem("redaccion-auth", "true");
+      setAuthenticated(true);
+      setError("");
+    } else {
+      setError("Contraseña incorrecta");
+    }
+  };
 
   const fetchNews = async () => {
     try {
@@ -31,16 +57,61 @@ export default function RedaccionPage() {
 
   const handleGenerateDraft = (item) => {
     const draft = transformNewsItem(item);
-    // Add a random ID for the simulation
     draft.metadata.id = Math.floor(Math.random() * 1000) + 20; 
     setSelectedDraft(draft);
     
-    // Scroll to draft area
     setTimeout(() => {
         document.getElementById('draft-section')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
+  // --- LOGIN SCREEN ---
+  if (!authenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+        <Navbar />
+        <main className="flex-grow flex items-center justify-center">
+          <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-200 w-full max-w-md">
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 bg-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+              </div>
+              <h1 className="text-2xl font-bold text-gray-900">Sala de Redacción</h1>
+              <p className="text-gray-500 text-sm mt-1">Acceso restringido al equipo editorial</p>
+            </div>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Ingresa la contraseña"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+                  autoFocus
+                />
+              </div>
+              {error && (
+                <p className="text-red-500 text-sm font-medium">{error}</p>
+              )}
+              <button
+                type="submit"
+                className="w-full bg-gray-900 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                Acceder
+              </button>
+            </form>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // --- ADMIN DASHBOARD ---
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <Navbar />
