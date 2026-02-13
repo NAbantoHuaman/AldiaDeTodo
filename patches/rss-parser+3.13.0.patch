@@ -1,0 +1,23 @@
+diff --git a/node_modules/rss-parser/lib/parser.js b/node_modules/rss-parser/lib/parser.js
+index 2852b5f..3fb428c 100644
+--- a/node_modules/rss-parser/lib/parser.js
++++ b/node_modules/rss-parser/lib/parser.js
+@@ -71,7 +71,17 @@ class Parser {
+   parseURL(feedUrl, callback, redirectCount=0) {
+     let xml = '';
+     let get = feedUrl.indexOf('https') === 0 ? https.get : http.get;
+-    let urlParts = url.parse(feedUrl);
++    const parsed = new URL(feedUrl);
++    let urlParts = {
++      protocol: parsed.protocol,
++      hostname: parsed.hostname,
++      path: parsed.pathname + parsed.search,
++      href: parsed.href
++    };
++    if (parsed.port) urlParts.port = parsed.port;
++    if (parsed.username || parsed.password) {
++      urlParts.auth = `${parsed.username}:${parsed.password}`;
++    }
+     let headers = Object.assign({}, DEFAULT_HEADERS, this.options.headers);
+     let timeout = null;
+     let prom = new Promise((resolve, reject) => {

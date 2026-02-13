@@ -13,7 +13,7 @@ const Navbar = () => {
     { name: "Noticias", path: "/noticias" },
     { name: "Artículos", path: "/articulos" },
     { name: "Acerca de", path: "/acerca" },
-    { name: "Contacto", path: "/contact" },
+    { name: "Contacto", path: "/contacto" },
   ];
 
   const isActive = (path) => {
@@ -62,7 +62,7 @@ const Navbar = () => {
               </a>
             ))}
             <div className="pl-4 border-l border-gray-300">
-               <Search className="w-5 h-5 text-gray-400 cursor-pointer hover:text-indigo-600" />
+
             </div>
           </div>
 

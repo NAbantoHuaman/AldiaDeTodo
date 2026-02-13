@@ -21,8 +21,28 @@ const geistMono = Geist_Mono({
 const AD_CLIENT_ID = "ca-pub-5266241351956416";
 
 export const metadata: Metadata = {
-  title: "AldiaDeTodo - Crecimiento Personal y Finanzas",
-  description: "Tu dosis diaria de inspiración, consejos prácticos y crecimiento personal.",
+  title: {
+    default: "AldiaDeTodo - Crecimiento Personal, Finanzas y Productividad",
+    template: "%s | AldiaDeTodo",
+  },
+  description: "Tu dosis diaria de inspiración, consejos prácticos de productividad, finanzas personales, salud mental y crecimiento personal. Artículos originales en español.",
+  keywords: ["crecimiento personal", "productividad", "finanzas personales", "salud mental", "autoestima", "hábitos", "motivación", "superación personal", "artículos en español"],
+  authors: [{ name: "AldiaDeTodo" }],
+  creator: "AldiaDeTodo",
+  metadataBase: new URL("https://aldiadetodo.com"),
+  openGraph: {
+    type: "website",
+    locale: "es_ES",
+    url: "https://aldiadetodo.com",
+    siteName: "AldiaDeTodo",
+    title: "AldiaDeTodo - Crecimiento Personal, Finanzas y Productividad",
+    description: "Tu dosis diaria de inspiración, consejos prácticos y crecimiento personal.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AldiaDeTodo - Crecimiento Personal y Finanzas",
+    description: "Tu dosis diaria de inspiración, consejos prácticos y crecimiento personal.",
+  },
 };
 
 

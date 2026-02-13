@@ -7,8 +7,8 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // Cache for 1 hour
 
 async function getNews() {
-  const allNews = await getRSSNews();
-  return allNews.slice(0, 50); // Show top 50
+  const rssNews = await getRSSNews();
+  return rssNews;
 }
 
 export default async function NewsPage() {

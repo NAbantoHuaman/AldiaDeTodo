@@ -37,6 +37,7 @@ const Footer = () => {
               <li><Link href="/privacidad" className="text-gray-400 hover:text-white text-sm text-left">Política de Privacidad</Link></li>
               <li><Link href="/terms" className="text-gray-400 hover:text-white text-sm text-left">Términos y Condiciones</Link></li>
               <li><Link href="/acerca" className="text-gray-400 hover:text-white text-sm text-left">Sobre Nosotros</Link></li>
+              <li><Link href="/contacto" className="text-gray-400 hover:text-white text-sm text-left">Contacto</Link></li>
             </ul>
           </div>
 
@@ -51,7 +52,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-500 text-sm">© 2024 AldiaDeTodo. Todos los derechos reservados.</p>
+          <p className="text-gray-500 text-sm">© 2026 AldiaDeTodo. Todos los derechos reservados.</p>
           <p className="text-gray-600 text-xs mt-2 md:mt-0">Diseñado con ❤️ para la excelencia.</p>
         </div>
       </div>
