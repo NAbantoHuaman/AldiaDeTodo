@@ -15,6 +15,24 @@ async function getDynamicArticles() {
   }
 }
 
+export const metadata = {
+  title: "AldiaDeTodo - Crecimiento Personal, Noticias y Finanzas",
+  description: "Tu fuente diaria de inspiración. Artículos sobre productividad, finanzas personales y las últimas noticias mundiales.",
+  openGraph: {
+    title: "AldiaDeTodo - Crecimiento Personal, Noticias y Finanzas",
+    description: "Tu fuente diaria de inspiración. Artículos sobre productividad, finanzas personales y las últimas noticias mundiales.",
+    url: "https://aldiadetodo.com",
+    siteName: "AldiaDeTodo",
+    locale: "es_ES",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AldiaDeTodo - Crecimiento Personal y Finanzas",
+    description: "Tu fuente diaria de inspiración y noticias.",
+  },
+};
+
 export default async function Home() {
   // 1. Get Static Evergreen Articles (Original Content — the STAR of the site)
   const allStatic = [...ARTICLES];
@@ -27,8 +45,26 @@ export default async function Home() {
   const newsArticles = await getDynamicArticles();
   const latestNews = newsArticles.slice(0, 6).filter(Boolean);
 
+
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'AldiaDeTodo',
+    url: 'https://aldiadetodo.com',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://aldiadetodo.com/search?q={search_term_string}',
+      'query-input': 'required name=search_term_string'
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       
       {/* HERO: Featured Original Article (Full Width) */}
       <section className="mb-12">

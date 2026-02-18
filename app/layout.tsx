@@ -44,6 +44,9 @@ export const metadata: Metadata = {
     title: "AldiaDeTodo - Crecimiento Personal y Finanzas",
     description: "Tu dosis diaria de inspiración, consejos prácticos y crecimiento personal.",
   },
+  alternates: {
+    canonical: './',
+  },
 };
 
 

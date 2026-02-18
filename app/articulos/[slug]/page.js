@@ -9,6 +9,72 @@ import { getCachedAnalysis, setCachedAnalysis } from '@/lib/cache';
 
 export const dynamicParams = true;
 
+const parseDateToISO = (dateStr) => {
+  if (!dateStr) return new Date().toISOString();
+  const months = { 'Ene': 'Jan', 'Feb': 'Feb', 'Mar': 'Mar', 'Abr': 'Apr', 'May': 'May', 'Jun': 'Jun', 'Jul': 'Jul', 'Ago': 'Aug', 'Sep': 'Sep', 'Oct': 'Oct', 'Nov': 'Nov', 'Dic': 'Dec' };
+  let normalized = dateStr;
+  Object.entries(months).forEach(([es, en]) => {
+    normalized = normalized.replace(es, en);
+  });
+  const d = new Date(normalized);
+  return isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
+};
+
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
+
+  let article = ARTICLES.find(a => a.slug === slug);
+  
+  if (!article) {
+    const { getRSSNews } = await import('@/lib/rss');
+    const news = await getRSSNews();
+    const dynamicArticle = news.find((n) => n.slug === slug);
+    if (dynamicArticle) {
+        article = dynamicArticle;
+    }
+  }
+
+  if (!article) {
+    return {
+      title: 'Artículo no encontrado',
+      description: 'El artículo que buscas no existe o ha sido movido.'
+    };
+  }
+
+  const isoDate = parseDateToISO(article.date);
+
+  return {
+    title: article.title,
+    description: article.excerpt || `Lee el artículo completo sobre ${article.title} en AldiaDeTodo.`,
+    openGraph: {
+      title: article.title,
+      description: article.excerpt || `Lee más sobre ${article.title}.`,
+      url: `https://aldiadetodo.com/articulos/${article.slug}`,
+      type: 'article',
+      images: [
+        {
+          url: article.image || 'https://aldiadetodo.com/images/default-hero.jpg',
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+      authors: [article.author || 'AldiaDeTodo'],
+      publishedTime: isoDate,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.excerpt,
+      images: [article.image || 'https://aldiadetodo.com/images/default-hero.jpg'],
+    },
+    alternates: {
+      canonical: `https://aldiadetodo.com/articulos/${article.slug}`,
+    },
+  };
+}
+
 export default async function ArticleDetailPage({ params }) {
   const resolvedParams = await params;
   const { slug } = resolvedParams;
@@ -60,10 +126,45 @@ export default async function ArticleDetailPage({ params }) {
       htmlContent = `<p>${article.excerpt}</p>`;
   }
 
+  // JSON-LD Structured Data
+  const isoDate = parseDateToISO(article.date);
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': isNews ? 'NewsArticle' : 'Article',
+    headline: article.title,
+    image: [article.image || 'https://aldiadetodo.com/images/default-hero.jpg'],
+    datePublished: isoDate,
+    dateModified: isoDate,
+    description: article.excerpt,
+    author: [{
+        '@type': 'Person',
+        name: article.author || 'AldiaDeTodo',
+        url: 'https://aldiadetodo.com'
+    }],
+    publisher: {
+        '@type': 'Organization',
+        name: 'AldiaDeTodo',
+        logo: {
+            '@type': 'ImageObject',
+            url: 'https://aldiadetodo.com/logo.png' 
+        }
+    },
+    mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': `https://aldiadetodo.com/articulos/${article.slug}`
+    }
+  };
+
   // --------------------------------------------------------
 
   return (
     <article className="min-h-screen bg-white">
+      {/* JSON-LD for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Hero Section */}
       <div className="relative h-[400px] w-full bg-gray-900 overflow-hidden group">
         {/* 1. Blurred Background (Atmosphere) */}
@@ -85,7 +186,7 @@ export default async function ArticleDetailPage({ params }) {
         </div>
 
         {/* 3. Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent flex items-end z-20">
+        <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent flex items-end z-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full">
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-100 backdrop-blur-sm border border-indigo-500/30 mb-6">
               {article.category}
@@ -147,7 +248,7 @@ export default async function ArticleDetailPage({ params }) {
                     />
                     
                     {/* Gradient Fade to imply more content */}
-                    <div className="h-24 w-full bg-gradient-to-b from-transparent to-white absolute bottom-0"></div>
+                    <div className="h-24 w-full bg-linear-to-b from-transparent to-white absolute bottom-0"></div>
                 </div>
             )}
 
@@ -159,7 +260,7 @@ export default async function ArticleDetailPage({ params }) {
         {isNews && article.link && (
             <div className="mt-8 p-8 bg-gray-50 rounded-2xl border border-gray-100 text-center relative overflow-hidden group">
                 {/* Background decorative pattern */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
+                <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
                 
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
                     Continúa leyendo esta historia

@@ -6,6 +6,20 @@ import { getRSSNews } from '../../lib/rss';
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // Cache for 1 hour
 
+export const metadata = {
+  title: "Últimas Noticias - Actualidad Mundial | AldiaDeTodo",
+  description: "Mantente informado con las últimas noticias de política, economía, tecnología y deportes en tiempo real.",
+  openGraph: {
+    title: "Últimas Noticias - Actualidad Mundial",
+    description: "Noticias en tiempo real de las mejores fuentes internacionales.",
+    url: "https://aldiadetodo.com/noticias",
+    type: "website",
+  },
+  alternates: {
+    canonical: '/noticias',
+  },
+};
+
 async function getNews() {
   const rssNews = await getRSSNews();
   return rssNews;
