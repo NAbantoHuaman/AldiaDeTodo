@@ -117,9 +117,11 @@ export default async function ArticleDetailPage({ params }) {
   const NEWS_CATEGORIES = ["Actualidad", "Política", "Mundo", "Noticias", "Tecnología", "Deportes", "Entretenimiento", "Economía", "Negocios"];
   
   // If not already flagged as news (from dynamic), check category
-  if (!isNews && article) {
-      isNews = NEWS_CATEGORIES.includes(article.category);
-  }
+  // We rely on the source (Static vs RSS) to determine if it's news.
+  // Static articles (written by us) should always show full content.
+  // if (!isNews && article) {
+  //     isNews = NEWS_CATEGORIES.includes(article.category);
+  // }
   
   // If it's a news item, htmlContent should be the RSS summary/snippet
   if (isNews && !htmlContent && article.excerpt) {
