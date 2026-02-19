@@ -10,21 +10,7 @@ const nextConfig: NextConfig = {
     ],
   },
   allowedDevOrigins: ["localhost:3000", "192.168.1.70:3000"],
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'www.aldiadetodo.com',
-          },
-        ],
-        destination: 'https://aldiadetodo.com/:path*',
-        permanent: true,
-      },
-    ];
-  },
+
 };
 
 export default nextConfig;
