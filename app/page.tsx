@@ -2,7 +2,7 @@ import Link from 'next/link';
 import FeaturedArticle from "../components/FeaturedArticle";
 import ArticleCard from "../components/ArticleCard";
 import AdsBanner from "../components/AdsBanner";
-import { ARTICLES } from "../lib/articles";
+import { ARTICLES, LATEST_ARTICLES } from "../lib/articles";
 import { getRSSNews } from "../lib/rss";
 
 // Function to fetch live news server-side via RSS
@@ -38,13 +38,14 @@ export default async function Home() {
   const allStatic = [...ARTICLES];
   const evergreenArticles = allStatic.filter(a => !["Actualidad", "Política", "Mundo", "Noticias"].includes(a.category));
   const featuredOriginal = evergreenArticles[0];
-  const topOriginals = evergreenArticles.slice(1, 7); // 6 original articles in main grid
-  const sidebarOriginals = evergreenArticles.slice(7, 12); // 5 more for sidebar
+  const sidebarOriginals = [...evergreenArticles].reverse().slice(0, 5); // 5 oldest articles for sidebar
 
   // 2. Get Dynamic News (secondary — sidebar feed)
   const newsArticles = await getDynamicArticles();
   const latestNews = newsArticles.slice(0, 6).filter(Boolean);
 
+  // 3. Get the 10 latest articles for the new section
+  const latestArticles = LATEST_ARTICLES;
 
 
   const jsonLd = {
@@ -65,7 +66,7 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      
+
       {/* HERO: Featured Original Article (Full Width) */}
       <section className="mb-12">
         <div className="flex items-center gap-3 mb-6">
@@ -75,21 +76,20 @@ export default async function Home() {
         {featuredOriginal && <FeaturedArticle article={featuredOriginal} />}
       </section>
 
-      {/* SECTION 1: Original Articles Grid (Full Width — THE MAIN CONTENT) */}
+      {/* NEW: Lo Más Reciente — Latest 10 Articles */}
       <section className="mb-16">
-        <h2 className="text-2xl font-bold text-gray-900 mb-8 border-b-2 border-gray-900 pb-2 flex justify-between items-end">
-          <span>Nuestros Artículos</span>
+        <div className="flex items-center gap-3 mb-6">
+          <span className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
+          <h2 className="text-xs font-bold text-red-600 uppercase tracking-widest">Lo Más Reciente</h2>
+        </div>
+        <h2 className="text-2xl font-bold text-gray-900 mb-8 border-b-2 border-red-500 pb-2 flex justify-between items-end">
+          <span>Artículos de Hoy</span>
           <Link href="/articulos" className="text-sm font-normal text-indigo-600 hover:text-indigo-800">Ver todos &rarr;</Link>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {topOriginals.map(article => (
+          {latestArticles.map(article => (
             <ArticleCard key={article.id} article={article} variant="default" />
           ))}
-        </div>
-        <div className="mt-8 text-center">
-          <Link href="/articulos" className="inline-block px-6 py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition">
-            Explorar todos los artículos
-          </Link>
         </div>
       </section>
 
