@@ -35,11 +35,12 @@ export const metadata = {
 
 export default async function Home() {
   // Fetch from DB
-  const rawArticles = await prisma.article.findMany({
+  const dbArticles = await prisma.article.findMany({
     where: { isNews: false },
-    orderBy: { createdAt: 'desc' },
     include: { category: true }
   });
+
+  const rawArticles = dbArticles.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   // Map to the shape ArticleCard expects
   const allStatic = rawArticles.map((a: any) => ({

@@ -9,11 +9,12 @@ export const metadata = {
 
 export default async function ArticleListPage() {
   // Fetch from DB
-  const rawArticles = await prisma.article.findMany({
+  const dbArticles = await prisma.article.findMany({
     where: { isNews: false },
-    orderBy: { createdAt: 'desc' },
     include: { category: true }
   });
+
+  const rawArticles = dbArticles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const rawCategories = await prisma.category.findMany();
   const categories = rawCategories.map(c => c.name);
