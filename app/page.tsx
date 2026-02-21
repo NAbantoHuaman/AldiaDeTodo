@@ -4,6 +4,7 @@ import ArticleCard from "../components/ArticleCard";
 import AdsBanner from "../components/AdsBanner";
 import prisma from "../lib/prisma";
 import { getRSSNews } from "../lib/rss";
+import { parseSpanishDate } from "../lib/dateUtils";
 
 // Function to fetch live news server-side via RSS
 async function getDynamicArticles() {
@@ -40,7 +41,7 @@ export default async function Home() {
     include: { category: true }
   });
 
-  const rawArticles = dbArticles.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const rawArticles = dbArticles.sort((a: any, b: any) => parseSpanishDate(b.date) - parseSpanishDate(a.date));
 
   // Map to the shape ArticleCard expects
   const allStatic = rawArticles.map((a: any) => ({

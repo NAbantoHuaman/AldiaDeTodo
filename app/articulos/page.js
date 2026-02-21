@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import ArticleListClient from '@/components/ArticleListClient';
 import prisma from '@/lib/prisma';
+import { parseSpanishDate } from '@/lib/dateUtils';
 
 export const metadata = {
   title: "Todos los Artículos | AldiaDeTodo",
@@ -14,7 +15,7 @@ export default async function ArticleListPage() {
     include: { category: true }
   });
 
-  const rawArticles = dbArticles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const rawArticles = dbArticles.sort((a, b) => parseSpanishDate(b.date) - parseSpanishDate(a.date));
 
   const rawCategories = await prisma.category.findMany();
   const categories = rawCategories.map(c => c.name);
