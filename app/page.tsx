@@ -50,7 +50,7 @@ export default async function Home() {
     excerpt: a.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."
   }));
 
-  const evergreenArticles = allStatic.filter((a: any) => !["Noticias", "Mundo"].includes(a.category));
+  const evergreenArticles = allStatic.filter((a: any) => a.category !== "Noticias");
   
   // The absolute newest article becomes the Feature
   const featuredOriginal = evergreenArticles[0];
