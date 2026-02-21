@@ -2,7 +2,7 @@ import Link from 'next/link';
 import FeaturedArticle from "../components/FeaturedArticle";
 import ArticleCard from "../components/ArticleCard";
 import AdsBanner from "../components/AdsBanner";
-import { ARTICLES, LATEST_ARTICLES } from "../lib/articles";
+import prisma from "../lib/prisma";
 import { getRSSNews } from "../lib/rss";
 
 // Function to fetch live news server-side via RSS
@@ -34,18 +34,36 @@ export const metadata = {
 };
 
 export default async function Home() {
-  // 1. Get Static Evergreen Articles (Original Content — the STAR of the site)
-  const allStatic = [...ARTICLES];
-  const evergreenArticles = allStatic.filter(a => !["Actualidad", "Política", "Mundo", "Noticias"].includes(a.category));
+  // Fetch from DB
+  const rawArticles = await prisma.article.findMany({
+    where: { isNews: false },
+    orderBy: { createdAt: 'desc' },
+    include: { category: true }
+  });
+
+  // Map to the shape ArticleCard expects
+  const allStatic = rawArticles.map((a: any) => ({
+    ...a,
+    category: a.category.name,
+    excerpt: a.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."
+  }));
+
+  const evergreenArticles = allStatic.filter((a: any) => !["Noticias", "Mundo"].includes(a.category));
+  
+  // The absolute newest article becomes the Feature
   const featuredOriginal = evergreenArticles[0];
-  const sidebarOriginals = [...evergreenArticles].reverse().slice(0, 5); // 5 oldest articles for sidebar
+  
+  // The next 4 newest articles go into "Artículos de Hoy"
+  const latestArticles = evergreenArticles.slice(1, 5);
+
+  // Older articles go to the "Más para ti" Sidebar feed
+  // (starting from the 6th newest article)
+  const sidebarOriginals = evergreenArticles.slice(5, 13);
 
   // 2. Get Dynamic News (secondary — sidebar feed)
   const newsArticles = await getDynamicArticles();
   const latestNews = newsArticles.slice(0, 6).filter(Boolean);
 
-  // 3. Get the 10 latest articles for the new section
-  const latestArticles = LATEST_ARTICLES;
 
 
   const jsonLd = {
@@ -87,7 +105,7 @@ export default async function Home() {
           <Link href="/articulos" className="text-sm font-normal text-indigo-600 hover:text-indigo-800">Ver todos &rarr;</Link>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {latestArticles.map(article => (
+          {latestArticles.map((article: any) => (
             <ArticleCard key={article.id} article={article} variant="default" />
           ))}
         </div>

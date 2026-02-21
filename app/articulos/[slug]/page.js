@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { ChevronRight, Facebook, Twitter, TrendingUp } from 'lucide-react';
-import { ARTICLES, generateArticleContent } from '@/lib/articles';
 import ArticleCard from '@/components/ArticleCard';
 import AdsBanner from '@/components/AdsBanner';
 import { transformNewsItem } from '@/lib/newsTransformer';
 import { generateArticleAnalysis } from '@/lib/ai';
 import { getCachedAnalysis, setCachedAnalysis } from '@/lib/cache';
+import prisma from '@/lib/prisma';
 
 export const dynamicParams = true;
 
@@ -24,9 +24,20 @@ export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const { slug } = resolvedParams;
 
-  let article = ARTICLES.find(a => a.slug === slug);
+  let dbArticle = await prisma.article.findUnique({
+    where: { slug },
+    include: { category: true }
+  });
   
-  if (!article) {
+  let article = null;
+  
+  if (dbArticle) {
+    article = {
+      ...dbArticle,
+      category: dbArticle.category.name,
+      excerpt: dbArticle.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."
+    };
+  } else {
     const { getRSSNews } = await import('@/lib/rss');
     const news = await getRSSNews();
     const dynamicArticle = news.find((n) => n.slug === slug);
@@ -79,13 +90,24 @@ export default async function ArticleDetailPage({ params }) {
   const resolvedParams = await params;
   const { slug } = resolvedParams;
   
-  // 1. Try to find in Static Content
-  let article = ARTICLES.find(a => a.slug === slug);
+  // 1. Try to find in Database Content
+  let dbArticle = await prisma.article.findUnique({
+    where: { slug },
+    include: { category: true }
+  });
+  
+  let article = null;
   let htmlContent = "";
   let isNews = false;
 
-  if (article) {
-    htmlContent = generateArticleContent(article.id, article.title);
+  if (dbArticle) {
+    article = {
+      ...dbArticle,
+      category: dbArticle.category.name,
+      excerpt: dbArticle.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."
+    };
+    htmlContent = dbArticle.content;
+    isNews = dbArticle.isNews;
   } else {
     // 2. Try to find in Dynamic RSS Content
     const { getRSSNews } = await import('@/lib/rss');

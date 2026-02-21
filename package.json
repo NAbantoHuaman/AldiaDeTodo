@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "node scripts/fix-rss-parser.js"
@@ -13,10 +13,12 @@
     "@google/generative-ai": "^0.24.1",
     "@mozilla/readability": "^0.6.0",
     "@next/third-parties": "^16.1.6",
+    "@prisma/client": "^6.4.1",
     "dotenv": "^17.2.4",
     "jsdom": "^28.0.0",
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
+    "pg": "^8.18.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "rss-parser": "3.13.0"
@@ -26,10 +28,13 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "^0.27.3",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "patch-package": "^8.0.1",
+    "prisma": "^6.4.1",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
