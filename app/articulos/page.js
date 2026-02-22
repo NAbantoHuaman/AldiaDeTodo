@@ -3,6 +3,8 @@ import ArticleListClient from '@/components/ArticleListClient';
 import prisma from '@/lib/prisma';
 import { parseSpanishDate } from '@/lib/dateUtils';
 
+export const revalidate = 60;
+
 export const metadata = {
   title: "Todos los Artículos | AldiaDeTodo",
   description: "Explora nuestra colección completa de sabiduría práctica para la vida moderna. Artículos sobre crecimiento personal, salud mental, productividad y más.",

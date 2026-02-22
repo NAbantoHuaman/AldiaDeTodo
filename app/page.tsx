@@ -16,6 +16,8 @@ async function getDynamicArticles() {
   }
 }
 
+export const revalidate = 60;
+
 export const metadata = {
   title: "AldiaDeTodo - Crecimiento Personal, Noticias y Finanzas",
   description: "Tu fuente diaria de inspiración. Artículos sobre productividad, finanzas personales y las últimas noticias mundiales.",

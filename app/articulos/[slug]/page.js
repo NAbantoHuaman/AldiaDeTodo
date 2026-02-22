@@ -7,6 +7,7 @@ import { generateArticleAnalysis } from '@/lib/ai';
 import { getCachedAnalysis, setCachedAnalysis } from '@/lib/cache';
 import prisma from '@/lib/prisma';
 
+export const revalidate = 60;
 export const dynamicParams = true;
 
 const parseDateToISO = (dateStr) => {
