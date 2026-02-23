@@ -1,0 +1,1 @@
+const { PrismaClient } = require('@prisma/client'); const prisma = new PrismaClient(); async function main() { const res = await prisma.article.findMany(); res.forEach(r => console.log(r.id + ' | ' + r.slug + ' | ' + r.image + ' | ' + r.title)); } main().finally(() => prisma.$disconnect());
