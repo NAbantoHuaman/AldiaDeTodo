@@ -47,6 +47,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: './',
   },
+  other: {
+    'google-adsense-account': AD_CLIENT_ID,
+  },
 };
 
 
@@ -59,6 +62,8 @@ export default function RootLayout({
   return (
     <html lang="es" data-scroll-behavior="smooth">
       <head>
+        {/* META ETIQUETA DE VERIFICACIÓN DE GOOGLE ADSENSE */}
+        <meta name="google-adsense-account" content={AD_CLIENT_ID} />
         {/* SCRIPT DE GOOGLE ADSENSE - Native Script to avoid data-nscript error */}
         <script
           async
