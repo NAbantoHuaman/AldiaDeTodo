@@ -64,16 +64,17 @@ export default function RootLayout({
       <head>
         {/* META ETIQUETA DE VERIFICACIÓN DE GOOGLE ADSENSE */}
         <meta name="google-adsense-account" content={AD_CLIENT_ID} />
-        {/* SCRIPT DE GOOGLE ADSENSE - Native Script to avoid data-nscript error */}
-        <script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT_ID}`}
-          crossOrigin="anonymous"
-        ></script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans text-slate-900 bg-white min-h-screen flex flex-col`}
       >
+        {/* SCRIPT DE GOOGLE ADSENSE */}
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT_ID}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <GoogleAnalytics gaId="G-SNE0YWHNQ4" />
         <Navbar />
         <div className="flex-grow">
