@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { CATEGORIES } from '../lib/articles';
+import { Facebook, Instagram, Twitter } from 'lucide-react';
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -38,9 +39,38 @@ const Footer = () => {
               <div className="bg-white text-gray-900 p-1 rounded font-bold text-lg tracking-tighter">AD</div>
               <span className="font-bold text-xl tracking-tight text-white">AldiaDeTodo</span>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-400 text-sm leading-relaxed mb-6">
               Tu dosis diaria de inspiración, consejos prácticos y crecimiento personal. Transformamos vidas un artículo a la vez.
             </p>
+            <div className="flex space-x-4">
+              <a 
+                href="https://www.instagram.com/aldiadetodos/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram size={20} />
+              </a>
+              <a 
+                href="https://www.facebook.com/share/16z3oSet5d/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook size={20} />
+              </a>
+              <a 
+                href="https://x.com/AldiaDeTodos" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Twitter/X"
+              >
+                <Twitter size={20} />
+              </a>
+            </div>
           </div>
           
           <div>

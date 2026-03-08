@@ -60,7 +60,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" data-scroll-behavior="smooth">
+    <html lang="es" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* META ETIQUETA DE VERIFICACIÓN DE GOOGLE ADSENSE */}
         <meta name="google-adsense-account" content={AD_CLIENT_ID} />
@@ -73,6 +73,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans text-slate-900 bg-white min-h-screen flex flex-col`}
+        suppressHydrationWarning
       >
         <GoogleAnalytics gaId="G-SNE0YWHNQ4" />
         <Navbar />

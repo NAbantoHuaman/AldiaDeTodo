@@ -247,7 +247,7 @@ export default async function ArticleDetailPage({ params }) {
                 </div>
                 <div>
                     <p className="text-sm font-bold text-gray-900">{article.author || "Redacción Aldia"}</p>
-                    <p className="text-xs text-gray-500">{isNews ? "Fuente Externa" : "Editor Senior"}</p>
+                    <p className="text-xs text-gray-500">{isNews ? "Fuente Externa" : "Editor Profesional"}</p>
                 </div>
             </div>
             <div className="flex space-x-3">
