@@ -3,7 +3,7 @@ export default function robots() {
     rules: [
       {
         userAgent: 'Mediapartners-Google',
-        disallow: [],
+        allow: '/',
       },
       {
         userAgent: '*',
