@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { ArrowRight, Calendar } from 'lucide-react';
+import { ArrowRight, Calendar, Share2 } from 'lucide-react';
+import ArticleShareButton from './ArticleShareButton';
 
 const ArticleCard = ({ article, variant = "default" }) => {
   if (variant === "compact") {
@@ -10,7 +11,12 @@ const ArticleCard = ({ article, variant = "default" }) => {
         </div>
         <div>
           <span className="text-xs font-bold text-indigo-600 uppercase mb-1 block">{article.category}</span>
-          <h4 className="text-sm font-bold text-gray-900 leading-tight group-hover:text-indigo-600 line-clamp-2">{article.title}</h4>
+          <h4 className="text-sm font-bold text-gray-900 leading-tight group-hover:text-indigo-600 line-clamp-2 pr-6 relative">
+            {article.title}
+          </h4>
+          <div className="mt-2 text-right">
+             <ArticleShareButton url={`https://aldiadetodo.com/articulos/${article.slug}`} title={article.title} text={article.excerpt} />
+          </div>
         </div>
       </Link>
     );
@@ -36,8 +42,11 @@ const ArticleCard = ({ article, variant = "default" }) => {
                  {article.excerpt}
                </p>
             </div>
-            <div className="flex items-center text-indigo-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
-               Leer completo <ArrowRight className="w-4 h-4 ml-1" />
+            <div className="flex items-center justify-between border-t border-gray-50 pt-3 mt-2">
+                <div className="flex items-center text-indigo-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
+                   Leer completo <ArrowRight className="w-4 h-4 ml-1" />
+                </div>
+                <ArticleShareButton url={`https://aldiadetodo.com/articulos/${article.slug}`} title={article.title} text={article.excerpt} />
             </div>
         </div>
       </Link>
@@ -63,8 +72,11 @@ const ArticleCard = ({ article, variant = "default" }) => {
         <p className="text-gray-600 text-sm line-clamp-3 mb-4 flex-grow">
           {article.excerpt}
         </p>
-        <div className="flex items-center text-indigo-600 text-sm font-semibold mt-auto group-hover:translate-x-1 transition-transform">
-          Leer más <ArrowRight className="w-4 h-4 ml-1" />
+        <div className="flex items-center justify-between border-t border-gray-50 pt-4 mt-auto">
+          <div className="flex items-center text-indigo-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
+            Leer más <ArrowRight className="w-4 h-4 ml-1" />
+          </div>
+          <ArticleShareButton url={`https://aldiadetodo.com/articulos/${article.slug}`} title={article.title} text={article.excerpt} />
         </div>
       </div>
     </Link>

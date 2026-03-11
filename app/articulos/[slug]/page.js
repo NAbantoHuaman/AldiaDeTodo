@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ChevronRight, Facebook, Twitter, TrendingUp } from 'lucide-react';
 import ArticleCard from '@/components/ArticleCard';
 import AdsBanner from '@/components/AdsBanner';
+import ShareButtons from '@/components/ShareButtons';
 import { transformNewsItem } from '@/lib/newsTransformer';
 import { generateArticleAnalysis } from '@/lib/ai';
 import { getCachedAnalysis, setCachedAnalysis } from '@/lib/cache';
@@ -250,10 +251,11 @@ export default async function ArticleDetailPage({ params }) {
                     <p className="text-xs text-gray-500">{isNews ? "Fuente Externa" : "Editor Profesional"}</p>
                 </div>
             </div>
-            <div className="flex space-x-3">
-                 <button className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition"><Facebook className="w-5 h-5"/></button>
-                 <button className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition"><Twitter className="w-5 h-5"/></button>
-            </div>
+            <ShareButtons 
+                url={`https://aldiadetodo.com/articulos/${article.slug}`} 
+                title={article.title} 
+                className="-mr-2"
+            />
         </div>
 
         {/* Dynamic Ad (Top) */}
