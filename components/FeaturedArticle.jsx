@@ -1,12 +1,20 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Clock } from 'lucide-react';
 
 const FeaturedArticle = ({ article }) => {
   return (
     <Link href={`/articulos/${article.slug}`} className="relative block w-full h-[500px] rounded-2xl overflow-hidden cursor-pointer group mb-12">
-      <img src={article.image} alt={article.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+      <Image
+        src={article.image}
+        alt={article.title}
+        fill
+        sizes="100vw"
+        priority
+        className="object-cover group-hover:scale-105 transition-transform duration-700"
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
-      <div className="absolute bottom-0 left-0 p-8 md:p-12 max-w-3xl">
+      <div className="absolute bottom-0 left-0 p-8 md:p-12 max-w-3xl z-10">
         <span className="inline-block px-3 py-1 bg-indigo-600 text-white text-xs font-bold uppercase tracking-wider mb-4 rounded-sm">
           Destacado de hoy
         </span>

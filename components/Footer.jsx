@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { CATEGORIES } from '../lib/articles';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
+
+const CATEGORIES = ["Crecimiento Personal", "Productividad", "Finanzas", "Salud Mental", "Relaciones", "Tecnología", "Ciencia", "Cultura"];
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -77,7 +78,7 @@ const Footer = () => {
             <h3 className="text-sm font-semibold text-gray-200 uppercase tracking-wider mb-4">Explorar</h3>
             <ul className="space-y-3">
               {CATEGORIES.slice(0, 4).map(cat => (
-                <li key={cat}><Link href={`/articulos?categoria=${encodeURIComponent(cat)}`} className="text-gray-400 hover:text-white text-sm">{cat}</Link></li>
+                <li key={cat}><Link href={`/categoria/${encodeURIComponent(cat.toLowerCase().replace(/\s+/g, '-'))}`} className="text-gray-400 hover:text-white text-sm">{cat}</Link></li>
               ))}
             </ul>
           </div>

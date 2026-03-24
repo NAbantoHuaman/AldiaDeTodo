@@ -1,8 +1,8 @@
-import { ARTICLES } from '../lib/articles';
+import prisma from '../lib/prisma';
 
 const BASE_URL = 'https://aldiadetodo.com';
 
-export default function sitemap() {
+export default async function sitemap() {
   // Static pages
   const staticPages = [
     {
@@ -22,6 +22,12 @@ export default function sitemap() {
       lastModified: new Date(),
       changeFrequency: 'hourly',
       priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/categoria`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
     },
     {
       url: `${BASE_URL}/acerca`,
@@ -49,24 +55,29 @@ export default function sitemap() {
     },
   ];
 
-  // Safe date parser that handles Spanish date formats
-  const parseDate = (dateStr) => {
-    const months = { 'Ene': 'Jan', 'Feb': 'Feb', 'Mar': 'Mar', 'Abr': 'Apr', 'May': 'May', 'Jun': 'Jun', 'Jul': 'Jul', 'Ago': 'Aug', 'Sep': 'Sep', 'Oct': 'Oct', 'Nov': 'Nov', 'Dic': 'Dec' };
-    let normalized = dateStr;
-    Object.entries(months).forEach(([es, en]) => {
-      normalized = normalized.replace(es, en);
-    });
-    const d = new Date(normalized);
-    return isNaN(d.getTime()) ? new Date() : d;
-  };
+  // Dynamic article pages from database
+  const articles = await prisma.article.findMany({
+    select: { slug: true, updatedAt: true },
+  });
 
-  // Dynamic article pages
-  const articlePages = ARTICLES.map((article) => ({
+  const articlePages = articles.map((article) => ({
     url: `${BASE_URL}/articulos/${article.slug}`,
-    lastModified: parseDate(article.date),
+    lastModified: article.updatedAt,
     changeFrequency: 'monthly',
     priority: 0.7,
   }));
 
-  return [...staticPages, ...articlePages];
+  // Category pages from database
+  const categories = await prisma.category.findMany({
+    select: { name: true },
+  });
+
+  const categoryPages = categories.map((cat) => ({
+    url: `${BASE_URL}/categoria/${encodeURIComponent(cat.name.toLowerCase().replace(/\s+/g, '-'))}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.6,
+  }));
+
+  return [...staticPages, ...articlePages, ...categoryPages];
 }

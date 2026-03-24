@@ -64,18 +64,18 @@ export default function RootLayout({
       <head>
         {/* META ETIQUETA DE VERIFICACIÓN DE GOOGLE ADSENSE */}
         <meta name="google-adsense-account" content={AD_CLIENT_ID} />
-        {/* SCRIPT DE GOOGLE ADSENSE - beforeInteractive lo coloca en el <head> */}
-        <Script
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT_ID}`}
-          crossOrigin="anonymous"
-          strategy="beforeInteractive"
-        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans text-slate-900 bg-white min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
         <GoogleAnalytics gaId="G-SNE0YWHNQ4" />
+        {/* SCRIPT DE GOOGLE ADSENSE - afterInteractive evita hydration mismatch */}
+        <Script
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT_ID}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <Navbar />
         <div className="flex-grow">
           {children}

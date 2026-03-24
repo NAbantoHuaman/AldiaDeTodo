@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronRight, Facebook, Twitter, TrendingUp } from 'lucide-react';
 import ArticleCard from '@/components/ArticleCard';
 import AdsBanner from '@/components/AdsBanner';
@@ -195,19 +196,24 @@ export default async function ArticleDetailPage({ params }) {
       <div className="relative h-[400px] w-full bg-gray-900 overflow-hidden group">
         {/* 1. Blurred Background (Atmosphere) */}
         <div className="absolute inset-0">
-             <img 
+             <Image 
                 src={article.image || "/images/default-hero.jpg"} 
                 alt=""
-                className="w-full h-full object-cover blur-xl opacity-50 scale-110" 
+                fill
+                sizes="100vw"
+                className="object-cover blur-xl opacity-50 scale-110" 
              />
         </div>
 
         {/* 2. Main Image (Sharp & Contained) */}
         <div className="relative h-full w-full flex justify-center items-center">
-             <img 
+             <Image 
                src={article.image || "/images/default-hero.jpg"} 
                alt={article.title}
-               className="h-full w-auto object-contain max-w-full z-10 shadow-lg" 
+               fill
+               sizes="100vw"
+               priority
+               className="object-contain z-10 shadow-lg" 
              />
         </div>
 
