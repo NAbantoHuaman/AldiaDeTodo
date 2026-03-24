@@ -1,5 +1,7 @@
 import prisma from '../lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 const BASE_URL = 'https://aldiadetodo.com';
 
 export default async function sitemap() {

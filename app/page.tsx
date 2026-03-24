@@ -6,6 +6,8 @@ import prisma from "../lib/prisma";
 import { getRSSNews } from "../lib/rss";
 import { parseSpanishDate } from "../lib/dateUtils";
 
+export const dynamic = 'force-dynamic';
+
 // Function to fetch live news server-side via RSS
 async function getDynamicArticles() {
   try {

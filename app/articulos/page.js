@@ -3,6 +3,7 @@ import ArticleListClient from '@/components/ArticleListClient';
 import prisma from '@/lib/prisma';
 import { parseSpanishDate } from '@/lib/dateUtils';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
 
 export const metadata = {
