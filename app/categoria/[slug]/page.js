@@ -67,7 +67,7 @@ export default async function CategoryPage({ params }) {
   }
 
   const articles = await prisma.article.findMany({
-    where: { categoryId: category.id, isNews: false },
+    where: { categoryId: category.id },
     include: { category: true },
   });
 
