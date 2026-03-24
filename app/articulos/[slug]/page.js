@@ -200,6 +200,7 @@ export default async function ArticleDetailPage({ params }) {
                 src={article.image || "/images/default-hero.jpg"} 
                 alt=""
                 fill
+                unoptimized
                 sizes="100vw"
                 className="object-cover blur-xl opacity-50 scale-110" 
              />
@@ -211,6 +212,7 @@ export default async function ArticleDetailPage({ params }) {
                src={article.image || "/images/default-hero.jpg"} 
                alt={article.title}
                fill
+               unoptimized
                sizes="100vw"
                priority
                className="object-contain z-10 shadow-lg" 
