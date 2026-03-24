@@ -41,7 +41,6 @@ export const metadata = {
 export default async function Home() {
   // Fetch from DB
   const dbArticles = await prisma.article.findMany({
-    where: { isNews: false },
     include: { category: true }
   });
 
