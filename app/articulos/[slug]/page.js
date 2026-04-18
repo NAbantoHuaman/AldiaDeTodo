@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronRight, Facebook, Twitter, TrendingUp } from 'lucide-react';
+import { ChevronRight, Facebook, Twitter, TrendingUp, Calendar } from 'lucide-react';
 import ArticleCard from '@/components/ArticleCard';
 import AdsBanner from '@/components/AdsBanner';
 import ShareButtons from '@/components/ShareButtons';
@@ -58,9 +58,18 @@ export async function generateMetadata({ params }) {
 
   const isoDate = parseDateToISO(article.date);
 
+  // If it's a news/RSS article, tell Google not to index it
+  const isRSS = !dbArticle;
+
   return {
     title: article.title,
     description: article.excerpt || `Lee el artículo completo sobre ${article.title} en AldiaDeTodo.`,
+    ...(isRSS && {
+      robots: {
+        index: false,
+        follow: true,
+      },
+    }),
     openGraph: {
       title: article.title,
       description: article.excerpt || `Lee más sobre ${article.title}.`,
@@ -126,29 +135,18 @@ export default async function ArticleDetailPage({ params }) {
 
   if (!article) {
     return (
-        <div className="flex flex-col items-center justify-center min-h-[50vh] p-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Artículo no encontrado</h2>
-            <p className="text-gray-600 mb-6">Lo sentimos, la noticia que buscas puede haber expirado o no está disponible.</p>
-            <Link href="/" className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+        <div className="flex flex-col items-center justify-center min-h-[50vh] p-8 text-center font-inter">
+            <h2 className="text-2xl font-bold text-slate-800 mb-4 font-outfit">Artículo no encontrado</h2>
+            <p className="text-slate-600 mb-6">Lo sentimos, la noticia que buscas puede haber expirado o no está disponible.</p>
+            <Link href="/" className="px-8 py-3 bg-slate-900 text-white rounded-2xl hover:bg-indigo-600 transition shadow-xl">
                 Volver al Inicio
             </Link>
         </div>
     );
   }
 
-  // --- AGGREGATOR MODE (Safe for AdSense) ---
-  // We do NOT extract full content for external news to avoid copyright/AdSense issues.
-  // We strictly show the RSS summary and link to the source.
   const NEWS_CATEGORIES = ["Actualidad", "Política", "Mundo", "Noticias", "Tecnología", "Deportes", "Entretenimiento", "Economía", "Negocios"];
   
-  // If not already flagged as news (from dynamic), check category
-  // We rely on the source (Static vs RSS) to determine if it's news.
-  // Static articles (written by us) should always show full content.
-  // if (!isNews && article) {
-  //     isNews = NEWS_CATEGORIES.includes(article.category);
-  // }
-  
-  // If it's a news item, htmlContent should be the RSS summary/snippet
   if (isNews && !htmlContent && article.excerpt) {
       htmlContent = `<p>${article.excerpt}</p>`;
   }
@@ -182,156 +180,186 @@ export default async function ArticleDetailPage({ params }) {
     }
   };
 
-  // --------------------------------------------------------
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://aldiadetodo.com' },
+      { '@type': 'ListItem', position: 2, name: isNews ? 'Noticias' : 'Artículos', item: isNews ? 'https://aldiadetodo.com/noticias' : 'https://aldiadetodo.com/articulos' },
+      { '@type': 'ListItem', position: 3, name: article.title, item: `https://aldiadetodo.com/articulos/${article.slug}` }
+    ]
+  };
 
   return (
-    <article className="min-h-screen bg-white">
+    <article className="min-h-screen bg-white font-inter">
       {/* JSON-LD for SEO */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
 
-      {/* Hero Section */}
-      <div className="relative h-[400px] w-full bg-gray-900 overflow-hidden group">
-        {/* 1. Blurred Background (Atmosphere) */}
-        <div className="absolute inset-0">
+      {/* Hero Section - Premium Magazine Style */}
+      <div className="relative h-[65vh] min-h-[500px] w-full bg-slate-950 overflow-hidden">
+        {/* Background Atmosphere */}
+        <div className="absolute inset-0 z-0">
              <Image 
                 src={article.image || "/images/default-hero.jpg"} 
                 alt=""
                 fill
                 unoptimized
-                sizes="100vw"
-                className="object-cover blur-xl opacity-50 scale-110" 
+                priority
+                className="object-cover blur-2xl opacity-40 scale-110" 
              />
         </div>
 
-        {/* 2. Main Image (Sharp & Contained) */}
-        <div className="relative h-full w-full flex justify-center items-center">
-             <Image 
-               src={article.image || "/images/default-hero.jpg"} 
-               alt={article.title}
-               fill
-               unoptimized
-               sizes="100vw"
-               priority
-               className="object-contain z-10 shadow-lg" 
-             />
-        </div>
-
-        {/* 3. Gradient Overlay */}
-        <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent flex items-end z-20">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-100 backdrop-blur-sm border border-indigo-500/30 mb-6">
-              {article.category}
-            </span>
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight tracking-tight shadow-sm">
-              {article.title}
-            </h1>
-            <div className="flex items-center text-gray-300 text-sm font-medium space-x-4">
-                <span className="flex items-center">
-                    <svg className="w-4 h-4 mr-2 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    {article.date || "Fecha desconocida"}
-                </span>
-                {article.author && (
-                    <span className="flex items-center">
-                        <span className="mx-2 text-gray-500">•</span>
-                        <svg className="w-4 h-4 mr-2 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                        {article.author}
-                    </span>
-                )}
+        {/* Content Container */}
+        <div className="container mx-auto h-full relative z-10 flex flex-col lg:flex-row items-center lg:items-end justify-center lg:justify-between pb-12 lg:pb-20 px-6 max-w-7xl gap-8 lg:gap-12">
+            
+            {/* Mobile/Tablet Image (Visible only on smaller screens) */}
+            <div className="block lg:hidden w-full aspect-video relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 mb-4 animate-in zoom-in-95 duration-700">
+               <Image 
+                src={article.image || "/images/default-hero.jpg"} 
+                alt={article.title}
+                fill
+                unoptimized
+                priority
+                className="object-cover" 
+              />
             </div>
-          </div>
+
+            {/* Column: Text Content */}
+            <div className="max-w-4xl text-left flex-1 w-full">
+              <div className="inline-flex items-center gap-3 mb-6 lg:mb-8 animate-in fade-in slide-in-from-left-4 duration-500">
+                 <span className="h-px w-10 bg-indigo-500"></span>
+                 <span className="text-[10px] font-black uppercase text-indigo-400 tracking-[0.3em] font-inter">
+                    {article.category}
+                 </span>
+              </div>
+              
+              <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-white mb-8 lg:mb-10 leading-[1.1] tracking-tighter font-outfit animate-fade-in-up">
+                {article.title}
+              </h1>
+
+              <div className="flex flex-wrap items-center gap-6 lg:gap-8 text-slate-400 text-[10px] font-black uppercase tracking-[0.15em] font-inter animate-in fade-in duration-700 delay-300">
+                  <div className="flex items-center gap-2.5">
+                      <TrendingUp className="w-4 h-4 text-emerald-400" />
+                      <span className="text-slate-100 italic">Lectura sugerida</span>
+                  </div>
+                  <span className="flex items-center gap-2.5 bg-white/5 py-1.5 px-3 rounded-full border border-white/10">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {article.date || "Hoy"}
+                  </span>
+                  {article.author && (
+                      <span className="flex items-center gap-3 border-l border-white/10 pl-6 lg:pl-8">
+                          <div className="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-[10px] text-white font-black shadow-lg shadow-indigo-500/20">
+                            {article.author[0]}
+                          </div>
+                          <span className="text-slate-200">{article.author}</span>
+                      </span>
+                  )}
+              </div>
+            </div>
+
+            {/* Desktop Image (Visible only on large screens) */}
+            <div className="hidden lg:block w-[400px] h-[480px] relative rounded-[40px] overflow-hidden shadow-2xl border border-white/10 rotate-3 animate-in zoom-in-95 duration-1000">
+              <Image 
+                src={article.image || "/images/default-hero.jpg"} 
+                alt={article.title}
+                fill
+                unoptimized
+                priority
+                className="object-cover" 
+              />
+            </div>
         </div>
+
+        {/* Decorative mask for transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white via-white/80 to-transparent z-20"></div>
       </div>
 
       {/* Content Section */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         
         {/* Author/Share Bar */}  
-        <div className="flex justify-between items-center border-b border-gray-100 pb-8 mb-12">
-            <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-lg">
+        <div className="flex justify-between items-center border-b border-slate-100 pb-10 mb-12">
+            <div className="flex items-center space-x-5">
+                <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 font-black text-xl font-outfit shadow-sm">
                     {article.author ? article.author[0] : "A"}
                 </div>
                 <div>
-                    <p className="text-sm font-bold text-gray-900">{article.author || "Redacción Aldia"}</p>
-                    <p className="text-xs text-gray-500">{isNews ? "Fuente Externa" : "Editor Profesional"}</p>
+                    <p className="text-sm font-black text-slate-900 uppercase tracking-widest font-inter">{article.author || "Redacción Aldia"}</p>
+                    <p className="text-xs text-slate-400 font-medium">{isNews ? "Corresponsal Global" : "Editor Senior"}</p>
                 </div>
             </div>
-            <ShareButtons 
-                url={`https://aldiadetodo.com/articulos/${article.slug}`} 
-                title={article.title} 
-                className="-mr-2"
-            />
+            <div className="flex items-center gap-4">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] hidden md:block">Compartir</span>
+                <ShareButtons 
+                    url={`https://aldiadetodo.com/articulos/${article.slug}`} 
+                    title={article.title} 
+                />
+            </div>
         </div>
 
-        {/* Dynamic Ad (Top) */}
-        <div className="my-10">
-           <AdsBanner slot="1122334455" format="article-top" label="Publicidad" />
-        </div>
+        {/* Ad removed to improve content-to-ad ratio for AdSense compliance */}
 
         {/* Content / Summary - Premium Editorial Design */}
-        <div className="prose prose-lg prose-indigo max-w-none text-gray-800 leading-loose space-y-8">
+        <div className="prose prose-lg prose-indigo max-w-none text-slate-800 leading-relaxed space-y-10 font-medium">
             {/* If it's a News Item, show as a "Teaser" with high-end typography */}
             {isNews && (
                 <div className="relative">
-                    {/* Editorial Text */}
                     <div 
-                        className="font-serif text-xl md:text-2xl leading-relaxed text-gray-700 first-letter:text-5xl first-letter:font-bold first-letter:text-gray-900 first-letter:mr-3 first-letter:float-left"
+                        className="font-inter text-xl md:text-2xl leading-relaxed text-slate-700 first-letter:text-7xl first-letter:font-black first-letter:text-slate-900 first-letter:mr-4 first-letter:float-left first-letter:mt-1 first-letter:font-outfit"
                         dangerouslySetInnerHTML={{ __html: htmlContent }} 
                     />
-                    
-                    {/* Gradient Fade to imply more content */}
-                    <div className="h-24 w-full bg-linear-to-b from-transparent to-white absolute bottom-0"></div>
+                    <div className="h-32 w-full bg-gradient-to-b from-transparent via-white/50 to-white absolute bottom-0"></div>
                 </div>
             )}
 
-            {/* If it's a Static Article, we just show the content normally */}
-            {!isNews && <div dangerouslySetInnerHTML={{ __html: htmlContent }} />}
+            {!isNews && <div className="animate-in fade-in duration-1000" dangerouslySetInnerHTML={{ __html: htmlContent }} />}
         </div>
 
         {/* "Read Full Article" Call-to-Action */}
         {isNews && article.link && (
-            <div className="mt-8 p-8 bg-gray-50 rounded-2xl border border-gray-100 text-center relative overflow-hidden group">
-                {/* Background decorative pattern */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
+            <div className="mt-12 p-12 bg-slate-50 rounded-[40px] border border-slate-100 text-center relative overflow-hidden group shadow-inner">
+                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 opacity-80"></div>
                 
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                    Continúa leyendo esta historia
+                <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-6 font-outfit">
+                    Sigue la cobertura completa
                 </h3>
-                <p className="text-gray-600 mb-8 max-w-lg mx-auto">
-                    Este artículo se encuentra completo en la página oficial de <strong>{article.source || "la fuente original"}</strong>.
+                <p className="text-slate-500 mb-10 max-w-lg mx-auto leading-relaxed">
+                    Este reportaje continúa con más detalles, multimedia y seguimiento en vivo en <strong>{article.source || "la fuente oficial"}</strong>.
                 </p>
 
                 <a 
                     href={article.link} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="inline-flex items-center px-8 py-4 bg-gray-900 text-white text-lg font-bold rounded-full hover:bg-indigo-600 transition-colors duration-300 shadow-xl shadow-indigo-500/20 group-hover:scale-105 transform"
+                    className="inline-flex items-center px-10 py-5 bg-slate-900 text-white text-base font-black uppercase tracking-widest rounded-3xl hover:bg-indigo-600 transition-all shadow-2xl shadow-slate-950/20 active:scale-95 group"
                 >
-                    Leer artículo completo
-                    <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    Ir a la fuente original
+                    <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
                 
-                <p className="mt-6 text-xs text-gray-400 uppercase tracking-widest">
-                    Fuente Externa • {article.source || "Noticias"}
+                <p className="mt-10 text-[9px] text-slate-400 font-black uppercase tracking-[0.4em]">
+                    Verificado • {article.source || "REDACCIÓN"}
                 </p>
             </div>
         )}
 
-        {/* Footer Ad */}
-        <div className="mt-16 pt-8 border-t border-gray-100">
-             <AdsBanner slot="5566778899" format="horizontal" label="Publicidad" />
+        {/* Related Content / Footer Ad */}
+        <div className="mt-20 pt-12 border-t border-slate-100">
+             <AdsBanner slot="5566778899" format="horizontal" label="Más de AldiaDeTodo" />
         </div>
 
         {/* Navigation */}
-        <div className="mt-12 flex justify-between items-center">
-            <Link href={isNews ? "/noticias" : "/articulos"} className="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all">
-                <svg className="h-5 w-5 mr-2 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-                </svg>
-                Volver a {isNews ? "Noticias" : "Artículos"}
+        <div className="mt-12 flex justify-center">
+            <Link href={isNews ? "/noticias" : "/articulos"} className="group inline-flex items-center gap-3 px-8 py-4 bg-white border border-slate-200 text-slate-600 text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-slate-50 hover:text-slate-900 transition-all shadow-sm">
+                <ChevronRight className="w-5 h-5 rotate-180 group-hover:-translate-x-1 transition-transform" />
+                Volver al Feed de {isNews ? "Noticias" : "Artículos"}
             </Link>
         </div>
       </div>

@@ -1,19 +1,26 @@
 "use client";
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Search } from 'lucide-react';
+import { Menu, X, Search, Bell } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
     { name: "Inicio", path: "/" },
-    { name: "Noticias", path: "/noticias" },
+    { name: "Guías", path: "/guias" },
     { name: "Artículos", path: "/articulos" },
-    { name: "Categorías", path: "/categoria" },
-    { name: "Acerca de", path: "/acerca" },
+    { name: "Noticias", path: "/noticias" },
     { name: "Contacto", path: "/contacto" },
   ];
 
@@ -23,87 +30,98 @@ const Navbar = () => {
     return false;
   };
 
-  const handleScroll = (e, path) => {
-    if (path.startsWith('/#')) {
-      e.preventDefault();
-      const id = path.replace('/#', '');
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false); // Close mobile menu if open
-      }
-    }
-  };
-
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <Link href="/" className="flex items-center cursor-pointer">
-            <div className="flex-shrink-0 flex items-center gap-2">
-              <div className="bg-black text-white p-1 rounded font-bold text-xl tracking-tighter">AD</div>
-              <span className="font-bold text-2xl tracking-tight text-gray-900">AldiaDeTodo</span>
+    <div className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
+      scrolled ? 'top-0 px-0 py-0' : 'top-8 px-4 py-3'
+    }`}>
+      <nav className={`max-w-7xl mx-auto transition-all duration-500 ${
+        scrolled ? 'bg-white/95 shadow-2xl shadow-slate-300/50 border-b border-slate-100' : 'bg-white/50 backdrop-blur-sm rounded-[32px]'
+      }`}>
+        <div className={`px-6 md:px-10 transition-all duration-500 ${scrolled ? 'py-1' : 'py-0'}`}>
+          <div className={`flex justify-between items-center transition-all duration-500 ${scrolled ? 'h-12 md:h-14' : 'h-14 md:h-16'}`}>
+            
+            {/* Logo Part */}
+            <Link href="/" className="flex items-center group transition-transform hover:scale-105">
+              <div className="bg-slate-950 text-white w-10 h-10 flex items-center justify-center rounded-2xl font-black text-xl tracking-tighter shadow-lg shadow-slate-400/20 group-hover:rotate-6 transition-transform">
+                AD
+              </div>
+              <span className={`ml-3 font-black text-2xl tracking-tighter text-slate-900 font-outfit transition-all duration-500 overflow-hidden whitespace-nowrap ${
+                scrolled ? 'opacity-0 max-w-0 ml-0' : 'opacity-100 max-w-[200px]'
+              }`}>
+                Aldia<span className="text-indigo-600">DeTodo</span>
+              </span>
+            </Link>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-10">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.path}
+                  className={`text-xs font-black uppercase tracking-widest transition-all relative py-2 ${
+                    isActive(link.path)
+                      ? "text-indigo-600" 
+                      : "text-slate-500 hover:text-slate-900"
+                  }`}
+                >
+                  {link.name}
+                  {isActive(link.path) && (
+                    <span className="absolute bottom-0 left-0 right-0 h-1 bg-indigo-600 rounded-full animate-in fade-in slide-in-from-bottom-1 duration-300"></span>
+                  )}
+                </Link>
+              ))}
             </div>
-          </Link>
-          
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.path}
-                onClick={(e) => link.path.startsWith('/#') ? handleScroll(e, link.path) : null}
-                className={`text-sm font-medium transition-colors cursor-pointer ${
-                  isActive(link.path)
-                    ? "text-indigo-600 border-b-2 border-indigo-600 pb-1" 
-                    : "text-gray-600 hover:text-indigo-600"
-                }`}
+
+            {/* Actions */}
+            <div className="hidden md:flex items-center gap-4 border-l border-slate-200 pl-8 ml-2">
+               <button className="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
+                  <Search className="w-5 h-5" />
+               </button>
+               <button className="bg-slate-950 text-white px-5 py-2.5 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-indigo-600 transition-all shadow-md active:scale-95">
+                  Suscribir
+               </button>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="flex items-center md:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2.5 rounded-2xl bg-slate-100 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all outline-none"
               >
-                {link.name}
-              </a>
-            ))}
-            <div className="pl-4 border-l border-gray-300">
-
+                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
             </div>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="flex items-center md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
           </div>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
-          <div className="pt-2 pb-3 space-y-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.path}
-                onClick={(e) => {
-                  if (link.path.startsWith('/#')) handleScroll(e, link.path);
-                  else setIsOpen(false);
-                }}
-                className={`block w-full text-left pl-3 pr-4 py-2 border-l-4 text-base font-medium cursor-pointer ${
-                   isActive(link.path)
-                    ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                    : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
-                }`}
-              >
-                {link.name}
-              </a>
-            ))}
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="md:hidden bg-white/95 backdrop-blur-3xl rounded-b-[32px] border-t border-slate-100 absolute top-full left-0 right-0 shadow-2xl overflow-hidden animate-in slide-in-from-top-4 duration-300">
+            <div className="p-6 space-y-2">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`block px-6 py-4 rounded-2xl text-sm font-black uppercase tracking-widest transition-all ${
+                     isActive(link.path)
+                      ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200"
+                      : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <div className="pt-4 mt-4 border-t border-slate-100">
+                 <button className="w-full bg-slate-950 text-white py-5 rounded-3xl font-black uppercase tracking-widest shadow-xl">
+                    Suscribirse Gratis
+                 </button>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
-    </nav>
+        )}
+      </nav>
+    </div>
   );
 };
 

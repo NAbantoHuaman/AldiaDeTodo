@@ -1,23 +1,26 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import NewsTicker from "@/components/NewsTicker";
+import VerticalsBar from "@/components/VerticalsBar";
 import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from "next/script";
+import { getFinanceData, getSportsData } from "@/lib/externalData";
 
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import { Inter, Outfit } from "next/font/google";
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
-
 
 const AD_CLIENT_ID = "ca-pub-5266241351956416";
 
@@ -52,32 +55,33 @@ export const metadata: Metadata = {
   },
 };
 
-
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const financeData = await getFinanceData();
+  const sportsData = await getSportsData();
+
   return (
     <html lang="es" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        {/* META ETIQUETA DE VERIFICACIÓN DE GOOGLE ADSENSE */}
         <meta name="google-adsense-account" content={AD_CLIENT_ID} />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans text-slate-900 bg-white min-h-screen flex flex-col`}
+        className={`${inter.variable} ${outfit.variable} antialiased font-inter text-slate-900 bg-white min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
         <GoogleAnalytics gaId="G-SNE0YWHNQ4" />
-        {/* SCRIPT DE GOOGLE ADSENSE - afterInteractive evita hydration mismatch */}
         <Script
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT_ID}`}
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
         <Navbar />
-        <div className="flex-grow">
+        <NewsTicker financeData={financeData} sportsData={sportsData} />
+        <VerticalsBar />
+        <div className="flex-grow pt-4">
           {children}
         </div>
         <Footer />

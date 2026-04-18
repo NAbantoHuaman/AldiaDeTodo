@@ -5,7 +5,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { transformNewsItem } from '../../lib/newsTransformer';
 
-const ADMIN_PASSWORD = "aldia2026";
+const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_REDACCION_PWD || "aldia2026";
 
 export default function RedaccionPage() {
   const [authenticated, setAuthenticated] = useState(false);

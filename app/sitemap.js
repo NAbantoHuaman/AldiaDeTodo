@@ -14,6 +14,12 @@ export default async function sitemap() {
       priority: 1.0,
     },
     {
+      url: `${BASE_URL}/guias`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/articulos`,
       lastModified: new Date(),
       changeFrequency: 'daily',
@@ -23,7 +29,7 @@ export default async function sitemap() {
       url: `${BASE_URL}/noticias`,
       lastModified: new Date(),
       changeFrequency: 'hourly',
-      priority: 0.9,
+      priority: 0.7,
     },
     {
       url: `${BASE_URL}/categoria`,
@@ -57,8 +63,22 @@ export default async function sitemap() {
     },
   ];
 
-  // Dynamic article pages from database
+  // Guide pages (original content — high priority)
+  const guidePages = [
+    'como-ahorrar-dinero',
+    'habitos-productivos',
+    'bienestar-mental',
+    'inteligencia-emocional',
+  ].map(slug => ({
+    url: `${BASE_URL}/guias/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.9,
+  }));
+
+  // Dynamic article pages from database (ORIGINAL content only — exclude RSS/news)
   const articles = await prisma.article.findMany({
+    where: { isNews: false },
     select: { slug: true, updatedAt: true },
   });
 
@@ -81,5 +101,5 @@ export default async function sitemap() {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...articlePages, ...categoryPages];
+  return [...staticPages, ...guidePages, ...articlePages, ...categoryPages];
 }

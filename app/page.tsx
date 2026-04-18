@@ -5,6 +5,11 @@ import AdsBanner from "../components/AdsBanner";
 import prisma from "../lib/prisma";
 import { getRSSNews } from "../lib/rss";
 import { parseSpanishDate } from "../lib/dateUtils";
+import { getWeatherData, getHoroscopeData, getSportsData } from "../lib/externalData";
+import WeatherWidget from "../components/WeatherWidget";
+import HoroscopeWidget from "../components/HoroscopeWidget";
+import SportsWidget from "../components/SportsWidget";
+import { ArrowRight, ChevronRight, TrendingUp, Terminal, Heart, Sparkles, Code, Brain } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
@@ -39,7 +44,12 @@ export const metadata = {
 };
 
 export default async function Home() {
-  // Fetch from DB
+  // 1. Fetch Dynamic Widgets Data
+  const weatherData = await getWeatherData("Cajamarca");
+  const horoscopeData = await getHoroscopeData();
+  const sportsData = await getSportsData();
+
+  // 2. Fetch DB Articles
   const dbArticles = await prisma.article.findMany({
     include: { category: true }
   });
@@ -54,22 +64,13 @@ export default async function Home() {
   }));
 
   const evergreenArticles = allStatic.filter((a: any) => a.category !== "Noticias");
-  
-  // The absolute newest article becomes the Feature
   const featuredOriginal = evergreenArticles[0];
-  
-  // The next 4 newest articles go into "Artículos de Hoy"
   const latestArticles = evergreenArticles.slice(1, 5);
-
-  // Older articles go to the "Más para ti" Sidebar feed
-  // (starting from the 6th newest article)
   const sidebarOriginals = evergreenArticles.slice(5, 13);
 
-  // 2. Get Dynamic News (secondary — sidebar feed)
+  // 3. Get Dynamic News (secondary — sidebar feed)
   const newsArticles = await getDynamicArticles();
   const latestNews = newsArticles.slice(0, 6).filter(Boolean);
-
-
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -84,52 +85,97 @@ export default async function Home() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-12 font-inter">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* HERO: Featured Original Article (Full Width) */}
-      <section className="mb-12">
-        <div className="flex items-center gap-3 mb-6">
-           <span className="w-3 h-3 bg-indigo-600 rounded-full"></span>
-           <h2 className="text-xs font-bold text-indigo-600 uppercase tracking-widest">Artículo Destacado</h2>
+      <section className="mb-20 animate-in fade-in duration-1000">
+        <div className="flex items-center gap-4 mb-8">
+           <span className="h-px w-12 bg-indigo-600"></span>
+           <h2 className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.3em] font-inter">Edición Especial</h2>
         </div>
         {featuredOriginal && <FeaturedArticle article={featuredOriginal} />}
       </section>
 
-      {/* NEW: Lo Más Reciente — Latest 10 Articles */}
-      <section className="mb-16">
-        <div className="flex items-center gap-3 mb-6">
-          <span className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
-          <h2 className="text-xs font-bold text-red-600 uppercase tracking-widest">Lo Más Reciente</h2>
+      {/* NEW: Lo Más Reciente — Latest Articles */}
+      <section className="mb-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+           <div>
+             <div className="flex items-center gap-3 mb-4">
+                <span className="w-2 h-2 bg-rose-500 rounded-full animate-pulse shadow-lg shadow-rose-300"></span>
+                <span className="text-[10px] font-black text-rose-500 uppercase tracking-[0.2em]">Live Feed</span>
+             </div>
+             <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter font-outfit">
+               Artículos de Hoy
+             </h2>
+           </div>
+           <Link href="/articulos" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-indigo-600 hover:gap-4 transition-all">
+             Ver Biblioteca completa <ArrowRight className="w-4 h-4" />
+           </Link>
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-8 border-b-2 border-red-500 pb-2 flex justify-between items-end">
-          <span>Artículos de Hoy</span>
-          <Link href="/articulos" className="text-sm font-normal text-indigo-600 hover:text-indigo-800">Ver todos &rarr;</Link>
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {latestArticles.map((article: any) => (
-            <ArticleCard key={article.id} article={article} variant="default" />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {latestArticles.map((article: any, index: number) => (
+            <ArticleCard key={article.id} article={article} variant="default" priority={index < 2} />
           ))}
         </div>
       </section>
 
-      {/* AD BANNER between sections */}
-      <div className="mb-16">
-        <AdsBanner slot="feed-mid" format="horizontal" />
-      </div>
+      {/* SECTION: Featured Guides */}
+      <section className="mb-24 bg-slate-50 -mx-4 px-4 py-20 rounded-[60px] border-y border-slate-100">
+        <div className="container mx-auto max-w-7xl">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-2 h-2 bg-indigo-600 rounded-full"></span>
+                <span className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.2em]">Contenido Premium</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter font-outfit">
+                Guías Maestras
+              </h2>
+            </div>
+            <Link href="/guias" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-indigo-600 hover:gap-4 transition-all">
+              Explorar todas las guías <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: "Ahorro e Inversión", slug: "como-ahorrar-dinero", icon: TrendingUp, color: "text-emerald-500", bg: "bg-emerald-50" },
+              { title: "Python Moderno 2026", slug: "python-moderno", icon: Terminal, color: "text-indigo-500", bg: "bg-indigo-50" },
+              { title: "Bienestar Mental", slug: "bienestar-mental", icon: Heart, color: "text-rose-500", bg: "bg-rose-50" },
+              { title: "Hábitos Productivos", slug: "habitos-productivos", icon: Sparkles, color: "text-amber-500", bg: "bg-amber-50" }
+            ].map(g => (
+              <Link key={g.slug} href={`/guias/${g.slug}`} className="group bg-white p-8 rounded-[32px] border border-slate-100 hover:border-indigo-100 hover:shadow-2xl hover:shadow-indigo-500/5 transition-all">
+                <div className={`w-12 h-12 ${g.bg} ${g.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                  <g.icon className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-black text-slate-900 mb-2 font-outfit group-hover:text-indigo-600 transition-colors">{g.title}</h3>
+                <p className="text-xs text-slate-500 font-medium mb-0 tracking-tight leading-relaxed line-clamp-2">Guía maestra de 1,200+ palabras con sistemas prácticos para dominar el tema.</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Spacing between sections */}
+      <div className="mb-16"></div>
 
       {/* SECTION 2: Two Columns — More Originals + News Sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
         
         {/* Left: More Original Articles (8 cols) */}
         <div className="lg:col-span-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8 border-b-2 border-gray-900 pb-2">
-            Más para ti
-          </h2>
-          <div className="space-y-8">
+          <div className="flex items-center gap-3 mb-10">
+             <span className="h-px w-10 bg-slate-900"></span>
+             <h2 className="text-3xl font-black text-slate-900 tracking-tighter font-outfit uppercase tracking-widest text-xs">
+               Exploración Profunda
+             </h2>
+          </div>
+          <div className="space-y-6">
             {sidebarOriginals.map(article => (
               <ArticleCard key={article.id} article={article} variant="horizontal" />
             ))}
@@ -137,42 +183,62 @@ export default async function Home() {
         </div>
 
         {/* Right: News + Widgets (4 cols) */}
-        <aside className="lg:col-span-4 space-y-10">
+        <aside className="lg:col-span-4 space-y-12">
           
-          {/* Sidebar Ad */}
-          <div className="bg-gray-50 p-4 border border-gray-100 rounded-lg">
-            <span className="text-xs text-gray-400 block mb-2 text-center">Publicidad</span>
-            <AdsBanner slot="sidebar-home" format="rectangle" />
+          <div className="animate-in fade-in slide-in-from-right-4 duration-700 delay-200">
+            <WeatherWidget data={weatherData} />
+          </div>
+
+          <div className="animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
+            <SportsWidget data={sportsData} />
+          </div>
+
+
+
+          <div className="animate-in fade-in slide-in-from-right-4 duration-700 delay-600">
+            <HoroscopeWidget data={horoscopeData} />
           </div>
 
           {/* Latest News (SECONDARY) */}
-          <div>
-            <h2 className="text-lg font-bold text-gray-900 mb-4 border-l-4 border-red-500 pl-4 flex justify-between items-center">
-              <span className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                Noticias al instante
+          <div className="bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm">
+            <h2 className="text-xl font-black text-slate-900 mb-8 flex justify-between items-center font-outfit">
+              <span className="flex items-center gap-3">
+                <span className="w-1.5 h-6 bg-indigo-600 rounded-full"></span>
+                Telegrafía
               </span>
-              <Link href="/noticias" className="text-xs font-normal text-gray-500 hover:text-indigo-600">Ver más &rarr;</Link>
+              <Link href="/noticias" className="text-[10px] uppercase font-black text-indigo-600 hover:text-indigo-800 tracking-widest">Global &rarr;</Link>
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-6">
               {latestNews.length > 0 ? (
                 latestNews.map((article) => article && (
                   <a key={article.id} href={article.link || `/articulos/${article.slug}`} target={article.link ? "_blank" : "_self"} rel="noopener noreferrer"
-                     className="block p-3 rounded-lg hover:bg-gray-50 transition border border-gray-100 group">
-                    <h3 className="text-sm font-semibold text-gray-800 group-hover:text-indigo-600 line-clamp-2 leading-snug">{article.title}</h3>
-                    <p className="text-xs text-gray-500 mt-1">{article.source || article.category} · {article.date}</p>
+                     className="group block">
+                    <div className="flex items-start gap-4">
+                       <div className="w-1.5 h-1.5 bg-slate-200 rounded-full mt-2 group-hover:bg-indigo-600 transition-colors"></div>
+                       <div>
+                          <h3 className="text-sm font-bold text-slate-800 group-hover:text-indigo-600 line-clamp-2 leading-tight transition-colors font-inter">{article.title}</h3>
+                          <div className="flex items-center gap-2 mt-2">
+                             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{article.source || "News"}</span>
+                             <span className="text-slate-300">•</span>
+                             <span className="text-[10px] font-medium text-slate-400">{article.date}</span>
+                          </div>
+                       </div>
+                    </div>
                   </a>
                 ))
               ) : (
-                <p className="text-gray-500 italic text-sm">Cargando noticias...</p>
+                <div className="flex flex-col gap-4 animate-pulse">
+                   {[1,2,3,4].map(i => <div key={i} className="h-10 bg-slate-50 rounded-lg"></div>)}
+                </div>
               )}
             </div>
           </div>
 
           {/* Quote Widget */}
-          <div className="bg-indigo-900 p-8 rounded-xl text-white text-center">
-            <h3 className="font-serif text-xl italic mb-4">&quot;La mejor forma de predecir el futuro es crearlo.&quot;</h3>
-            <p className="text-indigo-200 text-sm">- Peter Drucker</p>
+          <div className="bg-slate-950 p-10 rounded-[40px] text-white text-center shadow-2xl shadow-indigo-900/10 relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
+            <h3 className="font-outfit text-2xl font-black mb-6 leading-tight italic">&quot;La mejor forma de predecir el futuro es crearlo.&quot;</h3>
+            <p className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.3em]">- Peter Drucker</p>
           </div>
 
         </aside>
