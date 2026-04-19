@@ -127,5 +127,18 @@ export default async function sitemap() {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...guidePages, ...articlePages, ...categoryPages];
+  // DB News (Original news hosted in our DB, distinct from RSS feed)
+  const dbNews = await prisma.article.findMany({
+    where: { isNews: true },
+    select: { slug: true, updatedAt: true },
+  });
+
+  const newsPages = dbNews.map((news) => ({
+    url: `${BASE_URL}/noticias/${news.slug}`,
+    lastModified: news.updatedAt,
+    changeFrequency: 'daily',
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...guidePages, ...articlePages, ...newsPages, ...categoryPages];
 }
