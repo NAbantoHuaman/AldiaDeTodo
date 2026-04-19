@@ -61,8 +61,8 @@ export default function GuiaNoSQL() {
             El término <strong>NoSQL</strong> (Not Only SQL) agrupa una variedad de tecnologías de bases de datos diseñadas específicamente para modelos de datos flexibles y escalas masivas. Mientras que las bases de datos relacionales priorizan la consistencia absoluta, las NoSQL ofrecen compensaciones inteligentes para ganar en velocidad de lectura/escritura y en facilidad para distribuir los datos geográficamente. En esta guía, desglosaremos las cuatro familias principales de NoSQL y te daremos los criterios técnicos para saber exactamente cuándo abandonar la seguridad de una tabla y saltar al mundo de los documentos o las columnas.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-emerald-400" /> Índice Distribuido
             </h2>
             <nav>

@@ -61,8 +61,8 @@ export default function GuiaArquitectura() {
             En un mundo que cambia cada semana, la habilidad más valiosa de un ingeniero no es conocer el último framework de moda, sino entender los principios fundamentales de diseño que han persistido durante décadas. La <strong>Arquitectura de Software</strong> es el mapa que guía tu desarrollo; es lo que permite que un equipo de 50 personas trabaje en el mismo código sin pisarse los pies y que una aplicación pueda evolucionar, cambiar de base de datos o escalar a millones de usuarios sin necesidad de una reescritura completa. En esta guía profunda, desglosaremos desde los principios SOLID hasta los patrones de diseño esenciales que definen el software de clase mundial en 2026.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-blue-400" /> Índice Estructural
             </h2>
             <nav>

@@ -61,8 +61,8 @@ export default function GuiaInversion() {
             En un mundo de volatilidad criptográfica y mercados bursátiles impredecibles, el sector inmobiliario sigue siendo el puerto seguro preferido de los inversores más exitosos. Sin embargo, en 2026, el éxito inmobiliario no se basa en &quot;comprar y esperar&quot;. Requiere un análisis matemático riguroso, el dominio del apalancamiento financiero y la capacidad de identificar nichos de alta demanda (como el coliving o el alquiler de corta estancia gestionado por IA). Esta guía te enseñará a pensar como un profesional de los bienes raíces, desde la compra de tu primer estudio hasta la gestión de una cartera diversificada que trabaje para ti.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-emerald-400" /> Plan del Inversor
             </h2>
             <nav>

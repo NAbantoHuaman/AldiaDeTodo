@@ -61,8 +61,8 @@ export default function GuiaHacking() {
             En un mundo donde cada dispositivo está conectado y nuestras vidas financieras, personales y profesionales viven en la nube, el riesgo es total. La ciberseguridad ha dejado de ser una preocupación solo para los bancos para convertirse en un pilar de cualquier negocio. El <strong>Hacking Ético</strong> (o Pentesting) es el uso legal de técnicas de hacking para identificar y mitigar vulnerabilidades. En esta guía, desmitificamos el proceso, exploramos las herramientas de las que disponen los profesionales de 2026 y te daremos los pasos para que inicies tu camino como un &quot;White Hat&quot;.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-slate-400" /> Manifiesto Hacker
             </h2>
             <nav>

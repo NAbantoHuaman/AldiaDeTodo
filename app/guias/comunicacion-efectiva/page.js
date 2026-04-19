@@ -61,8 +61,8 @@ export default function GuiaComunicacion() {
             La comunicación no es simplemente intercambiar palabras. Es la capacidad de transferir un pensamiento, una emoción o una visión de una mente a otra con la menor distorsión posible. En el entorno actual, marcado por el trabajo remoto, la inteligencia artificial y la saturación de información, desarrollar una comunicación efectiva es el pilar de cualquier éxito personal y profesional.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-blue-400" /> Hoja de Ruta del Comunicador
             </h2>
             <nav>

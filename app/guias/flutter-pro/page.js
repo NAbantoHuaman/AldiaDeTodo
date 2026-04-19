@@ -61,8 +61,8 @@ export default function GuiaFlutter() {
             El desarrollo móvil siempre ha sido una batalla entre dos mundos: la fidelidad y rendimiento de las aplicaciones nativas (Swift/Kotlin) frente a la velocidad de desarrollo y el alcance de las soluciones web. <strong>Flutter</strong> llegó para destruir esa dicotomía. Al usar su propio motor de renderizado (Impeller) y compilar directamente a código de máquina (ARM o x64), Flutter ofrece un rendimiento de 120 FPS constantes en iOS, Android y PCs. En esta guía, exploraremos cómo pasar de ser un desarrollador junior a un <strong>Flutter Pro</strong>, dominando desde la arquitectura de widgets hasta la gestión de estado de nivel industrial.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-blue-400" /> Plan de Vuelo
             </h2>
             <nav>

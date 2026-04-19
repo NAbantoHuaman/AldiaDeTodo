@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Clock, ArrowRight } from 'lucide-react';
+import { getArticleBaseUrl } from '@/lib/articleHelpers';
 
 const FeaturedArticle = ({ article }) => {
+  const baseUrl = getArticleBaseUrl(article);
+
   return (
-    <Link href={`/articulos/${article.slug}`} className="relative block w-full h-[600px] rounded-[48px] overflow-hidden cursor-pointer group shadow-2xl shadow-slate-900/10">
+    <Link href={`/${baseUrl}/${article.slug}`} className="relative block w-full h-[600px] rounded-[48px] overflow-hidden cursor-pointer group shadow-2xl shadow-slate-900/10">
       {article.image ? (
         <Image
           src={article.image}

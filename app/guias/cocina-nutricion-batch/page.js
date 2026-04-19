@@ -61,8 +61,8 @@ export default function GuiaCocina() {
             Vivimos en la era de la inmediatez, pero la buena nutrición requiere tiempo... o al menos eso nos han hecho creer. El <strong>Batch Cooking</strong> es la técnica de cocinar grandes cantidades de ingredientes base de una sola vez para luego combinarlos en diferentes platos a lo largo de la semana. No se trata solo de hacer mucho de una sola cosa, sino de preparar los &quot;bloques de construcción&quot; biológicos que alimentarán tu cerebro y cuerpo. En esta guía, desglosaremos cómo puedes dominar tu cocina en solo 2-3 horas a la semana, ahorrando dinero, reduciendo el desperdicio y, sobre todo, comiendo mejor de lo que jamás imaginaste.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-orange-400" /> Plan de Cocina
             </h2>
             <nav>

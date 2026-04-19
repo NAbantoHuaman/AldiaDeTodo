@@ -61,8 +61,8 @@ export default function GuiaReact() {
             Desde su lanzamiento original, React ha evolucionado desde una simple librería de UI hasta convertirse en una plataforma de cómputo híbrido. Con la llegada de <strong>React 19</strong> y <strong>Next.js 16</strong>, las fronteras entre el front-end y el back-end se han difuminado definitivamente. Ya no enviamos megabytes de JavaScript al navegador; enviamos resultados de cómputo procesados en el servidor, manteniendo la interactividad fluida que hizo famoso a React. Esta guía desglosa cómo aprovechar estas innovaciones para construir sitios web que cargan instantáneamente y ofrecen una experiencia de usuario sin precedentes.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-indigo-400" /> Índice de Reactivo
             </h2>
             <nav>

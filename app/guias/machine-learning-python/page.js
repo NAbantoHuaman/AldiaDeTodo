@@ -61,8 +61,8 @@ export default function GuiaML() {
             El <strong>Machine Learning</strong> (ML) ha pasado de ser un campo de investigación académica a ser el motor que mueve la economía digital. Desde las recomendaciones de Netflix hasta la detección de fraudes bancarios y el diagnóstico médico asistido. Python se ha consolidado como el lenguaje indiscutible de esta revolución gracias a un ecosistema de librerías que permite a cualquier desarrollador implementar modelos sofisticados con apenas unas líneas de código. En esta guía profunda, aprenderás no solo a entrenar modelos, sino a entender la ciencia de los datos que los sustenta.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-teal-400" /> Ruta del Científico de Datos
             </h2>
             <nav>

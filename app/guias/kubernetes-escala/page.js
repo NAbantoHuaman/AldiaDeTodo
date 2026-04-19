@@ -61,8 +61,8 @@ export default function GuiaKubernetes() {
             La forma en que construimos y desplegamos software ha cambiado para siempre. Atrás quedaron los días de &quot;en mi máquina funciona&quot; y de los servidores manuales configurados con amor. Con <strong>Docker</strong>, empaquetamos nuestra aplicación con todo lo que necesita para correr en cualquier lugar. Pero cuando tienes cientos o miles de contenedores, necesitas un director de orquesta. Ahí es donde entra <strong>Kubernetes</strong> (K8s). Lo que comenzó como un proyecto interno de Google (Borg) hoy domina el 85% de las infraestructuras cloud-native del mundo. En esta guía, aprenderás cómo escalar de un simple contenedor a un cluster global capaz de manejar millones de peticiones por segundo.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-indigo-400" /> Registro de Bordo
             </h2>
             <nav>

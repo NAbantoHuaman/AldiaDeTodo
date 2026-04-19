@@ -99,7 +99,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function ArticleDetailPage({ params }) {
+export default async function NewsDetailPage({ params }) {
   const resolvedParams = await params;
   const { slug } = resolvedParams;
   
@@ -191,6 +191,8 @@ export default async function ArticleDetailPage({ params }) {
       { '@type': 'ListItem', position: 3, name: article.title, item: `https://aldiadetodo.com/${baseUrl}/${article.slug}` }
     ]
   };
+
+
 
   return (
     <article className="min-h-screen bg-white font-inter">
@@ -306,8 +308,6 @@ export default async function ArticleDetailPage({ params }) {
             </div>
         </div>
 
-        {/* Ad removed to improve content-to-ad ratio for AdSense compliance */}
-
         {/* Content / Summary - Premium Editorial Design */}
         <div className="prose prose-lg prose-indigo max-w-none text-slate-800 leading-relaxed space-y-10 font-medium">
             {/* If it's a News Item, show as a "Teaser" with high-end typography */}
@@ -351,11 +351,6 @@ export default async function ArticleDetailPage({ params }) {
                 </p>
             </div>
         )}
-
-        {/* Related Content / Footer Ad */}
-        <div className="mt-20 pt-12 border-t border-slate-100">
-             <AdsBanner slot="5566778899" format="horizontal" label="Más de AldiaDeTodo" />
-        </div>
 
         {/* Navigation */}
         <div className="mt-12 flex justify-center">

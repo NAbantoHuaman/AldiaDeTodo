@@ -61,8 +61,8 @@ export default function GuiaBiohacking() {
             El <strong>Biohacking</strong> es la práctica de gestionar tu propia biología mediante una combinación de cambios en el estilo de vida, nutrición avanzada y tecnología para mejorar tu salud y longevidad. En un mundo donde el estrés, la mala alimentación y la falta de sueño son la norma, los biohackers de 2026 utilizan datos en tiempo real para hackear sus propios sistemas biológicos. Esta guía te llevará a través de los cuatro pilares de la optimización humana: desde la regulación del ritmo circadiano hasta el uso de nootrópicos y terapias de longevidad de vanguardia.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-emerald-400" /> Registro de Salud
             </h2>
             <nav>

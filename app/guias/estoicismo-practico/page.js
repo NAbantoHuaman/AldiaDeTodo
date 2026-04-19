@@ -61,8 +61,8 @@ export default function GuiaEstoicismo() {
             Hace dos mil años, en el corazón de Roma y Grecia, hombres como el emperador Marco Aurelio, el ex-esclavo Epicteto y el consejero Séneca desarrollaron una caja de herramientas psicológicas para enfrentar el caos, la enfermedad y la incertidumbre. En 2026, atrapados entre las notificaciones constantes, la ansiedad por el futuro y la sobrecarga de información, el <strong>Estoicismo</strong> ha renacido no como una reliquia del pasado, sino como el sistema operativo mental definitivo para el ciudadano global. Esta guía te enseñará a aplicar estos principios milenarios para construir una vida de serenidad, propósito y fuerza invulnerable.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-stone-400" /> El Camino de la Virtud
             </h2>
             <nav>

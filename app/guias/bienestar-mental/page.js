@@ -61,8 +61,8 @@ export default function GuiaBienestar() {
             Vivimos en una era de sobreestimulación constante. Notificaciones, expectativas sociales e incertidumbre global compiten por nuestro foco y nuestra estabilidad emocional. El bienestar mental ya no es &quot;no estar triste&quot;; es un proceso activo de mantenimiento biológico y psicológico. Esta guía explora técnicas desde la neurociencia aplicada hasta hábitos milenarios para que retomes el control de tu paz interior.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-rose-400" /> Tópicos de Resiliencia
             </h2>
             <nav>

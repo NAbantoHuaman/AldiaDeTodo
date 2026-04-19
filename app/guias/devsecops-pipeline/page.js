@@ -61,8 +61,8 @@ export default function GuiaDevSecOps() {
             La industria del software ha evolucionado de despliegues trimestrales a miles de despliegues por día. Esta velocidad ha creado un riesgo sin precedentes: ¿cómo aseguramos que cada una de esas actualizaciones no introduzca una vulnerabilidad crítica? La respuesta es <strong>DevSecOps</strong>. Al integrar la seguridad como una responsabilidad compartida y automatizar las pruebas de seguridad dentro del pipeline de <strong>Integración Continua y Despliegue Continuo (CI/CD)</strong>, permitimos que los equipos de ingeniería innoven a la velocidad del rayo con la confianza de una fortaleza digital.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-slate-400" /> Índice de Seguridad
             </h2>
             <nav>

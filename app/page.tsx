@@ -211,7 +211,7 @@ export default async function Home() {
             <div className="space-y-6">
               {latestNews.length > 0 ? (
                 latestNews.map((article) => article && (
-                  <a key={article.id} href={article.link || `/articulos/${article.slug}`} target={article.link ? "_blank" : "_self"} rel="noopener noreferrer"
+                  <a key={article.id} href={article.link || `/noticias/${article.slug}`} target={article.link ? "_blank" : "_self"} rel="noopener noreferrer"
                      className="group block">
                     <div className="flex items-start gap-4">
                        <div className="w-1.5 h-1.5 bg-slate-200 rounded-full mt-2 group-hover:bg-indigo-600 transition-colors"></div>

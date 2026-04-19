@@ -61,8 +61,8 @@ export default function GuiaRust() {
             Históricamente, los desarrolladores tenían que elegir entre el alto rendimiento de C/C++ (pero con el peligro constante de segmentación de fallos y vulnerabilidades de memoria) o la seguridad de lenguajes como Java o Python (a costa de un recolector de basura y un mayor consumo de recursos). Rust ha roto este paradigma. Al introducir el concepto de <strong>Ownership</strong>, Rust garantiza la seguridad de memoria sin necesidad de un recolector de basura (GC), permitiendo un control total sobre el hardware con la ergonomía de un lenguaje de alto nivel.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-orange-400" /> Manual del Rustacean
             </h2>
             <nav>

@@ -4,11 +4,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Calendar, Bookmark, Share2 } from 'lucide-react';
 import ArticleShareButton from './ArticleShareButton';
+import { isNewsContent, getArticleBaseUrl } from '@/lib/articleHelpers';
 
 const ArticleCard = ({ article, variant = "default", priority = false }) => {
+  const baseUrl = getArticleBaseUrl(article);
+
   if (variant === "compact") {
     return (
-      <Link href={`/articulos/${article.slug}`} className="group flex gap-5 items-center p-3 rounded-2xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100">
+      <Link href={`/${baseUrl}/${article.slug}`} className="group flex gap-5 items-center p-3 rounded-2xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100">
         <div className="flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden relative shadow-sm">
           {article.image ? (
             <Image
@@ -38,7 +41,7 @@ const ArticleCard = ({ article, variant = "default", priority = false }) => {
 
   if (variant === "horizontal") {
     return (
-      <Link href={`/articulos/${article.slug}`} className="group flex flex-col md:flex-row gap-8 items-stretch bg-white p-6 rounded-[32px] hover:shadow-2xl hover:shadow-slate-200/50 transition-all border border-slate-100 mb-8">
+      <Link href={`/${baseUrl}/${article.slug}`} className="group flex flex-col md:flex-row gap-8 items-stretch bg-white p-6 rounded-[32px] hover:shadow-2xl hover:shadow-slate-200/50 transition-all border border-slate-100 mb-8">
         <div className="w-full md:w-2/5 aspect-[4/3] rounded-[24px] overflow-hidden relative shadow-inner">
            {article.image ? (
           <Image
@@ -79,7 +82,7 @@ const ArticleCard = ({ article, variant = "default", priority = false }) => {
                    Leer Artículo <ArrowRight className="w-4 h-4" />
                 </div>
                 <div className="flex items-center gap-2">
-                   <ArticleShareButton url={`https://aldiadetodo.com/articulos/${article.slug}`} title={article.title} text={article.excerpt} />
+                   <ArticleShareButton url={`https://aldiadetodo.com/${baseUrl}/${article.slug}`} title={article.title} text={article.excerpt} />
                 </div>
             </div>
         </div>
@@ -88,7 +91,7 @@ const ArticleCard = ({ article, variant = "default", priority = false }) => {
   }
 
   return (
-    <Link href={`/articulos/${article.slug}`} className="group flex flex-col h-full bg-white rounded-[40px] overflow-hidden border border-slate-100 hover:shadow-2xl hover:shadow-slate-200/60 transition-all hover:-translate-y-2">
+    <Link href={`/${baseUrl}/${article.slug}`} className="group flex flex-col h-full bg-white rounded-[40px] overflow-hidden border border-slate-100 hover:shadow-2xl hover:shadow-slate-200/60 transition-all hover:-translate-y-2">
       <div className="h-64 overflow-hidden relative shadow-inner">
         {article.image ? (
           <Image
@@ -126,7 +129,7 @@ const ArticleCard = ({ article, variant = "default", priority = false }) => {
           <div className="flex items-center gap-2 text-indigo-600 text-xs font-black uppercase tracking-widest group-hover:gap-4 transition-all">
             Ver más <ArrowRight className="w-4 h-4" />
           </div>
-          <ArticleShareButton url={`https://aldiadetodo.com/articulos/${article.slug}`} title={article.title} text={article.excerpt} />
+          <ArticleShareButton url={`https://aldiadetodo.com/${baseUrl}/${article.slug}`} title={article.title} text={article.excerpt} />
         </div>
       </div>
     </Link>

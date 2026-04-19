@@ -61,8 +61,8 @@ export default function GuiaEmprendimiento() {
             Iniciar un negocio online hoy es radicalmente distinto a como lo era hace una década. Con la llegada de agentes de IA, herramientas no-code potentes y un mercado global hiperconectado, las barreras de entrada han caído, pero la competencia por la atención ha escalado a niveles sin precedentes. Esta guía te proporcionará las estrategias probadas para construir, validar y escalar tu emprendimiento en la era digital.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-orange-400" /> Hoja de Ruta del Emprendedor
             </h2>
             <nav>

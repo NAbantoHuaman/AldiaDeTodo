@@ -61,8 +61,8 @@ export default function GuiaInteligenciaEmocional() {
             La Inteligencia Emocional (IE) ha pasado de ser un concepto &quot;curioso&quot; a ser la competencia más demandada por las empresas Fortune 500 y la base de una vida personal plena. No se trata de reprimir lo que sentimos, sino de usar la emoción como una fuente de datos valiosa para navegar el mundo. En esta guía, profundizamos en la neurobiología de las emociones y te damos herramientas prácticas para entrenar tu mente.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-amber-400" /> Anatomía de la IE
             </h2>
             <nav>

@@ -61,8 +61,8 @@ export default function GuiaJSModerno() {
             JavaScript ha dejado de ser un simple lenguaje de scripts para convertirse en la plataforma de ejecución universal. Desde el navegador hasta los servidores de borde (Edge Computing) y el Internet de las Cosas (IoT). En esta guía técnica, profundizamos en las características críticas de <strong>ES2026</strong> y cómo están cambiando la forma en que construimos aplicaciones web escalables.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-yellow-400" /> Anatomía de ES2026
             </h2>
             <nav>

@@ -61,8 +61,8 @@ export default function GuiaProgramar() {
             En 2026, la programación se ha convertido en la nueva alfabetización. Ya no se trata solo de personas en sótanos oscuros escribiendo código críptico; se trata de abogados, biólogos, emprendedores y creativos usando la tecnología para amplificar su impacto. En esta guía, desmitificamos el proceso y te daremos las herramientas para que empieces hoy mismo.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-violet-400" /> Índice de Aprendizaje
             </h2>
             <nav>

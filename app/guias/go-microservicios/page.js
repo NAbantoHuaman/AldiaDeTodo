@@ -61,8 +61,8 @@ export default function GuiaGo() {
             Go (o Golang) no intenta ser el lenguaje más complejo o elegante del planeta. Su superpoder reside en la <strong>simplicidad</strong>. Mientras otros lenguajes añaden características infinitas, Go se mantiene minimalista, lo que permite que equipos grandes lean y mantengan el código de los demás sin necesidad de manuales de estilo de 500 páginas. Esta filosofía, combinada con un sistema de concurrencia basado en CSP (Communicating Sequential Processes), lo ha convertido en el lenguaje oficial de la infraestructura moderna: Docker, Kubernetes y Terraform están escritos en Go.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-teal-400" /> Ruta del Gopher
             </h2>
             <nav>

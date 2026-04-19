@@ -61,8 +61,8 @@ export default function GuiaStorytelling() {
             Desde que nos sentábamos alrededor de una fogata en cuevas prehistóricas, las historias han sido nuestro pegamento social y nuestra forma de transmitir conocimiento. En 2026, a pesar de los algoritmos y la inteligencia artificial, el <strong>Storytelling</strong> sigue siendo la competencia más valorada en líderes, emprendedores y creadores de contenido. No se trata de inventar cuentos; se trata de estructurar la verdad de manera que resuene con la psicología humana. En esta guía profunda, aprenderás los secretos de los grandes narradores para convertir datos áridos en viajes emocionales inolvidables.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-rose-400" /> Índice de Narrativa
             </h2>
             <nav>

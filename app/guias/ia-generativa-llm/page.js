@@ -61,8 +61,8 @@ export default function GuiaIA() {
             La Inteligencia Artificial Generativa ha transformado radicalmente lo que es posible construir. Lo que antes requería ejércitos de ingenieros y modelos de aprendizaje automático personalizados, ahora se puede lograr llamando a una API y diseñando el flujo de datos correcto. No obstante, integrar IA de manera profesional va mucho más allá de simplemente enviar un prompt a OpenAI. Requiere entender la economía de los tokens, la seguridad de los datos, la latencia de respuesta y, sobre todo, cómo dar contexto relevante a los modelos para que dejen de alucinar y empiecen a ser útiles de verdad.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-violet-400" /> Índice de Inteligencia
             </h2>
             <nav>

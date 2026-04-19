@@ -61,8 +61,8 @@ export default function GuiaGameDev() {
             El desarrollo de videojuegos ha dejado de ser una disciplina reservada para grandes corporaciones. Hoy, una sola persona con una idea brillante y las herramientas adecuadas puede crear un éxito global. Sin embargo, la primera gran barrera para cualquier aspirante a Game Dev en 2026 es la elección del motor de juego (Game Engine). ¿Vas por la potencia industrial de <strong>Unity</strong> o por la libertad de código abierto de <strong>Godot</strong>? En esta guía, comparamos ambos mundos y te damos el mapa de ruta definitivo para que pases de consumidor a creador.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-amber-400" /> Manual del Desarrollador
             </h2>
             <nav>

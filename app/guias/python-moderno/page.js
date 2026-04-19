@@ -61,8 +61,8 @@ export default function GuiaPythonModerno() {
             Desde la estabilización de los tipos estáticos hasta la explosión de los agentes de IA autónomos, Python ha experimentado una metamorfosis. En esta guía exploramos por qué Python 3.14 es la versión más rápida y segura de la historia, y cómo las nuevas herramientas de gestión de paquetes han eliminado finalmente el &quot;infierno de dependencias&quot; de la década pasada.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-green-400" /> Hoja de Ruta de Aprendizaje
             </h2>
             <nav>

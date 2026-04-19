@@ -61,8 +61,8 @@ export default function GuiaProductividad() {
             En un mundo que puja constantemente por tu atención, ser productivo se ha vuelto un acto de resistencia. En 2026, la diferencia entre quienes alcanzan sus objetivos y quienes se quedan en el intento no es el talento, sino el diseño de sus rutinas. Esta guía disecciona los hábitos atómicos que transforman el potencial en resultados tangibles.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-indigo-400" /> El Framework de Alto Impacto
             </h2>
             <nav>

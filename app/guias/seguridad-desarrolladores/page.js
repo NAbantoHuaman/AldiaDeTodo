@@ -61,8 +61,8 @@ export default function GuiaSeguridadDevs() {
             La ciberseguridad ha pasado de ser un departamento aislado a ser una responsabilidad central del desarrollador. En 2026, con el auge del <strong>DevSecOps</strong>, la seguridad se integra en cada línea de código desde el primer commit. Esta guía explora las fronteras del software seguro, desde la protección de modelos de lenguaje hasta el cifrado post-cuántico.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-blue-400" /> Tópicos Críticos
             </h2>
             <nav>

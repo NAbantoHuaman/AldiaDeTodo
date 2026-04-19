@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { Database, ChevronLeft, BookOpen, CheckCircle, Lightbulb, AlertTriangle, Terminal, Cpu, Search, HelpCircle, ArrowRight, Zap, Layers, Binary } from 'lucide-react';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import RelatedGuides from '@/components/RelatedGuides';
 
 export const metadata = {
   title: "SQL Moderno Avanzado: Dominando PostgreSQL en 2026",
@@ -15,15 +17,49 @@ export const metadata = {
 };
 
 export default function GuiaSQL() {
-  const jsonLd = {
-    '@context': 'https://schema.org', '@type': 'Article',
-    headline: 'SQL Moderno Avanzado: Dominando PostgreSQL en 2026',
-    description: 'Guía técnica profunda sobre el lenguaje SQL, enfocada en PostgreSQL como el estándar de la industria para sistemas relacionales robustos.',
-    author: { '@type': 'Organization', name: 'AldiaDeTodo' },
-    publisher: { '@type': 'Organization', name: 'AldiaDeTodo' },
-    datePublished: '2026-04-18', dateModified: '2026-04-18',
-    mainEntityOfPage: 'https://aldiadetodo.com/guias/sql-avanzado',
-  };
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: 'SQL Moderno Avanzado: Dominando PostgreSQL en 2026',
+      description: 'Guía técnica profunda sobre el lenguaje SQL, enfocada en PostgreSQL como el estándar de la industria para sistemas relacionales robustos.',
+      author: { '@type': 'Organization', name: 'AldiaDeTodo' },
+      publisher: { '@type': 'Organization', name: 'AldiaDeTodo' },
+      datePublished: '2026-04-18',
+      dateModified: '2026-04-18',
+      mainEntityOfPage: 'https://aldiadetodo.com/guias/sql-avanzado',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: '¿SQL o un ORM (como Prisma/Hibernate)?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Los ORM son excelentes para la productividad, pero ocultar el SQL crudo puede llevar a problemas de rendimiento masivos (como el famoso N+1). Un desarrollador experto usa el ORM para las tareas simples, pero escribe SQL manual optimizado para las consultas complejas y críticas.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: '¿Cuándo debo usar Sharding o Particionado?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'El particionado nativo de Postgres es excelente cuando tus tablas superan los cientos de millones de filas. Permite que el motor de búsqueda trabaje solo con la "partición" relevante (ej. por fecha), lo que acelera enormemente las lecturas y el mantenimiento de índices.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: '¿Postgres puede manejar IA y vectores?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Sí, absolutamente. Gracias a la extensión pgvector, Postgres se ha convertido en una de las bases de datos de vectores más populares. Permite guardar embeddings de IA y realizar ránkings por similitud de coseno directamente con SQL.'
+          }
+        }
+      ]
+    }
+  ];
 
   return (
     <article className="min-h-screen bg-white font-inter">
@@ -31,28 +67,29 @@ export default function GuiaSQL() {
 
       {/* Hero Header */}
       <div className="bg-gradient-to-b from-blue-50 to-white py-24 border-b border-blue-100">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
-          <Link href="/guias" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-blue-700 hover:text-blue-900 mb-10 transition-colors bg-white px-4 py-2 rounded-full shadow-sm">
-            <ChevronLeft className="w-4 h-4" /> Todas las Guías
-          </Link>
-          <div className="flex justify-center items-center gap-3 mb-8">
-            <div className="w-16 h-16 bg-blue-600 rounded-3xl flex items-center justify-center shadow-xl shadow-blue-200 rotate-12 border-4 border-white">
-              <Database className="w-8 h-8 text-white" />
+        <div className="container mx-auto px-4 max-w-4xl">
+          <Breadcrumbs title="SQL Moderno Avanzado" />
+          
+          <div className="text-center">
+            <div className="flex justify-center items-center gap-3 mb-8">
+              <div className="w-16 h-16 bg-blue-600 rounded-3xl flex items-center justify-center shadow-xl shadow-blue-200 rotate-12 border-4 border-white">
+                <Database className="w-8 h-8 text-white" />
+              </div>
             </div>
-          </div>
-          <h1 className="text-4xl md:text-6xl font-black text-slate-950 tracking-tight leading-[1.05] font-outfit mb-8">
-             SQL Moderno: <span className="text-blue-600">PostgreSQL</span> a Nivel Maestro
-          </h1>
-          <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-slate-500 font-medium">
-            <span className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-lg"><span className="font-black text-slate-900">Datos</span> Relacional</span>
-            <span className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-lg"><span className="font-black text-slate-900">Lectura:</span> 22 min</span>
-            <span className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-lg"><span className="font-black text-slate-900">Status:</span> Revisado 2026</span>
+            <h1 className="text-4xl md:text-6xl font-black text-slate-950 tracking-tight leading-[1.05] font-outfit mb-8">
+               SQL Moderno: <span className="text-blue-600">PostgreSQL</span> a Nivel Maestro
+            </h1>
+            <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-slate-500 font-medium">
+              <span className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-lg"><span className="font-black text-slate-900">Datos</span> Relacional</span>
+              <span className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-lg"><span className="font-black text-slate-900">Lectura:</span> 22 min</span>
+              <span className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-lg"><span className="font-black text-slate-900">Status:</span> Revisado 2026</span>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="container mx-auto px-4 max-w-3xl py-16">
-        <div className="prose prose-lg prose-slate max-w-none">
+        <div className="prose prose-lg prose-slate max-w-none text-slate-900">
           <p className="text-xl text-slate-600 leading-relaxed mb-12 font-medium italic border-l-4 border-blue-500 pl-6">
             &quot;En un mundo obsesionado con lo nuevo, el SQL sigue siendo la herramienta más potente y estable para gestionar la verdad de los datos. No se trata solo de guardar filas; se trata de diseñar la estructura misma de la realidad de tu plataforma.&quot;
           </p>
@@ -61,8 +98,8 @@ export default function GuiaSQL() {
             A pesar del auge de las bases de datos NoSQL, el modelo relacional y el lenguaje SQL han demostrado ser increíblemente resistentes y evolutivos. En 2026, <strong>PostgreSQL</strong> se ha consolidado como el estándar de oro de la industria debido a su extensibilidad, fiabilidad y soporte para tipos de datos modernos como JSONB y vectores. Esta guía no te enseñará solo a hacer un <code>SELECT</code>; te enseñará a convertirte en un arquitecto de datos capaz de optimizar sistemas que manejan terabytes de información con latencias de milisegundos.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-blue-400" /> Índice de Datos
             </h2>
             <nav>
@@ -94,10 +131,10 @@ export default function GuiaSQL() {
           <h2 id="diseño" className="text-3xl font-black text-slate-950 font-outfit mt-20 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
              <Layers className="w-8 h-8 text-blue-600" /> 1. Arquitectura de Datos: El Arte del Esquema
           </h2>
-          <p>
+          <p className="mb-8">
             Un mal diseño de base de datos perseguirá a tu proyecto por siempre. En 2026, la clave no es seguir ciegamente la 3ª Forma Normal, sino entender cuándo <strong>desnormalizar por rendimiento</strong>.
           </p>
-          <p>
+          <p className="mb-8">
             <strong>Integridad sobre Todo:</strong> Usa las <code>Foreign Keys</code> y restricciones <code>CHECK</code> con orgullo. Es infinitamente más fácil corregir la lógica en la base de datos que arreglar datos corruptos en el futuro. Además, el uso de tipos <code>ENUM</code> y <code>DOMAIN</code> personalizados te permite mover la validación de negocio al nivel más bajo y seguro posible.
           </p>
           <div className="bg-blue-50 border border-blue-100 rounded-3xl p-8 my-10 flex gap-6 items-start shadow-sm">
@@ -113,28 +150,28 @@ export default function GuiaSQL() {
           <h2 id="indices" className="text-3xl font-black text-slate-950 font-outfit mt-20 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
              <Search className="w-8 h-8 text-blue-600" /> 2. Índices: El Acelerador de Consultas
           </h2>
-          <p>
+          <p className="mb-8">
             No tener los índices adecuados es como intentar encontrar un libro en una biblioteca con los ojos vendados. Pero el exceso de índices también es perjudicial (ralentizan las inserciones).
           </p>
-          <p>
+          <p className="mb-8">
             PostgreSQL ofrece tipos de índices que van mucho más allá del B-Tree:
           </p>
-          <ul className="list-disc pl-6 space-y-2 mt-4">
+          <ul className="list-disc pl-6 space-y-2 mt-4 mb-8">
             <li><strong>BRIN:</strong> Para tablas gigantescas ordenadas por tiempo.</li>
             <li><strong>GIN:</strong> Perfecto para búsquedas de texto completo o dentro de arrays/JSONB.</li>
             <li><strong>Hstore:</strong> Para pares clave-valor dinámicos.</li>
           </ul>
-          <p className="mt-4">
+          <p className="mt-4 mb-8">
             Un maestro de SQL sabe que un índice parcial (<code>WHERE active = true</code>) puede ahorrar espacio y tiempo de búsqueda de forma espectacular.
           </p>
 
           <h2 id="window" className="text-3xl font-black text-slate-950 font-outfit mt-20 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
              <Binary className="w-8 h-8 text-blue-600" /> 3. Window Functions: Análisis sin Agregados
           </h2>
-          <p>
+          <p className="mb-8">
             Las <strong>Window Functions</strong> son el superpoder secreto del SQL moderno. Permiten realizar cálculos a través de un conjunto de filas que están relacionadas con la fila actual, sin tener que usar un <code>GROUP BY</code> que colapsa los resultados.
           </p>
-          <p>
+          <p className="mb-8">
             Funciones como <code>ROW_NUMBER()</code>, <code>RANK()</code>, y <code>LAG/LEAD</code> son vitales para generar informes financieros complejos, ránkings de usuarios o análisis temporales (ej. &quot;comparar ventas de este mes con el mes anterior&quot;) en una sola consulta elegante y performante.
           </p>
           <pre className="bg-slate-950 text-blue-300 p-6 rounded-2xl overflow-x-auto text-sm my-8 border border-slate-800">
@@ -152,10 +189,10 @@ FROM ventas_mensuales;`}
           <h2 id="optimizacion" className="text-3xl font-black text-slate-950 font-outfit mt-20 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
              <Zap className="w-8 h-8 text-blue-600" /> 4. El Oráculo del Rendimiento
           </h2>
-          <p>
+          <p className="mb-8">
             Nunca asumas que una consulta es rápida solo porque funciona. En 2026, el uso de <code>EXPLAIN (ANALYZE, BUFFERS)</code> es obligatorio para cualquier desarrollador senior. 
           </p>
-          <p>
+          <p className="mb-8">
              Saber leer un plan de ejecución te permite identificar &quot;Sequential Scans&quot; innecesarios, cuellos de botella en los &quot;Nested Loops&quot; y problemas de memoria en los &quot;Hash Joins&quot;. A menudo, una consulta que tarda 10 segundos puede reducirse a 10 milisegundos simplemente cambiando el orden de un JOIN o añadiendo un índice compuesto.
           </p>
 
@@ -199,6 +236,8 @@ FROM ventas_mensuales;`}
               </p>
             </details>
           </div>
+
+          <RelatedGuides currentSlug="sql-avanzado" />
 
           <div className="bg-blue-600 rounded-[40px] p-10 md:p-16 mt-24 text-white relative shadow-2xl overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>

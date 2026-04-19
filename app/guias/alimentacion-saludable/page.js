@@ -61,8 +61,8 @@ export default function GuiaAlimentacion() {
             Estamos en la era de la nutrición de precisión. Ya no buscamos dietas que prometen milagros en una semana, sino una relación equilibrada con la comida basada en la ciencia nutricional moderna y la sostenibilidad. Esta guía técnica y práctica te enseñará a navegar los macronutrientes, entender tu microbiota y tomar decisiones informadas en un mundo lleno de ultraprocesados.
           </p>
 
-          <div className="bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3 mt-0">
+          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
+            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
               <BookOpen className="w-6 h-6 text-green-400" /> Índice Nutricional
             </h2>
             <nav>
