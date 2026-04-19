@@ -67,17 +67,17 @@ export default async function RootLayout({
     <html lang="es" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <meta name="google-adsense-account" content={AD_CLIENT_ID} />
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT_ID}`}
+          crossOrigin="anonymous"
+        ></script>
       </head>
       <body
         className={`${inter.variable} ${outfit.variable} antialiased font-inter text-slate-900 bg-white min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
         <GoogleAnalytics gaId="G-SNE0YWHNQ4" />
-        <Script
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT_ID}`}
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
         <Navbar />
         <NewsTicker financeData={financeData} sportsData={sportsData} />
         <VerticalsBar />
