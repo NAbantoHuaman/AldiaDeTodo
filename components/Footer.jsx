@@ -86,7 +86,7 @@ const Footer = () => {
           <div className="md:col-span-2 lg:col-span-2">
             <h3 className="text-[10px] font-black text-slate-100 uppercase tracking-[0.3em] mb-8 font-outfit">Ecosistema</h3>
             <ul className="space-y-4">
-              <li><Link href="/guias" className="text-slate-400 hover:text-indigo-400 text-sm transition-colors font-medium">Guías Originales</Link></li>
+              <li><Link href="/guias" className="text-slate-400 hover:text-indigo-400 text-sm transition-colors font-medium">Guías</Link></li>
               <li><Link href="/privacidad" className="text-slate-400 hover:text-indigo-400 text-sm transition-colors font-medium">Privacidad</Link></li>
               <li><Link href="/terms" className="text-slate-400 hover:text-indigo-400 text-sm transition-colors font-medium">Términos</Link></li>
               <li><Link href="/acerca" className="text-slate-400 hover:text-indigo-400 text-sm transition-colors font-medium">Nosotros</Link></li>

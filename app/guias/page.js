@@ -6,10 +6,10 @@ import {
 } from 'lucide-react';
 
 export const metadata = {
-  title: "Guías Originales — AldiaDeTodo",
-  description: "Explora 30 guías completas sobre tecnología, programación, finanzas y bienestar. Contenido original y profundo diseñado para 2026.",
+  title: "Guías — AldiaDeTodo",
+  description: "Explora nuestras guías completas y gratuitas sobre crecimiento personal, productividad, finanzas y tecnología. Aprende paso a paso con los expertos de AldiaDeTodo.",
   openGraph: {
-    title: "Guías Originales — AldiaDeTodo",
+    title: "Guías — AldiaDeTodo",
     description: "Artículos educativos masivos sobre desarrollo, arquitectura, salud y crecimiento personal.",
     url: "https://aldiadetodo.com/guias",
     type: "website",
@@ -107,9 +107,9 @@ const colorClasses = {
 export default function GuiasIndexPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'Guías Originales — AldiaDeTodo',
-    description: 'Colección de guías educativas masivas sobre tecnología, finanzas, bienestar y más.',
+    '@type': 'WebPage',
+    name: 'Guías — AldiaDeTodo',
+    description: 'Explora nuestras guías maestras. Sistema 100% práctico, estructurado y aplicable al instante.',
     url: 'https://aldiadetodo.com/guias',
     publisher: {
       '@type': 'Organization',
