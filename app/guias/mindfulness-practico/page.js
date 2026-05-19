@@ -1,14 +1,14 @@
 import Link from 'next/link';
-import { Brain, ArrowRight, CheckCircle, AlertTriangle, Info } from 'lucide-react';
+import { Brain, ArrowRight, Wind, Timer, Zap, Anchor } from 'lucide-react';
 import AuthorBox from '@/components/AuthorBox';
 
 export const metadata = {
   title: 'Mindfulness para Gente Ocupada | AldiaDeTodo',
   description: 'Técnicas de atención plena que puedes aplicar en 5 minutos al día. Reduce el estrés y mejora tu enfoque sin tener que meditar por horas.',
-  keywords: ['mindfulness', 'estrés', 'salud mental'],
+  keywords: ['mindfulness', 'meditación', 'estrés', 'bienestar', 'salud mental'],
   openGraph: {
-    title: 'Mindfulness para Gente Ocupada',
-    description: 'Técnicas de atención plena que puedes aplicar en 5 minutos al día. Reduce el estrés y mejora tu enfoque sin tener que meditar por horas.',
+    title: 'Mindfulness Práctico para la Vida Diaria',
+    description: 'Reduce la ansiedad en 5 minutos diarios sin tener que aislarte en un monasterio.',
     url: 'https://aldiadetodo.com/guias/mindfulness-practico',
     type: 'article',
   },
@@ -19,98 +19,62 @@ export default function Guia() {
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'Article',
     headline: 'Mindfulness para Gente Ocupada',
-    description: 'Técnicas de atención plena que puedes aplicar en 5 minutos al día. Reduce el estrés y mejora tu enfoque sin tener que meditar por horas.',
+    description: 'Técnicas de atención plena en la vida diaria.',
     author: { '@type': 'Organization', name: 'AldiaDeTodo' },
     publisher: { '@type': 'Organization', name: 'AldiaDeTodo' },
     datePublished: '2026-05-18', dateModified: '2026-05-18',
     mainEntityOfPage: 'https://aldiadetodo.com/guias/mindfulness-practico',
   };
 
-  const sections = [
-  {
-    id: "mitos",
-    title: "Desmintiendo el mindfulness"
-  },
-  {
-    id: "ciencia",
-    title: "La neurociencia de la atención"
-  },
-  {
-    id: "micro",
-    title: "Micro-meditaciones de 2 minutos"
-  },
-  {
-    id: "trabajo",
-    title: "Mindfulness en la oficina"
-  },
-  {
-    id: "rutina",
-    title: "Construyendo el hábito diario"
-  }
-];
-
   return (
     <article className="min-h-screen bg-white font-inter text-slate-900">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <header className="relative bg-slate-950 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_60%)]"></div>
         <div className="container mx-auto max-w-4xl px-4 py-24 md:py-32 relative z-10">
           <div className="flex items-center gap-3 mb-8">
             <span className="bg-teal-500/20 text-teal-400 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-teal-500/20">bienestar</span>
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black font-outfit leading-[0.9] tracking-tight mb-8">
-            Mindfulness para Gente Ocupada<br/><span className="text-teal-400"></span>
+            Mindfulness<br/><span className="text-teal-400">para Gente Ocupada</span>
           </h1>
           <p className="text-xl text-slate-300 max-w-2xl leading-relaxed font-medium">
-            Técnicas de atención plena que puedes aplicar en 5 minutos al día. Reduce el estrés y mejora tu enfoque sin tener que meditar por horas. En esta guía completa y detallada, exploraremos las mejores prácticas y estrategias probadas en la actualidad.
+            No necesitas incienso, ni cruzar las piernas en forma de loto, ni una hora libre. La verdadera atención plena se practica en medio del caos del mundo moderno.
           </p>
         </div>
       </header>
 
       <div className="container mx-auto max-w-4xl px-4 py-16 md:py-24">
-        <nav className="bg-slate-50 rounded-3xl p-8 mb-16 border border-slate-100">
-          <h2 className="text-lg font-black text-slate-900 mb-6 flex items-center gap-3"><Brain className="w-5 h-5 text-teal-500" /> Contenido de la Guía</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {sections.map((s, i) => (
-              <a key={s.id} href={`#${s.id}`} className="flex items-center gap-3 text-sm text-slate-600 hover:text-teal-600 transition-colors group">
-                <span className="w-7 h-7 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-[10px] font-black text-slate-400 group-hover:bg-teal-500 group-hover:text-white transition-all">{i + 1}</span>
-                {s.title}
-              </a>
-            ))}
-          </div>
-        </nav>
-
         <div className="prose prose-lg prose-slate max-w-none">
-          {sections.map((s, idx) => (
-            <section key={s.id} id={s.id} className="mb-12">
-              <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><CheckCircle className="w-7 h-7 text-teal-500" /> {s.title}</h2>
-              <p>Este es el inicio de la sección sobre <strong>{s.title.toLowerCase()}</strong>. Para lograr un entendimiento profundo y exhaustivo de este tema crucial en 2026, es fundamental analizar las bases y los datos que respaldan esta metodología.</p>
-              <p>Históricamente, la mayoría de las personas han abordado este problema de manera ineficiente. Sin embargo, con los avances recientes y los nuevos estudios empíricos, hemos descubierto que aplicar una estrategia estructurada reduce los errores en un margen significativo.</p>
-              <h3>Claves principales a considerar</h3>
-              <p>Cuando aplicas estos conceptos en la vida real, notarás que los resultados no son inmediatos, sino que siguen una curva de crecimiento exponencial. La paciencia es el pilar central.</p>
-              <ul>
-                <li><strong>Consistencia:</strong> Aplicar los principios de forma diaria es mucho más valioso que hacer esfuerzos gigantescos de forma esporádica.</li>
-                <li><strong>Análisis de métricas:</strong> Siempre debes medir tu progreso. Lo que no se mide, no se puede mejorar.</li>
-                <li><strong>Adaptabilidad:</strong> Tu entorno cambiará, por lo que tus sistemas deben ser lo suficientemente flexibles para soportar la fricción diaria.</li>
-              </ul>
-              <p>Al finalizar esta etapa, tendrás un marco de referencia sólido que te permitirá tomar decisiones basadas en principios en lugar de emociones o conjeturas. Y esto, a largo plazo, es lo que separa a los profesionales de los amateurs.</p>
-            </section>
-          ))}
+          <section id="mitos" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><Wind className="w-7 h-7 text-teal-500" /> Desmintiendo la "Mente en Blanco"</h2>
+            <p>El mayor obstáculo para las personas que intentan practicar mindfulness (atención plena) y fracasan es una expectativa completamente irreal instaurada por la cultura pop: la falsa idea de que debes "poner tu mente en blanco" o detener por completo el torrente de tus pensamientos. Si intentas esto, fracasarás a los 10 segundos, te sentirás frustrado y abandonarás diciendo "la meditación no es para mí, soy muy ansioso".</p>
+            <p>Tu cerebro está diseñado evolutivamente para generar pensamientos constantemente. Es su función principal. Intentar detener los pensamientos es como intentar que el corazón deje de latir. El objetivo del mindfulness no es la supresión del pensamiento, sino cambiar la <strong>relación geométrica</strong> que tienes con ellos. Se trata de dar un paso atrás y observar tus pensamientos y emociones como nubes pasando por un cielo, en lugar de creer que tú eres la tormenta.</p>
+            <p>Cuando te sientas a observar tu respiración y tu mente se distrae pensando en la lista de compras (lo cual ocurrirá inevitablemente), el momento de "éxito" no es el tiempo que pasaste sin pensar. El momento mágico y transformador del mindfulness ocurre <strong>exactamente en el instante en que te das cuenta</strong> de que estabas distraído y, con suavidad y sin juzgarte, traes tu atención de vuelta al presente. Esa flexión cognitiva es la flexión de un músculo. Cada vez que te distraes y regresas, estás fortaleciendo tu corteza prefrontal.</p>
+          </section>
+
+          <section id="micro" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><Timer className="w-7 h-7 text-teal-500" /> Micro-meditaciones de Anclaje Rápido</h2>
+            <p>Si eres un profesional ocupado, un padre o estudiante a tiempo completo, separar 45 minutos diarios para meditar es una meta destinada al fracaso por falta de tiempo. La solución neurocientífica son las micro-prácticas de alta frecuencia. Introducir "anclajes" de atención plena de apenas 2 a 3 minutos a lo largo de tu día caótico.</p>
+            <p><strong>El Anclaje Sensorial (Técnica 5-4-3-2-1):</strong> Perfecta para detener un ataque de ansiedad leve o la rumiación antes de una junta importante. Detente e identifica mentalmente: 5 cosas que puedes ver a tu alrededor (texturas, colores, sombras), 4 cosas que puedes sentir físicamente (la textura de tu ropa, la silla en tu espalda), 3 cosas que puedes escuchar (el zumbido del aire acondicionado, autos a lo lejos), 2 cosas que puedes oler, y 1 cosa que puedes saborear. Esto arranca bruscamente tu cerebro de la red neuronal por defecto (rumiación sobre el pasado/futuro) y lo fuerza a procesar datos sensoriales del tiempo real.</p>
+            <p><strong>Respiración de Caja (Box Breathing):</strong> Utilizada por fuerzas de operaciones especiales (Navy SEALs) para calmar el sistema nervioso simpático bajo fuego cruzado. Inhala profundamente por 4 segundos, mantén el aire en tus pulmones por 4 segundos, exhala lentamente por 4 segundos, y mantén tus pulmones vacíos por 4 segundos. Repite este ciclo cuadrado durante 2 minutos. La alteración del ritmo de CO2 en sangre le enviará una señal química inmediata a tu nervio vago de que "estás a salvo", reduciendo radicalmente los picos de cortisol y la taquicardia.</p>
+          </section>
+
+          <section id="trabajo" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><Zap className="w-7 h-7 text-teal-500" /> Integración Asimétrica en el Entorno Laboral</h2>
+            <p>El mindfulness más efectivo no ocurre en un cojín de meditación, sino en los espacios liminales (tiempos de transición) de tu vida ordinaria. Puedes transformar acciones robóticas e inconscientes en ejercicios profundos de presencia sin añadir un solo minuto extra a tu horario.</p>
+            <p><strong>Mindfulness en la Ducha:</strong> La mayoría de nosotros usamos el tiempo de la ducha matutina para planificar discusiones imaginarias con nuestro jefe o estresarnos por la agenda del día. Mañana, comprométete a sentir solo el agua. Observa la temperatura, el sonido del agua golpeando los azulejos, el olor del jabón. Si tu mente viaja a la oficina, tráela de vuelta a la sensación física del agua. Es un reseteo mental impecable para empezar el día.</p>
+            <p><strong>El Semáforo Rojo o la Espera:</strong> En la vida moderna odiamos esperar y sacamos el teléfono instantáneamente al primer segundo de aburrimiento. Usa los semáforos en rojo, la espera del ascensor o la fila del supermercado como tus "campanas de mindfulness". En lugar de hacer scroll, usa esos 45 segundos libres obligados para tomar tres respiraciones profundas y escanear la tensión en tus hombros y mandíbula, soltándola conscientemente. Has convertido una fuente de frustración urbana en un gatillo automático de paz mental.</p>
+          </section>
+
+          <section id="rutina" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><Anchor className="w-7 h-7 text-teal-500" /> El Arte de la Consistencia Imperfecta</h2>
+            <p>Es preferible meditar mal y con muchas distracciones durante 5 minutos todos los días de la semana, que tener una sesión "perfecta" y profunda de 40 minutos una sola vez al mes. La neuroplasticidad (la capacidad de tu cerebro de recablear sus conexiones estructurales para ser más resiliente al estrés) depende estrictamente de la repetición constante y rítmica, no de la intensidad esporádica.</p>
+            <p>Vincula tu micro-práctica a un hábito que ya esté incrustado como una roca en tu rutina de la mañana. Por ejemplo: "Después de encender la cafetera, me sentaré en la silla de la cocina, sin mirar el celular, y seguiré mis inhalaciones hasta que escuche que el café está listo". Esa simple ancla de 4 minutos diarios, acumulada durante meses, te otorgará un "amortiguador" entre un estímulo externo (un correo agresivo o una mala noticia) y tu reacción automática. Ese pequeño espacio de 2 segundos que ganarás entre el estímulo y tu reacción emocional, es el lugar exacto donde reside tu libertad y tu paz interior.</p>
+          </section>
         </div>
 
         <AuthorBox category="bienestar" datePublished="2026" dateReviewed="Mayo 2026" />
-
-        <div className="bg-teal-600 rounded-[40px] p-10 md:p-16 mt-24 text-white relative shadow-2xl overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -mr-40 -mt-40"></div>
-          <div className="relative z-10 text-center md:text-left">
-            <h2 className="text-3xl md:text-5xl font-black font-outfit mt-0 mb-8 text-white">Da el siguiente paso</h2>
-            <p className="text-teal-100 text-xl leading-relaxed mb-12 font-medium max-w-2xl">Esperamos que esta guía te brinde el impulso necesario. Sigue explorando nuestro catálogo para continuar tu aprendizaje.</p>
-            <Link href="/guias" className="bg-white text-teal-600 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-teal-100 transition-all shadow-2xl inline-flex items-center gap-3">
-              Más guías <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </div>
       </div>
     </article>
   );

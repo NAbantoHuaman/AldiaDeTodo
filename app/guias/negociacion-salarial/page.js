@@ -1,14 +1,14 @@
 import Link from 'next/link';
-import { Briefcase, ArrowRight, CheckCircle, AlertTriangle, Info } from 'lucide-react';
+import { Briefcase, ArrowRight, DollarSign, TrendingUp, Handshake, Eye } from 'lucide-react';
 import AuthorBox from '@/components/AuthorBox';
 
 export const metadata = {
-  title: 'Negociación Salarial: Cómo Cobrar lo que Vales | AldiaDeTodo',
+  title: 'Negociación Salarial: Cobra lo que Vales | AldiaDeTodo',
   description: 'Estrategias probadas para negociar tu salario, aumentos y beneficios. Supera el síndrome del impostor y usa datos para respaldar tu valor.',
-  keywords: ['carrera', 'dinero', 'negociación'],
+  keywords: ['salario', 'negociación', 'finanzas', 'carrera', 'aumento'],
   openGraph: {
-    title: 'Negociación Salarial: Cómo Cobrar lo que Vales',
-    description: 'Estrategias probadas para negociar tu salario, aumentos y beneficios. Supera el síndrome del impostor y usa datos para respaldar tu valor.',
+    title: 'Negociación Salarial: Cobra lo que Vales',
+    description: 'Guía táctica para negociar un aumento de sueldo o un salario inicial.',
     url: 'https://aldiadetodo.com/guias/negociacion-salarial',
     type: 'article',
   },
@@ -18,99 +18,64 @@ export const metadata = {
 export default function Guia() {
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'Article',
-    headline: 'Negociación Salarial: Cómo Cobrar lo que Vales',
-    description: 'Estrategias probadas para negociar tu salario, aumentos y beneficios. Supera el síndrome del impostor y usa datos para respaldar tu valor.',
+    headline: 'Negociación Salarial: Cobra lo que Vales',
+    description: 'Guía táctica para negociar un aumento de sueldo.',
     author: { '@type': 'Organization', name: 'AldiaDeTodo' },
     publisher: { '@type': 'Organization', name: 'AldiaDeTodo' },
     datePublished: '2026-05-18', dateModified: '2026-05-18',
     mainEntityOfPage: 'https://aldiadetodo.com/guias/negociacion-salarial',
   };
 
-  const sections = [
-  {
-    id: "mindset",
-    title: "El mindset del negociador"
-  },
-  {
-    id: "investigacion",
-    title: "Investigación de mercado salarial"
-  },
-  {
-    id: "timing",
-    title: "El momento perfecto para pedir"
-  },
-  {
-    id: "guiones",
-    title: "Guiones exactos qué decir"
-  },
-  {
-    id: "beneficios",
-    title: "Negociando más allá del dinero"
-  }
-];
-
   return (
     <article className="min-h-screen bg-white font-inter text-slate-900">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <header className="relative bg-slate-950 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_60%)]"></div>
         <div className="container mx-auto max-w-4xl px-4 py-24 md:py-32 relative z-10">
           <div className="flex items-center gap-3 mb-8">
             <span className="bg-emerald-500/20 text-emerald-400 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-500/20">finanzas</span>
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black font-outfit leading-[0.9] tracking-tight mb-8">
-            Negociación Salarial<br/><span className="text-emerald-400">Cómo Cobrar lo que Vales</span>
+            Negociación Salarial<br/><span className="text-emerald-400">Cobra lo que Vales</span>
           </h1>
           <p className="text-xl text-slate-300 max-w-2xl leading-relaxed font-medium">
-            Estrategias probadas para negociar tu salario, aumentos y beneficios. Supera el síndrome del impostor y usa datos para respaldar tu valor. En esta guía completa y detallada, exploraremos las mejores prácticas y estrategias probadas en la actualidad.
+            El miedo a negociar puede costarte cientos de miles de dólares a lo largo de tu carrera. Aprende a abordar la compensación con confianza, datos y estrategia.
           </p>
         </div>
       </header>
 
       <div className="container mx-auto max-w-4xl px-4 py-16 md:py-24">
-        <nav className="bg-slate-50 rounded-3xl p-8 mb-16 border border-slate-100">
-          <h2 className="text-lg font-black text-slate-900 mb-6 flex items-center gap-3"><Briefcase className="w-5 h-5 text-emerald-500" /> Contenido de la Guía</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {sections.map((s, i) => (
-              <a key={s.id} href={`#${s.id}`} className="flex items-center gap-3 text-sm text-slate-600 hover:text-emerald-600 transition-colors group">
-                <span className="w-7 h-7 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-[10px] font-black text-slate-400 group-hover:bg-emerald-500 group-hover:text-white transition-all">{i + 1}</span>
-                {s.title}
-              </a>
-            ))}
-          </div>
-        </nav>
-
         <div className="prose prose-lg prose-slate max-w-none">
-          {sections.map((s, idx) => (
-            <section key={s.id} id={s.id} className="mb-12">
-              <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><CheckCircle className="w-7 h-7 text-emerald-500" /> {s.title}</h2>
-              <p>Este es el inicio de la sección sobre <strong>{s.title.toLowerCase()}</strong>. Para lograr un entendimiento profundo y exhaustivo de este tema crucial en 2026, es fundamental analizar las bases y los datos que respaldan esta metodología.</p>
-              <p>Históricamente, la mayoría de las personas han abordado este problema de manera ineficiente. Sin embargo, con los avances recientes y los nuevos estudios empíricos, hemos descubierto que aplicar una estrategia estructurada reduce los errores en un margen significativo.</p>
-              <h3>Claves principales a considerar</h3>
-              <p>Cuando aplicas estos conceptos en la vida real, notarás que los resultados no son inmediatos, sino que siguen una curva de crecimiento exponencial. La paciencia es el pilar central.</p>
-              <ul>
-                <li><strong>Consistencia:</strong> Aplicar los principios de forma diaria es mucho más valioso que hacer esfuerzos gigantescos de forma esporádica.</li>
-                <li><strong>Análisis de métricas:</strong> Siempre debes medir tu progreso. Lo que no se mide, no se puede mejorar.</li>
-                <li><strong>Adaptabilidad:</strong> Tu entorno cambiará, por lo que tus sistemas deben ser lo suficientemente flexibles para soportar la fricción diaria.</li>
-              </ul>
-              <p>Al finalizar esta etapa, tendrás un marco de referencia sólido que te permitirá tomar decisiones basadas en principios en lugar de emociones o conjeturas. Y esto, a largo plazo, es lo que separa a los profesionales de los amateurs.</p>
-            </section>
-          ))}
+          <section id="mindset" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><Eye className="w-7 h-7 text-emerald-500" /> El Mindset del Negociador</h2>
+            <p>La razón principal por la que los profesionales no negocian su salario inicial o no piden aumentos no es la falta de habilidades o resultados; es una barrera psicológica profunda. Sentimos que pedir más dinero es "de mala educación", nos da terror que nos retiren la oferta o sufrimos del síndrome del impostor. Romper estas falsas creencias es el paso cero.</p>
+            <p>Primero, comprende que para Recursos Humanos y gerencia, la negociación es un trámite estrictamente de negocios, no un insulto personal. Las empresas esperan que negocies. De hecho, en roles gerenciales, no negociar puede hacerte lucir débil o inexperto. Ellos tienen un presupuesto y una banda salarial aprobada, y siempre, invariablemente, su primera oferta estará en la parte media-baja de esa banda para tener margen de maniobra.</p>
+            <p>Si no negocias un aumento inicial del 10%, el impacto del interés compuesto a lo largo de 30 años de vida laboral (sobre aportes a jubilación, bonos basados en porcentajes y futuros aumentos) puede resultar en una pérdida neta superior al medio millón de dólares. Negociar no es ser codicioso, es ser financieramente responsable contigo y con tu futuro.</p>
+          </section>
+
+          <section id="investigacion" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><DollarSign className="w-7 h-7 text-emerald-500" /> Investigación de Mercado Salarial</h2>
+            <p>La negociación no se gana en la mesa de reuniones, se gana en la preparación semanas antes de sentarte a hablar. Jamás debes entrar a una negociación diciendo "creo que merezco más porque trabajo duro" o "necesito más dinero porque la inflación ha subido". A la empresa no le importan tus necesidades personales, le importa el valor de mercado de tus habilidades.</p>
+            <p>Tu objetivo es establecer un "caso de negocio" irrefutable. Usa herramientas como Glassdoor, Payscale, encuestas salariales de reclutadores locales y plataformas como LinkedIn Salary para determinar la banda salarial exacta para tu cargo, en tu ciudad, con tus años de experiencia. Esa es la data dura.</p>
+            <p>Construye un portafolio de victorias o "Brag Document" (Documento de Alarde). Documenta con números exactos cómo tus acciones le ahorraron dinero a la empresa, aumentaron los ingresos, o mejoraron procesos críticos durante el último año. "Reduje los tiempos de carga del servidor en un 40%, ahorrando $5k mensuales en infraestructura" es un argumento blindado. "He sido un buen jugador de equipo" no lo es.</p>
+          </section>
+
+          <section id="guiones" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><Handshake className="w-7 h-7 text-emerald-500" /> Estrategias y Guiones Exactos</h2>
+            <p>Cuando llegue el momento de la conversación (idealmente 3 a 4 meses antes del ciclo oficial de revisión de desempeño y presupuestos de la empresa, no el mismo día que te entregan tu evaluación), el anclaje y el tono lo son todo. Mantén un tono colaborativo, no combativo. No es "tú contra tu jefe", es "tú y tu jefe resolviendo cómo alinear tu compensación con tu impacto".</p>
+            <p><strong>Si te preguntan tu expectativa salarial antes de darte una oferta:</strong> Evita ser el primero en decir un número. El que da el primer número pierde apalancamiento. Di: <em>"Estoy más enfocado en encontrar un rol donde pueda aportar un gran impacto. Estoy seguro de que si hay un buen encaje mutuo, podremos llegar a una compensación justa y competitiva. ¿Cuál es el presupuesto aprobado para este rol?"</em></p>
+            <p><strong>Para pedir un aumento en tu rol actual:</strong> <em>"Durante los últimos 12 meses, he liderado los proyectos X e Y que resultaron en un incremento del 20% en ventas. Basado en este impacto continuo y en los datos actuales de mercado para roles con este nivel de responsabilidad en nuestra industria, me gustaría ajustar mi salario base a [X cantidad]. ¿Cómo podemos trabajar juntos para llegar a este objetivo?"</em></p>
+          </section>
+
+          <section id="beneficios" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><TrendingUp className="w-7 h-7 text-emerald-500" /> Negociando más allá del dinero</h2>
+            <p>A veces, el presupuesto de la empresa está genuinamente congelado o tienen un tope estricto e inamovible para tu rol (banda salarial máxima). Si recibes un "No" firme al aumento del salario base, la negociación no ha terminado; acaba de pivotar hacia la compensación total.</p>
+            <p>Existen elementos altamente valiosos para ti que tienen un costo marginal cero o muy bajo para la empresa. Prepárate para pivotar a tu "Plan B". Puedes pedir días adicionales de vacaciones pagadas, un presupuesto anual para conferencias y educación profesional, mejoras en la cobertura de tu seguro médico, o flexibilidad garantizada (como trabajar remoto permanentemente 3 días a la semana).</p>
+            <p>Otra táctica poderosa frente a un "no" por falta de presupuesto es pedir una revisión adelantada condicionada. Di: <em>"Entiendo las restricciones presupuestarias actuales. Si logro alcanzar los KPIs X, Y y Z durante los próximos 6 meses, ¿podemos firmar por escrito un compromiso para revisar mi banda salarial en ese momento en lugar de esperar al próximo año?"</em> Nunca te levantes de la mesa con las manos completamente vacías.</p>
+          </section>
         </div>
 
         <AuthorBox category="finanzas" datePublished="2026" dateReviewed="Mayo 2026" />
-
-        <div className="bg-emerald-600 rounded-[40px] p-10 md:p-16 mt-24 text-white relative shadow-2xl overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -mr-40 -mt-40"></div>
-          <div className="relative z-10 text-center md:text-left">
-            <h2 className="text-3xl md:text-5xl font-black font-outfit mt-0 mb-8 text-white">Da el siguiente paso</h2>
-            <p className="text-emerald-100 text-xl leading-relaxed mb-12 font-medium max-w-2xl">Esperamos que esta guía te brinde el impulso necesario. Sigue explorando nuestro catálogo para continuar tu aprendizaje.</p>
-            <Link href="/guias" className="bg-white text-emerald-600 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-emerald-100 transition-all shadow-2xl inline-flex items-center gap-3">
-              Más guías <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </div>
       </div>
     </article>
   );

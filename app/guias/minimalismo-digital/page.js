@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import { Smartphone, ArrowRight, CheckCircle, AlertTriangle, Info } from 'lucide-react';
+import { Smartphone, ArrowRight, CheckCircle, Brain, Shield, Clock } from 'lucide-react';
 import AuthorBox from '@/components/AuthorBox';
 
 export const metadata = {
   title: 'Minimalismo Digital: Recupera tu Atención | AldiaDeTodo',
   description: 'Guía práctica para implementar el minimalismo digital. Elimina distracciones, recupera horas de tu día y construye una relación intencional con la tecnología.',
-  keywords: ['productividad', 'bienestar', 'atención'],
+  keywords: ['productividad', 'bienestar', 'atención', 'minimalismo digital'],
   openGraph: {
     title: 'Minimalismo Digital: Recupera tu Atención',
     description: 'Guía práctica para implementar el minimalismo digital. Elimina distracciones, recupera horas de tu día y construye una relación intencional con la tecnología.',
@@ -19,35 +19,12 @@ export default function Guia() {
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'Article',
     headline: 'Minimalismo Digital: Recupera tu Atención',
-    description: 'Guía práctica para implementar el minimalismo digital. Elimina distracciones, recupera horas de tu día y construye una relación intencional con la tecnología.',
+    description: 'Guía práctica para implementar el minimalismo digital.',
     author: { '@type': 'Organization', name: 'AldiaDeTodo' },
     publisher: { '@type': 'Organization', name: 'AldiaDeTodo' },
     datePublished: '2026-05-18', dateModified: '2026-05-18',
     mainEntityOfPage: 'https://aldiadetodo.com/guias/minimalismo-digital',
   };
-
-  const sections = [
-  {
-    id: "que-es",
-    title: "¿Qué es el Minimalismo Digital?"
-  },
-  {
-    id: "auditoria",
-    title: "Auditoría de tu vida digital"
-  },
-  {
-    id: "limpieza",
-    title: "El detox de 30 días"
-  },
-  {
-    id: "reintroduccion",
-    title: "Reintroducción intencional"
-  },
-  {
-    id: "sistemas",
-    title: "Sistemas a prueba de distracciones"
-  }
-];
 
   return (
     <article className="min-h-screen bg-white font-inter text-slate-900">
@@ -63,51 +40,54 @@ export default function Guia() {
             Minimalismo Digital<br/><span className="text-slate-400">Recupera tu Atención</span>
           </h1>
           <p className="text-xl text-slate-300 max-w-2xl leading-relaxed font-medium">
-            Guía práctica para implementar el minimalismo digital. Elimina distracciones, recupera horas de tu día y construye una relación intencional con la tecnología. En esta guía completa y detallada, exploraremos las mejores prácticas y estrategias probadas en la actualidad.
+            En un mundo diseñado para secuestrar tu atención, el minimalismo digital no es un rechazo a la tecnología, sino una filosofía de uso intencional. Recupera tu tiempo y claridad mental.
           </p>
         </div>
       </header>
 
       <div className="container mx-auto max-w-4xl px-4 py-16 md:py-24">
-        <nav className="bg-slate-50 rounded-3xl p-8 mb-16 border border-slate-100">
-          <h2 className="text-lg font-black text-slate-900 mb-6 flex items-center gap-3"><Smartphone className="w-5 h-5 text-slate-500" /> Contenido de la Guía</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {sections.map((s, i) => (
-              <a key={s.id} href={`#${s.id}`} className="flex items-center gap-3 text-sm text-slate-600 hover:text-slate-600 transition-colors group">
-                <span className="w-7 h-7 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-[10px] font-black text-slate-400 group-hover:bg-slate-500 group-hover:text-white transition-all">{i + 1}</span>
-                {s.title}
-              </a>
-            ))}
-          </div>
-        </nav>
-
         <div className="prose prose-lg prose-slate max-w-none">
-          {sections.map((s, idx) => (
-            <section key={s.id} id={s.id} className="mb-12">
-              <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><CheckCircle className="w-7 h-7 text-slate-500" /> {s.title}</h2>
-              <p>Este es el inicio de la sección sobre <strong>{s.title.toLowerCase()}</strong>. Para lograr un entendimiento profundo y exhaustivo de este tema crucial en 2026, es fundamental analizar las bases y los datos que respaldan esta metodología.</p>
-              <p>Históricamente, la mayoría de las personas han abordado este problema de manera ineficiente. Sin embargo, con los avances recientes y los nuevos estudios empíricos, hemos descubierto que aplicar una estrategia estructurada reduce los errores en un margen significativo.</p>
-              <h3>Claves principales a considerar</h3>
-              <p>Cuando aplicas estos conceptos en la vida real, notarás que los resultados no son inmediatos, sino que siguen una curva de crecimiento exponencial. La paciencia es el pilar central.</p>
-              <ul>
-                <li><strong>Consistencia:</strong> Aplicar los principios de forma diaria es mucho más valioso que hacer esfuerzos gigantescos de forma esporádica.</li>
-                <li><strong>Análisis de métricas:</strong> Siempre debes medir tu progreso. Lo que no se mide, no se puede mejorar.</li>
-                <li><strong>Adaptabilidad:</strong> Tu entorno cambiará, por lo que tus sistemas deben ser lo suficientemente flexibles para soportar la fricción diaria.</li>
-              </ul>
-              <p>Al finalizar esta etapa, tendrás un marco de referencia sólido que te permitirá tomar decisiones basadas en principios en lugar de emociones o conjeturas. Y esto, a largo plazo, es lo que separa a los profesionales de los amateurs.</p>
-            </section>
-          ))}
+          <section id="que-es" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><Brain className="w-7 h-7 text-slate-500" /> ¿Qué es el Minimalismo Digital?</h2>
+            <p>Acuñado por el autor Cal Newport, el minimalismo digital es una filosofía de uso tecnológico en la cual enfocas tu tiempo en línea en un número pequeño y cuidadosamente seleccionado de actividades óptimas que apoyan fuertemente las cosas que valoras, y felizmente te pierdes de todo lo demás.</p>
+            <p>No se trata de tirar tu smartphone a la basura o mudarte a una cabaña en el bosque. Se trata de pasar de ser un consumidor pasivo, manipulado por algoritmos diseñados para la adicción, a ser un usuario activo y soberano de tus herramientas digitales. El objetivo es que la tecnología trabaje para ti, no que tú trabajes para la tecnología proporcionando tu atención como producto.</p>
+            <p>La economía de la atención gasta miles de millones de dólares al año empleando a los mejores ingenieros y psicólogos del comportamiento para mantener tus ojos en la pantalla. Frente a esta asimetría de poder, los "tips" y "trucos" (como desactivar las notificaciones) son insuficientes. Necesitas una filosofía robusta de resistencia.</p>
+          </section>
+
+          <section id="auditoria" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><CheckCircle className="w-7 h-7 text-slate-500" /> Auditoría de tu vida digital</h2>
+            <p>El primer paso práctico es entender exactamente dónde estás perdiendo tu tiempo. La mayoría de las personas subestiman masivamente su tiempo en pantalla. Los datos revelan que el adulto promedio en 2026 pasa más de 6.5 horas diarias interactuando con pantallas fuera de sus obligaciones laborales estrictas.</p>
+            <p>Para realizar una auditoría honesta, activa la función de "Tiempo en Pantalla" (iOS) o "Bienestar Digital" (Android) y obsérvate durante una semana sin juzgarte ni intentar cambiar tu comportamiento. Anota los picos de uso. ¿Cuándo abres las redes sociales? Generalmente es en momentos de aburrimiento leve, ansiedad o transición (esperando en una fila, en el baño, en el transporte).</p>
+            <p>Identifica las aplicaciones que son "tecnologías opcionales". Si tu trabajo requiere usar WhatsApp, eso no es opcional. Pero TikTok, Instagram, Twitter y los videojuegos móviles son tecnologías opcionales. El minimalismo digital se enfoca en someter estas tecnologías opcionales a un escrutinio riguroso.</p>
+          </section>
+
+          <section id="limpieza" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><Shield className="w-7 h-7 text-slate-500" /> El detox de 30 días</h2>
+            <p>La estrategia central del minimalismo digital es el "declutter" o la limpieza digital de 30 días. No puedes hacer cambios sutiles y esperar resultados radicales. Necesitas un reseteo de tu sistema de dopamina. Durante 30 días, eliminarás absolutamente todas las tecnologías opcionales de tu vida.</p>
+            <p>Desinstala las redes sociales de tu teléfono (puedes usarlas en el navegador de tu PC si es de vida o muerte). Elimina las aplicaciones de noticias y entretenimiento infinito. Este mes será incómodo al principio. Sentirás el impulso fantasma de agarrar tu teléfono docenas de veces al día solo para encontrar una pantalla vacía. Ese es el síndrome de abstinencia de la dopamina, y es la prueba empírica de que necesitabas este detox.</p>
+            <p>El propósito de estos 30 días no es solo el sufrimiento estoico, sino la <strong>exploración activa</strong>. Usa este tiempo recuperado (literalmente docenas de horas a la semana) para reconectar con actividades de alto valor en el mundo físico: lee libros enteros, aprende un instrumento, practica un deporte, repara cosas en casa o ten conversaciones en persona sin mirar una pantalla.</p>
+          </section>
+
+          <section id="reintroduccion" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><Clock className="w-7 h-7 text-slate-500" /> Reintroducción intencional</h2>
+            <p>Después de los 30 días, tu cerebro estará re-calibrado. Ahora viene el paso crítico: la reintroducción. No vuelvas a instalar todo. Por cada herramienta tecnológica opcional que consideres traer de vuelta a tu vida, debes hacerle pasar una prueba brutal. Pregúntate:</p>
+            <ul className="list-disc pl-6 space-y-2 mb-6">
+              <li>¿Esta herramienta apoya directamente algo que valoro profundamente?</li>
+              <li>¿Es esta herramienta la <em>mejor</em> forma de apoyar este valor?</li>
+              <li>¿Cómo y cuándo exactamente voy a usar esta herramienta para maximizar su valor y minimizar sus daños?</li>
+            </ul>
+            <p>Por ejemplo, si valoras "mantener el contacto con familiares lejanos", Facebook apoya ese valor. ¿Pero es la mejor forma? No. Una videollamada semanal o un grupo de chat familiar exclusivo es superior y menos propenso a la distracción algorítmica.</p>
+          </section>
         </div>
 
         <AuthorBox category="crecimiento" datePublished="2026" dateReviewed="Mayo 2026" />
 
-        <div className="bg-slate-600 rounded-[40px] p-10 md:p-16 mt-24 text-white relative shadow-2xl overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -mr-40 -mt-40"></div>
+        <div className="bg-slate-900 rounded-[40px] p-10 md:p-16 mt-24 text-white relative shadow-2xl overflow-hidden">
           <div className="relative z-10 text-center md:text-left">
-            <h2 className="text-3xl md:text-5xl font-black font-outfit mt-0 mb-8 text-white">Da el siguiente paso</h2>
-            <p className="text-slate-100 text-xl leading-relaxed mb-12 font-medium max-w-2xl">Esperamos que esta guía te brinde el impulso necesario. Sigue explorando nuestro catálogo para continuar tu aprendizaje.</p>
-            <Link href="/guias" className="bg-white text-slate-600 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-slate-100 transition-all shadow-2xl inline-flex items-center gap-3">
-              Más guías <ArrowRight className="w-5 h-5" />
+            <h2 className="text-3xl md:text-5xl font-black font-outfit mt-0 mb-8 text-white">Domina tu tecnología</h2>
+            <p className="text-slate-300 text-xl leading-relaxed mb-12 font-medium max-w-2xl">Descubre más estrategias para proteger tu tiempo y enfoque en nuestras otras guías de productividad.</p>
+            <Link href="/guias" className="bg-white text-slate-900 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-slate-200 transition-all inline-flex items-center gap-3">
+              Ver todas las guías <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </div>

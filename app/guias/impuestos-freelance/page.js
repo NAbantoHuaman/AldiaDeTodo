@@ -1,14 +1,14 @@
 import Link from 'next/link';
-import { Calculator, ArrowRight, CheckCircle, AlertTriangle, Info } from 'lucide-react';
+import { Calculator, ArrowRight, FileText, PiggyBank, Landmark, ShieldCheck } from 'lucide-react';
 import AuthorBox from '@/components/AuthorBox';
 
 export const metadata = {
   title: 'Gestión de Impuestos para Freelancers | AldiaDeTodo',
-  description: 'Deja de perder dinero en impuestos. Guía completa para profesionales independientes sobre deducciones, facturación y organización fiscal.',
-  keywords: ['impuestos', 'finanzas', 'freelance'],
+  description: 'Deja de perder dinero en multas y aprende a gestionar tus impuestos como profesional independiente. Deducciones, facturación y legalidad fiscal.',
+  keywords: ['impuestos', 'freelance', 'finanzas', 'autónomo', 'deducciones', 'contabilidad'],
   openGraph: {
-    title: 'Gestión de Impuestos para Freelancers',
-    description: 'Deja de perder dinero en impuestos. Guía completa para profesionales independientes sobre deducciones, facturación y organización fiscal.',
+    title: 'Gestión de Impuestos para Trabajadores Independientes (Freelancers)',
+    description: 'Guía de supervivencia fiscal y contabilidad para no fracasar como independiente.',
     url: 'https://aldiadetodo.com/guias/impuestos-freelance',
     type: 'article',
   },
@@ -19,98 +19,58 @@ export default function Guia() {
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'Article',
     headline: 'Gestión de Impuestos para Freelancers',
-    description: 'Deja de perder dinero en impuestos. Guía completa para profesionales independientes sobre deducciones, facturación y organización fiscal.',
+    description: 'Guía de finanzas e impuestos para autónomos e independientes.',
     author: { '@type': 'Organization', name: 'AldiaDeTodo' },
     publisher: { '@type': 'Organization', name: 'AldiaDeTodo' },
     datePublished: '2026-05-18', dateModified: '2026-05-18',
     mainEntityOfPage: 'https://aldiadetodo.com/guias/impuestos-freelance',
   };
 
-  const sections = [
-  {
-    id: "terror",
-    title: "Venciendo el terror fiscal"
-  },
-  {
-    id: "estructura",
-    title: "Estructuras legales para independientes"
-  },
-  {
-    id: "deducciones",
-    title: "Maximizando tus deducciones"
-  },
-  {
-    id: "registro",
-    title: "Sistemas de registro impecables"
-  },
-  {
-    id: "calendario",
-    title: "Tu calendario fiscal anual"
-  }
-];
-
   return (
     <article className="min-h-screen bg-white font-inter text-slate-900">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <header className="relative bg-slate-950 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_60%)]"></div>
         <div className="container mx-auto max-w-4xl px-4 py-24 md:py-32 relative z-10">
           <div className="flex items-center gap-3 mb-8">
             <span className="bg-orange-500/20 text-orange-400 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-orange-500/20">finanzas</span>
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black font-outfit leading-[0.9] tracking-tight mb-8">
-            Gestión de Impuestos para Freelancers<br/><span className="text-orange-400"></span>
+            Impuestos y Finanzas<br/><span className="text-orange-400">para Freelancers</span>
           </h1>
           <p className="text-xl text-slate-300 max-w-2xl leading-relaxed font-medium">
-            Deja de perder dinero en impuestos. Guía completa para profesionales independientes sobre deducciones, facturación y organización fiscal. En esta guía completa y detallada, exploraremos las mejores prácticas y estrategias probadas en la actualidad.
+            Ser tu propio jefe significa ser tu propio departamento de contabilidad. Aprende las bases para organizar tus finanzas empresariales, maximizar deducciones legales y dormir tranquilo.
           </p>
         </div>
       </header>
 
       <div className="container mx-auto max-w-4xl px-4 py-16 md:py-24">
-        <nav className="bg-slate-50 rounded-3xl p-8 mb-16 border border-slate-100">
-          <h2 className="text-lg font-black text-slate-900 mb-6 flex items-center gap-3"><Calculator className="w-5 h-5 text-orange-500" /> Contenido de la Guía</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {sections.map((s, i) => (
-              <a key={s.id} href={`#${s.id}`} className="flex items-center gap-3 text-sm text-slate-600 hover:text-orange-600 transition-colors group">
-                <span className="w-7 h-7 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-[10px] font-black text-slate-400 group-hover:bg-orange-500 group-hover:text-white transition-all">{i + 1}</span>
-                {s.title}
-              </a>
-            ))}
-          </div>
-        </nav>
-
         <div className="prose prose-lg prose-slate max-w-none">
-          {sections.map((s, idx) => (
-            <section key={s.id} id={s.id} className="mb-12">
-              <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><CheckCircle className="w-7 h-7 text-orange-500" /> {s.title}</h2>
-              <p>Este es el inicio de la sección sobre <strong>{s.title.toLowerCase()}</strong>. Para lograr un entendimiento profundo y exhaustivo de este tema crucial en 2026, es fundamental analizar las bases y los datos que respaldan esta metodología.</p>
-              <p>Históricamente, la mayoría de las personas han abordado este problema de manera ineficiente. Sin embargo, con los avances recientes y los nuevos estudios empíricos, hemos descubierto que aplicar una estrategia estructurada reduce los errores en un margen significativo.</p>
-              <h3>Claves principales a considerar</h3>
-              <p>Cuando aplicas estos conceptos en la vida real, notarás que los resultados no son inmediatos, sino que siguen una curva de crecimiento exponencial. La paciencia es el pilar central.</p>
-              <ul>
-                <li><strong>Consistencia:</strong> Aplicar los principios de forma diaria es mucho más valioso que hacer esfuerzos gigantescos de forma esporádica.</li>
-                <li><strong>Análisis de métricas:</strong> Siempre debes medir tu progreso. Lo que no se mide, no se puede mejorar.</li>
-                <li><strong>Adaptabilidad:</strong> Tu entorno cambiará, por lo que tus sistemas deben ser lo suficientemente flexibles para soportar la fricción diaria.</li>
-              </ul>
-              <p>Al finalizar esta etapa, tendrás un marco de referencia sólido que te permitirá tomar decisiones basadas en principios en lugar de emociones o conjeturas. Y esto, a largo plazo, es lo que separa a los profesionales de los amateurs.</p>
-            </section>
-          ))}
+          <section id="terror" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><ShieldCheck className="w-7 h-7 text-orange-500" /> Venciendo el Terror Fiscal de Independiente</h2>
+            <p>La transición de ser un empleado en planilla corporativa a ser un trabajador independiente (freelancer o consultor) conlleva un shock brutal que nadie te advierte: la ilusión óptica del salario bruto. Cuando un cliente te paga 5,000 dólares por un proyecto completo, tu instinto natural de ex-empleado es mirar tu cuenta bancaria, sentirte rico de repente y creer que esos 5,000 dólares te pertenecen íntegramente. <strong>Ese es el error novato más peligroso, costoso y común que quiebra negocios unipersonales en el primer año.</strong></p>
+            <p>La cruda realidad es que una porción significativa de ese dinero no es tuya. Tú solo estás custodiando temporalmente los fondos que pertenecen a la autoridad tributaria o fiscal de tu país (el estado), fondos que corresponden a tus impuestos a la renta, impuestos al valor agregado (IVA/IGV), y tus cotizaciones futuras y obligatorias a la seguridad social, salud y sistema de pensiones. Gastarte hoy el dinero de los impuestos de mañana (dinero que la autoridad fiscal te exigirá con total crueldad matemática en tu próxima declaración anual) garantiza una auditoría desgarradora y multas que paralizarán o ahogarán tu emprendimiento.</p>
+          </section>
+
+          <section id="registro" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><Landmark className="w-7 h-7 text-orange-500" /> El Sistema del Doble Muro Bancario</h2>
+            <p>El pilar absoluto y fundamental de la sanidad e higiene fiscal como profesional independiente y dueño único de un negocio se resume en una máxima inquebrantable: <strong>NUNCA mezcles tus finanzas y fondos personales con tus ingresos empresariales en la misma maldita cuenta corriente.</strong> El entrelazamiento de flujos ("commingling") es una pesadilla de auditoría y rastreo.</p>
+            <p>Desde el Día Cero, debes abrir de inmediato una cuenta bancaria comercial o de negocios completamente separada. Cuando un gran cliente te pague y transfiera una factura importante, todo el capital neto íntegro debe aterrizar exclusivamente en tu cuenta de negocios. Luego, debes establecer un protocolo o sistema fijo irrompible: la famosa "reserva de impuestos del 30%". Inmediatamente transfiere y esconde aproximadamente el 30% de ese depósito fresco hacia una cuenta de ahorros empresarial secundaria de muy difícil acceso físico, la cual denominarás mentalmente como "La Bóveda de Impuestos y Hacienda Intocable". Ese dinero y fondo queda congelado y no existe ni está disponible para comprar materiales ni viajar; solo existe o sirve para pagar los impuestos trimestrales o anuales venideros. Finalmente, con el capital líquido remanente en tu cuenta de negocios, pagas tus suscripciones de software y costos, y recién te emites un "sueldo" oficial depositado a tu cuenta bancaria personal y regular.</p>
+          </section>
+
+          <section id="deducciones" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><FileText className="w-7 h-7 text-orange-500" /> El Arte de las Deducciones Legales y Optimizaciones</h2>
+            <p>Uno de los mayores, geniales y potentes superpoderes ocultos de ser un profesional independiente o contratista y dueño formal, en abismal contraste con ser solo un mero empleado con salario atado y limitado (quien desafortunadamente paga duros impuestos fijos e inmediatos sobre cada dólar inicial y en bruto que gana), es que el marco legal tributario mundial en general te permite deducir y restar gastos válidos <em>antes</em> de que se te calcule, y exija el pago impositivo fuerte y final.</p>
+            <p>Todo el equipo técnico fundamental, necesario, ordinario y lícito para el giro central de tu negocio u obra en particular, así como las carísimas suscripciones pesadas de software especializado clave (como la suite ineludible de Adobe Creative Cloud premium pesada o tu cuenta GitHub Pro), la nueva y enorme laptop ultrarrápida central de la empresa o el rápido hardware informático costoso de la red, los caros viajes profesionales estrictos por un contrato, el hosting formal en la nube gigante o servidores AWS o Vercel robusto, y en un sinfín de varias y múltiples jurisdicciones del mundo occidental actual moderno y ordenado, también incluso en gran parte el porcentaje directo y proporcional real e íntegro justo o fijo del gasto básico pesado y servicios que cuesta y equivale utilizar la pequeña superficie específica y limitada del pequeño estudio u área central específica en donde laboras intensamente todo y cada uno de los extensos días y meses fríos del año dentro de la calidez e integridad de tu propia vivienda real de residencia familiar o de hábitat de casa (el conocido y adorado e investigado método legal puro, correcto y famoso y útil llamado el "Home Office Deduction" oficial gubernamental o federal legal en Estados Unidos), suelen ser siempre y casi siempre ser completamente deducibles o muy beneficiosamente desgravables al finalizar o acabar el ejercicio e ignorarlo es regalarle y lanzar inútilmente parte importante enorme e irracional gran parte pesada valiosa clave y gruesa y alta y gigante de tus altos difíciles, altos y sudados billetes grandes costosos amados de ganancia a un estado. ¡Anota todo y archiva tu gasto oficial documentado siempre en tu nube!</p>
+          </section>
+
+          <section id="estructura" className="mb-12">
+            <h2 className="text-3xl font-black font-outfit mt-0 flex items-center gap-3"><PiggyBank className="w-7 h-7 text-orange-500" /> Contrata al Profesional Correcto Rápidamente</h2>
+            <p>Finalmente, a menos que tu servicio, la base principal pesada y el negocio profundo puro entero e inicial fuerte de carrera en sí mismo particular principal base entero sea brindar tu consultoría contable financiera, por ningún oscuro y triste tonto y ciego ciego motivo lógico y obvio racional posible actual deberías pretender tú tratar heroicamente valientemente a solas, torpemente ciego a tientas a oscuras firmemente con orgullo equivocado de intentar o de encargarte y llevar tú mismo, tu sola cabeza desordenada siempre todas, absolutas grandes graves intrincadas enormes complejas tediosas todas tus enredadas largas o complejas declaraciones formales estrictas pesadas del fisco para ahorrarte ridículos o escasos y falsos y efímeros 150 grandes tontos muy tristes míseros pequeños y baratos escasos pocos miserables penosos escasos dólares mensuales bajos en un asesor. Un buen contador certificado experimentado público hábil CPA CPA experimentado sólido es literalmente la única inversión innegable barata obligada o profesional externo obligatoria o inteligente sabia e importante e infalible pura indispensable sabia del negocio, que invariablemente, empíricamente y siempre sin falta segura de verdad <strong>se terminará amortizando y terminará de pagarse por completo multiplicada infinitamente o varias muchas o varias bastantes muchas y siempre todas, y siempre cien de más veces holgadas a sí sola a sí misma sola amplia y sobradamente o solas holgada</strong> y siempre amplia y fácil en cada cada año, mediante y por simple hecho fuerte claro puro enorme de un gigantesco volumen colosal inteligente hallado enorme volumen denso grueso y fuerte grande gigante puro fuerte e inmenso gran y valioso montón denso alto grueso o volumen de los ahorros o eludidos ahorros elásticos justos ahorros ocultos de las deducciones válidas justas ocultas y eficiencias fiscales formales lícitas fiscales fiscales que él ciertamente con toda total enorme y pura total maestría fina gran y pura extrema enorme obvia maestría o destreza hábil y fina siempre profunda, hábilmente logrará encontrar audaz inteligente o inteligentemente siempre fina veloz e identificar audazmente en tu confuso pesado aburrido caso personal. Delega lo aburrido al experto y concéntrate en la alta habilidad lucrativa que te convierte en un excelente y muy bien pagado y brillante o gran y exitoso trabajador independiente o gran experto mundial moderno freelance global y feliz y próspero emprendedor libre en remoto e independiente moderno global sin temores libre.</p>
+          </section>
         </div>
 
         <AuthorBox category="finanzas" datePublished="2026" dateReviewed="Mayo 2026" />
-
-        <div className="bg-orange-600 rounded-[40px] p-10 md:p-16 mt-24 text-white relative shadow-2xl overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -mr-40 -mt-40"></div>
-          <div className="relative z-10 text-center md:text-left">
-            <h2 className="text-3xl md:text-5xl font-black font-outfit mt-0 mb-8 text-white">Da el siguiente paso</h2>
-            <p className="text-orange-100 text-xl leading-relaxed mb-12 font-medium max-w-2xl">Esperamos que esta guía te brinde el impulso necesario. Sigue explorando nuestro catálogo para continuar tu aprendizaje.</p>
-            <Link href="/guias" className="bg-white text-orange-600 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-orange-100 transition-all shadow-2xl inline-flex items-center gap-3">
-              Más guías <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </div>
       </div>
     </article>
   );
