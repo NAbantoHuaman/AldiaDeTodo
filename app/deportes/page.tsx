@@ -1,9 +1,8 @@
-import { Trophy, Zap, Calendar, ListChecks, ArrowRight, Rss } from 'lucide-react';
+import { Trophy, Zap, Calendar, ListChecks, ArrowRight, BookOpen } from 'lucide-react';
 import { getSportsData } from "@/lib/externalData";
-import { getRSSNews } from "@/lib/rss";
 import prisma from "@/lib/prisma";
-import ArticleCard from "@/components/ArticleCard";
 import LiveMatchCard from "@/components/LiveMatchCard";
+import Link from 'next/link';
 
 export const metadata = {
   title: "Deportes - AldiaDeTodo",
@@ -13,13 +12,6 @@ export const metadata = {
 export default async function SportsPage() {
   const data = await getSportsData();
 
-  // Fetch real sports news from RSS instead of local articles
-  const allNews = await getRSSNews();
-  const sportsNews = allNews
-    .filter((item): item is NonNullable<typeof item> => item != null && item.category === 'Deportes')
-    .slice(0, 6);
-
-  const formattedArticles = sportsNews;
 
   return (
     <div className="min-h-screen bg-white">
@@ -61,20 +53,15 @@ export default async function SportsPage() {
               </div>
             </section>
 
-            {/* Sports News Section */}
+            {/* Explore Guides CTA */}
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-8 flex items-center gap-2">
-                <Rss className="w-5 h-5 text-indigo-600" />
-                Últimas Noticias de Deportes
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {formattedArticles.length > 0 ? (
-                  formattedArticles.map((article, index) => (
-                    <ArticleCard key={article.id} article={article} variant="default" priority={index < 2} />
-                  ))
-                ) : (
-                  <p className="text-slate-400 italic">No hay noticias deportivas recientes.</p>
-                )}
+              <div className="bg-slate-50 rounded-3xl p-8 border border-slate-100 text-center">
+                <BookOpen className="w-10 h-10 text-indigo-600 mx-auto mb-4" />
+                <h2 className="text-xl font-bold text-slate-900 mb-3">Entrena tu mente también</h2>
+                <p className="text-slate-500 mb-6 max-w-md mx-auto">Explora nuestras guías originales sobre bienestar, nutrición y entrenamiento de fuerza.</p>
+                <Link href="/guias/entrenamiento-fuerza" className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-indigo-600 transition-all">
+                  Ver Guía de Entrenamiento <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             </section>
 

@@ -102,6 +102,22 @@ const colorClasses = {
     hover: "group-hover:bg-slate-100",
     accent: "bg-slate-500",
   },
+  red: {
+    bg: "bg-red-50",
+    border: "border-red-200",
+    icon: "bg-red-100 text-red-600",
+    tag: "bg-red-100 text-red-700",
+    hover: "group-hover:bg-red-100",
+    accent: "bg-red-500",
+  },
+  pink: {
+    bg: "bg-pink-50",
+    border: "border-pink-200",
+    icon: "bg-pink-100 text-pink-600",
+    tag: "bg-pink-100 text-pink-700",
+    hover: "group-hover:bg-pink-100",
+    accent: "bg-pink-500",
+  },
 };
 
 export default function GuiasIndexPage() {

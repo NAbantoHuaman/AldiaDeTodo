@@ -9,7 +9,7 @@ const AdsBanner = ({ slot, format = "auto", label = "Publicidad", responsive = "
   const SHOW_DEV_MOCKUP = false; // <--- Cambiar a true si necesitas ver dónde irán los anuncios
   
   // TU ID DE CLIENTE (Obtenido de Google AdSense, formato: ca-pub-XXXXXXXXXXXXXXXX)
-  const AD_CLIENT_ID = "ca-pub-XXXXXXXXXXXXXXXX"; 
+  const AD_CLIENT_ID = "ca-pub-5266241351956416"; 
 
   const adRef = useRef(null);
 

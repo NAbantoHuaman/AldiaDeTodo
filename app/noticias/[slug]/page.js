@@ -65,12 +65,11 @@ export async function generateMetadata({ params }) {
   return {
     title: article.title,
     description: article.excerpt || `Lee el artículo completo sobre ${article.title} en AldiaDeTodo.`,
-    ...(isRSS && {
-      robots: {
-        index: false,
-        follow: true,
-      },
-    }),
+    // Block ALL /noticias/ pages from indexing - thin content violates AdSense policies
+    robots: {
+      index: false,
+      follow: false,
+    },
     openGraph: {
       title: article.title,
       description: article.excerpt || `Lee más sobre ${article.title}.`,

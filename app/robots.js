@@ -4,11 +4,12 @@ export default function robots() {
       {
         userAgent: 'Mediapartners-Google',
         allow: '/',
+        disallow: ['/noticias/', '/api/', '/data/', '/redaccion/'],
       },
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/data/', '/redaccion/'],
+        disallow: ['/noticias/', '/api/', '/data/', '/redaccion/'],
       },
     ],
     sitemap: 'https://aldiadetodo.com/sitemap.xml',

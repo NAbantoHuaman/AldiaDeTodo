@@ -51,6 +51,12 @@ export default function PrivacidadPage() {
           <p className="mb-4">
             Algunos de nuestros socios publicitarios pueden usar cookies y balizas web en nuestro sitio. Cada uno de estos socios publicitarios tiene su propia Política de Privacidad.
           </p>
+          <p className="mb-4">
+            Para más información sobre cómo Google utiliza los datos cuando usa los sitios o aplicaciones de nuestros socios, visite:{" "}
+            <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-800 underline">
+              Cómo usa Google los datos cuando utilizas sitios o aplicaciones de nuestros socios
+            </a>.
+          </p>
         </section>
 
         <section>

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Landmark, ArrowRightLeft, TrendingUp, TrendingDown, Bitcoin, CreditCard } from 'lucide-react';
+import { Landmark, ArrowRightLeft, TrendingUp, TrendingDown, Bitcoin, CreditCard, BookOpen, ArrowRight } from 'lucide-react';
 import { getFinanceData } from "@/lib/externalData";
-import { getRSSNews } from "@/lib/rss";
-import ArticleCard from "@/components/ArticleCard";
+import Link from 'next/link';
 
 export const metadata = {
   title: "Dinero y Finanzas - AldiaDeTodo",
@@ -12,13 +11,6 @@ export const metadata = {
 export default async function FinancePage() {
   const data = await getFinanceData();
 
-  // Fetch real-time economy news
-  const allNews = await getRSSNews();
-  const economyNews = allNews
-    .filter((item): item is NonNullable<typeof item> => item != null && item.category === 'Economía')
-    .slice(0, 6);
-
-  const formattedArticles = economyNews;
 
   if (!data) return <div className="p-10 text-center text-slate-500">Cargando finanzas...</div>;
 
@@ -104,19 +96,30 @@ export default async function FinancePage() {
               </div>
             </section>
 
-            {/* News Section */}
+            {/* Finance Guides Section */}
             <section>
               <h2 className="text-2xl font-bold mb-8 flex items-center gap-2 text-slate-800">
-                <TrendingUp className="w-6 h-6 text-indigo-600" />
-                Actualidad Económica
+                <BookOpen className="w-6 h-6 text-indigo-600" />
+                Guías de Finanzas Personales
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-             {formattedArticles.map((article, index) => (
-               <div key={article.id} className="bg-white rounded-2xl p-1">
-                 <ArticleCard article={article} variant="default" priority={index < 3} />
-               </div>
-             ))}
-           </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  { title: "Cómo Ahorrar Dinero", slug: "como-ahorrar-dinero", desc: "Estrategias probadas para construir hábitos financieros saludables." },
+                  { title: "Inversión en ETFs", slug: "inversion-etfs-bolsa", desc: "Construye tu retiro usando estrategias pasivas y de bajo riesgo." },
+                  { title: "Psicología del Dinero", slug: "psicologia-dinero", desc: "Por qué tomamos malas decisiones financieras y cómo cambiar." },
+                  { title: "Cripto y Web3 Seguro", slug: "cripto-web3-seguro", desc: "Blockchain y contratos inteligentes sin caer en estafas." },
+                  { title: "Emprendimiento Digital", slug: "emprendimiento-digital", desc: "Inicia tu negocio online en 2026." },
+                  { title: "Inversión Inmobiliaria", slug: "inversion-inmobiliaria", desc: "Construye patrimonio real a través del mercado inmobiliario." },
+                ].map((guide) => (
+                  <Link key={guide.slug} href={`/guias/${guide.slug}`} className="group bg-white rounded-2xl p-6 border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all">
+                    <h3 className="font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">{guide.title}</h3>
+                    <p className="text-sm text-slate-500 mb-4 line-clamp-2">{guide.desc}</p>
+                    <span className="text-xs font-black text-indigo-600 uppercase tracking-widest flex items-center gap-1">
+                      Leer guía <ArrowRight className="w-3 h-3" />
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </section>
 
             {/* Crypto Section */}

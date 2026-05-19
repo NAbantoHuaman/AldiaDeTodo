@@ -9,6 +9,10 @@ export const revalidate = 3600; // Cache for 1 hour
 export const metadata = {
   title: "Últimas Noticias - Actualidad Mundial | AldiaDeTodo",
   description: "Mantente informado con las últimas noticias de política, economía, tecnología y deportes en tiempo real.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   openGraph: {
     title: "Últimas Noticias - Actualidad Mundial",
     description: "Noticias en tiempo real de las mejores fuentes internacionales.",
@@ -46,10 +50,6 @@ export default async function NewsPage() {
           ) : (
              <p className="col-span-full text-center text-gray-500">Cargando noticias...</p>
           )}
-       </div>
-
-       <div className="mt-12">
-          <AdsBanner slot="news-footer" format="horizontal" />
        </div>
     </div>
   );

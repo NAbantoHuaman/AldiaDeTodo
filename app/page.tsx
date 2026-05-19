@@ -3,25 +3,14 @@ import FeaturedArticle from "../components/FeaturedArticle";
 import ArticleCard from "../components/ArticleCard";
 import AdsBanner from "../components/AdsBanner";
 import prisma from "../lib/prisma";
-import { getRSSNews } from "../lib/rss";
 import { parseSpanishDate } from "../lib/dateUtils";
 import { getWeatherData, getHoroscopeData, getSportsData } from "../lib/externalData";
 import WeatherWidget from "../components/WeatherWidget";
 import HoroscopeWidget from "../components/HoroscopeWidget";
 import SportsWidget from "../components/SportsWidget";
-import { ArrowRight, ChevronRight, TrendingUp, Terminal, Heart, Sparkles, Code, Brain } from "lucide-react";
+import { ArrowRight, ChevronRight, TrendingUp, Terminal, Heart, Sparkles, Code, Brain, BookOpen } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
-
-// Function to fetch live news server-side via RSS
-async function getDynamicArticles() {
-  try {
-    return await getRSSNews();
-  } catch (error) {
-    console.error("Error getting dynamic articles:", error);
-    return [];
-  }
-}
 
 export const revalidate = 60;
 
@@ -67,10 +56,6 @@ export default async function Home() {
   const featuredOriginal = evergreenArticles[0];
   const latestArticles = evergreenArticles.slice(1, 5);
   const sidebarOriginals = evergreenArticles.slice(5, 13);
-
-  // 3. Get Dynamic News (secondary — sidebar feed)
-  const newsArticles = await getDynamicArticles();
-  const latestNews = newsArticles.slice(0, 6).filter(Boolean);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -199,38 +184,40 @@ export default async function Home() {
             <HoroscopeWidget data={horoscopeData} />
           </div>
 
-          {/* Latest News (SECONDARY) */}
+          {/* Guías Destacadas — Contenido Original */}
           <div className="bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm">
             <h2 className="text-xl font-black text-slate-900 mb-8 flex justify-between items-center font-outfit">
               <span className="flex items-center gap-3">
                 <span className="w-1.5 h-6 bg-indigo-600 rounded-full"></span>
-                Telegrafía
+                Guías Destacadas
               </span>
-              <Link href="/noticias" className="text-[10px] uppercase font-black text-indigo-600 hover:text-indigo-800 tracking-widest">Global &rarr;</Link>
+              <Link href="/guias" className="text-[10px] uppercase font-black text-indigo-600 hover:text-indigo-800 tracking-widest">Ver todas &rarr;</Link>
             </h2>
             <div className="space-y-6">
-              {latestNews.length > 0 ? (
-                latestNews.map((article) => article && (
-                  <a key={article.id} href={article.link || `/noticias/${article.slug}`} target={article.link ? "_blank" : "_self"} rel="noopener noreferrer"
-                     className="group block">
-                    <div className="flex items-start gap-4">
-                       <div className="w-1.5 h-1.5 bg-slate-200 rounded-full mt-2 group-hover:bg-indigo-600 transition-colors"></div>
-                       <div>
-                          <h3 className="text-sm font-bold text-slate-800 group-hover:text-indigo-600 line-clamp-2 leading-tight transition-colors font-inter">{article.title}</h3>
-                          <div className="flex items-center gap-2 mt-2">
-                             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{article.source || "News"}</span>
-                             <span className="text-slate-300">•</span>
-                             <span className="text-[10px] font-medium text-slate-400">{article.date}</span>
-                          </div>
-                       </div>
-                    </div>
-                  </a>
-                ))
-              ) : (
-                <div className="flex flex-col gap-4 animate-pulse">
-                   {[1,2,3,4].map(i => <div key={i} className="h-10 bg-slate-50 rounded-lg"></div>)}
-                </div>
-              )}
+              {[
+                { title: "Python Maestro 2026", slug: "python-moderno", tag: "Tecnología", icon: Terminal },
+                { title: "Bienestar Mental", slug: "bienestar-mental", tag: "Salud", icon: Heart },
+                { title: "Cómo Ahorrar Dinero", slug: "como-ahorrar-dinero", tag: "Finanzas", icon: TrendingUp },
+                { title: "Hábitos Productivos", slug: "habitos-productivos", tag: "Crecimiento", icon: Sparkles },
+                { title: "Inteligencia Emocional", slug: "inteligencia-emocional", tag: "Crecimiento", icon: Brain },
+                { title: "Aprender a Programar", slug: "aprender-a-programar", tag: "Tecnología", icon: Code },
+              ].map((guide) => (
+                <Link key={guide.slug} href={`/guias/${guide.slug}`} className="group block">
+                  <div className="flex items-start gap-4">
+                     <div className="w-8 h-8 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all flex-shrink-0">
+                       <guide.icon className="w-4 h-4" />
+                     </div>
+                     <div>
+                        <h3 className="text-sm font-bold text-slate-800 group-hover:text-indigo-600 line-clamp-2 leading-tight transition-colors font-inter">{guide.title}</h3>
+                        <div className="flex items-center gap-2 mt-2">
+                           <span className="text-[10px] font-black text-indigo-500 uppercase tracking-widest">{guide.tag}</span>
+                           <span className="text-slate-300">•</span>
+                           <span className="text-[10px] font-medium text-slate-400">Guía completa</span>
+                        </div>
+                     </div>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
 

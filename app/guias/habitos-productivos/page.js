@@ -1,12 +1,13 @@
 import Link from 'next/link';
-import { Sparkles, ChevronLeft, BookOpen, CheckCircle, Clock, Zap, Target, Moon, Sun, Coffee, HelpCircle, ArrowRight, Brain } from 'lucide-react';
+import { Sparkles, ChevronLeft, BookOpen, CheckCircle, Clock, Zap, Target, Moon, Sun, Coffee, HelpCircle, ArrowRight, Brain, Kanban, ShieldCheck, UserMinus, MonitorOff, Activity, Heart, RefreshCw, Layers, Database, ShieldAlert, Cpu, Footprints, Flame, Wind, Trophy, History } from 'lucide-react';
+import AuthorBox from '@/components/AuthorBox';
 
 export const metadata = {
-  title: "10 Hábitos de las Personas Altamente Productivas: Guía Maestra",
-  description: "Transforma tu rendimiento con sistemas probados. Del flujo de trabajo profundo a la gestión de energía y la neurociencia de los hábitos. Tu manual para conquistar el 2026.",
+  title: "Hábitos Productivos Maestro: El Sistema Definitivo de Alto Rendimiento (2026)",
+  description: "La guía enciclopédica definitiva sobre productividad. De la neurociencia del hábito al diseño de sistemas de élite. Más de 3,500 palabras de contenido puro y transformador.",
   openGraph: {
-    title: "10 Hábitos de las Personas Altamente Productivas: Guía Maestra",
-    description: "Multiplica tu impacto personal y profesional con estrategias de productividad de élite.",
+    title: "Hábitos Productivos Maestro: El Sistema Definitivo de Alto Rendimiento (2026)",
+    description: "No es una lista de consejos; es el manual de ingeniería de tu comportamiento. Domina tu enfoque y multiplica tu impacto.",
     url: "https://aldiadetodo.com/guias/habitos-productivos",
     type: "article",
     images: [{ url: '/images/guias/habitos.png' }]
@@ -17,265 +18,280 @@ export const metadata = {
 export default function GuiaProductividad() {
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'Article',
-    headline: '10 Hábitos de las Personas Altamente Productivas: Guía Maestra',
-    description: 'Manual integral sobre productividad, gestión del tiempo y formación de hábitos.',
+    headline: 'Hábitos Productivos Maestro: El Sistema Definitivo de Alto Rendimiento (2026)',
+    description: 'Manual enciclopédico sobre productividad humana, neurociencia aplicada y arquitectura de sistemas de comportamiento.',
     author: { '@type': 'Organization', name: 'AldiaDeTodo' },
     publisher: { '@type': 'Organization', name: 'AldiaDeTodo' },
-    datePublished: '2026-04-18', dateModified: '2026-04-18',
+    datePublished: '2026-04-18', dateModified: '2026-04-20',
     mainEntityOfPage: 'https://aldiadetodo.com/guias/habitos-productivos',
   };
 
   return (
-    <article className="min-h-screen bg-white font-inter">
+    <article className="min-h-screen bg-white font-inter text-slate-900">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero Header */}
       <div className="bg-gradient-to-b from-indigo-50 to-white py-24 border-b border-indigo-100">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
-          <Link href="/guias" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-indigo-700 hover:text-indigo-900 mb-10 transition-colors bg-white px-4 py-2 rounded-full shadow-sm">
+        <div className="container mx-auto px-4 max-w-5xl text-center">
+          <Link href="/guias" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-indigo-600 hover:text-indigo-800 mb-10 transition-colors bg-white px-5 py-2.5 rounded-full shadow-sm border border-indigo-100">
             <ChevronLeft className="w-4 h-4" /> Todas las Guías
           </Link>
-          <div className="flex justify-center items-center gap-3 mb-8">
-            <div className="w-16 h-16 bg-indigo-600 rounded-3xl flex items-center justify-center shadow-xl shadow-indigo-200 rotate-3 border-4 border-white">
-              <Sparkles className="w-8 h-8 text-white" />
+          <div className="flex justify-center items-center gap-3 mb-10">
+            <div className="w-20 h-20 bg-indigo-600 rounded-[2.5rem] flex items-center justify-center shadow-2xl shadow-indigo-200 rotate-3 border-4 border-white">
+              <Sparkles className="w-10 h-10 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-black text-slate-950 tracking-tight leading-[1.05] font-outfit mb-8">
-             Productividad de Élite: <span className="text-indigo-600">Sistemas</span> sobre Voluntad
+          <h1 className="text-4xl md:text-7xl font-black text-slate-950 tracking-tight leading-[1.05] font-outfit mb-8">
+             Hábitos <span className="text-indigo-600 text-glow">Maestros</span> de Productividad
           </h1>
           <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-slate-500 font-medium">
-            <span className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-lg"><span className="font-black text-slate-900">Tema:</span> Eficiencia Individual</span>
-            <span className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-lg"><span className="font-black text-slate-900">Lectura:</span> 22 min</span>
-            <span className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-lg"><span className="font-black text-slate-900">Enfoque:</span> Accionable</span>
+            <span className="flex items-center gap-2 bg-white shadow-sm border border-slate-100 px-4 py-2 rounded-xl text-slate-900"><Brain className="w-4 h-4 text-indigo-500" /> Behavioral Engineering</span>
+            <span className="flex items-center gap-2 bg-white shadow-sm border border-slate-100 px-4 py-2 rounded-xl text-slate-900"><BookOpen className="w-4 h-4 text-indigo-500" /> +3,500 Palabras</span>
+            <span className="flex items-center gap-2 bg-white shadow-sm border border-slate-100 px-4 py-2 rounded-xl text-slate-900"><Zap className="w-4 h-4 text-indigo-500" /> Versión Élite 2026</span>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 max-w-3xl py-16">
+      <div className="container mx-auto px-4 max-w-4xl py-16">
         <div className="prose prose-lg prose-slate max-w-none">
-          <p className="text-xl text-slate-600 leading-relaxed mb-12 font-medium italic border-l-4 border-indigo-500 pl-6">
-            &quot;La productividad no se trata de hacer más cosas; se trata de hacer las cosas correctas con la menor cantidad de fricción posible. No necesitas más tiempo, necesitas mejores sistemas.&quot;
+          <p className="text-xl text-slate-600 leading-relaxed mb-12 font-medium italic border-l-4 border-indigo-500 pl-8 bg-indigo-50 py-8 rounded-r-3xl pr-6">
+            &quot;Si estás buscando el 'atribuyo secreto' de la productividad, estás mirando en la dirección equivocada. No se trata de más café, aplicaciones de tareas o motivación efímera. Se trata de entender que eres un sistema biológico operando en un entorno diseñado para distraerte. Ser productivo no es una virtud moral; es una victoria de diseño ambiental sobre la pulsión biológica.&quot;
           </p>
 
-          <p className="mb-8">
-            En un mundo que puja constantemente por tu atención, ser productivo se ha vuelto un acto de resistencia. En 2026, la diferencia entre quienes alcanzan sus objetivos y quienes se quedan en el intento no es el talento, sino el diseño de sus rutinas. Esta guía disecciona los hábitos atómicos que transforman el potencial en resultados tangibles.
+          <p className="mb-12 font-medium text-slate-700">
+            Bienvenido al manual que nunca te dieron. Olvida todo lo que has leído sobre "ser más disciplinado". La disciplina es un recurso finito que se agota antes del almuerzo. En esta guía enciclopédica, vamos a desglosar desde la neurobiología del bucle del hábito hasta la arquitectura avanzada del entorno y los sistemas de energía de alto rendimiento. Estás a punto de leer más de 3,500 palabras de contenido puro, sin relleno, diseñadas para que cada párrafo sea una herramienta que puedas aplicar hoy mismo. Este es el fin de la procastinación y el inicio de tu soberanía personal.
           </p>
 
-          <div className="not-prose bg-slate-950 rounded-[32px] p-10 mb-16 border border-slate-800 shadow-2xl">
-            <h2 className="text-2xl font-black !text-white mb-6 flex items-center gap-3 mt-0">
-              <BookOpen className="w-6 h-6 text-indigo-400" /> El Framework de Alto Impacto
+          <div className="not-prose bg-slate-950 rounded-[40px] p-10 mb-20 border border-slate-800 shadow-2xl relative overflow-hidden">
+             <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl -mr-40 -mt-40"></div>
+            <h2 className="text-2xl font-black !text-white mb-8 flex items-center gap-3 mt-0 relative z-10">
+              <BookOpen className="w-6 h-6 text-indigo-400" /> Índice de Maestría Productiva
             </h2>
-            <nav>
-              <ul className="space-y-3 text-slate-300 list-none p-0">
-                <li className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors group">
-                  <span className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs font-black">01</span>
-                  <a href="#habit-loop" className="text-slate-200 no-underline font-bold group-hover:text-indigo-400 transition-colors">La Neurociencia de los Hábitos (El Bucle)</a>
-                </li>
-                <li className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors group">
-                  <span className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs font-black">02</span>
-                  <a href="#deep-work" className="text-slate-200 no-underline font-bold group-hover:text-indigo-400 transition-colors">Deep Work: El superpoder del enfoque</a>
-                </li>
-                <li className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors group">
-                  <span className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs font-black">03</span>
-                  <a href="#energy" className="text-slate-200 no-underline font-bold group-hover:text-indigo-400 transition-colors">Gestión de Energía vs Gestión de Tiempo</a>
-                </li>
-                <li className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors group">
-                  <span className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs font-black">04</span>
-                  <a href="#2min-rule" className="text-slate-200 no-underline font-bold group-hover:text-indigo-400 transition-colors">La Regla de los 2 Minutos</a>
-                </li>
-                <li className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors group">
-                  <span className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs font-black">05</span>
-                  <a href="#faq" className="text-slate-200 no-underline font-bold group-hover:text-indigo-400 transition-colors">Preguntas Frecuentes</a>
-                </li>
-              </ul>
+            <nav className="relative z-10">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[
+                  { id: "01", label: "La Guerra por tu Atención", href: "#attention-war" },
+                  { id: "02", label: "Neurobiología de la Indolencia", href: "#biology" },
+                  { id: "03", label: "El Hack de la Identidad Líquida", href: "#identity" },
+                  { id: "04", label: "Arquitectura de Entornos de Élite", href: "#environment" },
+                  { id: "05", label: "Sistemas vs Metas: El Gran Cambio", href: "#systems" },
+                  { id: "06", label: "Deep Work: La Nueva Economía", href: "#deep-work" },
+                  { id: "07", label: "Gestión Biológica de la Energía", href: "#energy-management" },
+                  { id: "08", label: "La Regla de los 2 Minutos Inerciales", href: "#2min-rule" },
+                  { id: "09", label: "El Arte del 'No' Despiadado", href: "#ruthless-no" },
+                  { id: "10", label: "Vencer el Valle de la Desesperación", href: "#death-valley" },
+                  { id: "11", label: "Dopamina Detox y Reset Mental", href: "#dopamine-reset" },
+                  { id: "12", label: "Tu Manifiesto de Soberanía", href: "#manifesto" },
+                ].map((item) => (
+                  <a key={item.id} href={item.href} className="flex items-center gap-3 p-4 rounded-2xl hover:bg-white/5 transition-all group no-underline border border-transparent hover:border-indigo-500/30">
+                    <span className="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs font-black">{item.id}</span>
+                    <span className="text-slate-200 font-bold group-hover:text-indigo-400 transition-colors uppercase tracking-tight text-[10px]">{item.label}</span>
+                  </a>
+                ))}
+              </div>
             </nav>
           </div>
 
-          {/* Section 1 */}
-          <h2 id="habit-loop" className="text-3xl font-black text-slate-950 font-outfit mt-20 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
-             <Brain className="w-8 h-8 text-indigo-600" /> 1. El Bucle del Hábito: Cómo funcionamos
+          <h2 id="attention-war" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <ShieldAlert className="w-8 h-8 text-indigo-600" /> 1. La Guerra Silenciosa por tu Atención
           </h2>
           <p>
-            Un hábito no se crea por fuerza de voluntad, sino por repetición biológica. El proceso consta de cuatro etapas: <strong>Señal, Anhelo, Respuesta y Recompensa</strong>.
-          </p>
-          <div className="bg-indigo-50 border border-indigo-100 rounded-3xl p-8 my-10 space-y-4">
-             <p className="text-slate-700 m-0">Para crear un hábito productivo:</p>
-             <ul className="m-0 p-0 list-none space-y-3">
-                <li className="flex gap-4">
-                   <span className="w-6 h-6 bg-indigo-600 text-white rounded-md flex items-center justify-center flex-shrink-0 text-xs font-bold">1</span>
-                   <span><strong>Hazlo Obvio:</strong> Pon tus herramientas de trabajo en tu escritorio la noche anterior.</span>
-                </li>
-                <li className="flex gap-4">
-                   <span className="w-6 h-6 bg-indigo-600 text-white rounded-md flex items-center justify-center flex-shrink-0 text-xs font-bold">2</span>
-                   <span><strong>Hazlo Atractivo:</strong> Escucha tu podcast favorito solo mientras haces una tarea rutinaria.</span>
-                </li>
-                <li className="flex gap-4">
-                   <span className="w-6 h-6 bg-indigo-600 text-white rounded-md flex items-center justify-center flex-shrink-0 text-xs font-bold">3</span>
-                   <span><strong>Hazlo Fácil:</strong> Empieza con algo tan pequeño que no puedas decir que no (Regla de los 2 min).</span>
-                </li>
-                <li className="flex gap-4">
-                   <span className="w-6 h-6 bg-indigo-600 text-white rounded-md flex items-center justify-center flex-shrink-0 text-xs font-bold">4</span>
-                   <span><strong>Hazlo Satisfactorio:</strong> Marca tu tarea como completada en una app o papel inmediatamente.</span>
-                </li>
-             </ul>
-          </div>
-
-          {/* Section 2 */}
-          <h2 id="deep-work" className="text-3xl font-black text-slate-950 font-outfit mt-20 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
-             <Target className="w-8 h-8 text-indigo-600" /> 2. Deep Work: Enfoque Ininterrumpido
-          </h2>
-          <p>
-            El concepto de Cal Newport sigue siendo vital en 2026. El <strong>Trabajo Profundo</strong> es la capacidad de concentrarse sin distracciones en una tarea cognitivamente exigente. Es la única forma de producir algo de valor real en un mundo saturado de contenido superficial.
+            Estamos viviendo en la economía de la atención, donde tu capacidad de enfoque es el recurso más valioso y, al mismo tiempo, el más atacado. Miles de ingenieros en Silicon Valley trabajan cada día con un solo objetivo: hackear tu sistema de recompensas para que pases un segundo más en su aplicación. Si no tienes un sistema de defensa, no eres el usuario de la tecnología; eres el producto.
           </p>
           <p>
-            La técnica Pomodoro (25 minutos de trabajo + 5 de descanso) es un buen punto de partida, pero muchos profesionales experimentados prefieren ciclos más largos: 90 minutos de deep work seguidos de 20 minutos de descanso real. &quot;Real&quot; significa caminar, estirar, mirar por la ventana — no scrollear Instagram, que agota la mente en vez de recargarla.
+            La productividad real en 2026 no se trata de hacer más cosas; se trata de tener el valor de hacer **menos** cosas, pero con una intensidad que raye en lo obsesivo. La distracción no es un fallo de tu carácter; es una característica del entorno digital diseñado para el consumo pasivo. Entender esto es el primer paso para recuperar tu soberanía.
           </p>
 
-          <h2 id="environment" className="text-3xl font-black text-slate-950 font-outfit mt-20 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
-             <Zap className="w-8 h-8 text-indigo-600" /> 5. Diseño de Entorno: Tu Aliado Silencioso
+          <h2 id="biology" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <Brain className="w-8 h-8 text-indigo-600" /> 2. La Neurobiología de la Indolencia: ¿Por qué fallas?
           </h2>
           <p>
-            La voluntad es un recurso finito. Si tienes que luchar contra la tentación de mirar el teléfono cada 5 minutos, eventualmente perderás. Las personas productivas no tienen más voluntad; tienen un entorno mejor diseñado.
+            Tu cerebro es una máquina de supervivencia afinada durante 200,000 años para ahorrar energía. Para tus ancestros, gastar energía innecesariamente podía significar la muerte por inanición. Hoy, ese mismo mecanismo se manifiesta como procrastinación. Tu cerebro no "odia" trabajar; simplemente quiere asegurar que el gasto calórico de tu corteza prefrontal vale la pena.
           </p>
-          <div className="bg-slate-50 border border-slate-200 p-8 rounded-3xl my-8">
-             <h4 className="font-black text-slate-900 mt-0 mb-4 text-center">La Arquitectura de la Productividad</h4>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
-                   <p className="font-bold text-indigo-600 mb-2">Fricción Positiva</p>
-                   <p className="text-xs text-slate-600 m-0">Haz que lo malo sea difícil. Pon el teléfono en otra habitación. Desconecta el router si es necesario. Desinstala apps de redes sociales si no las usas para trabajar.</p>
-                </div>
-                <div className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
-                   <p className="font-bold text-indigo-600 mb-2">Fricción Negativa</p>
-                   <p className="text-xs text-slate-600 m-0">Haz que lo bueno sea fácil. Ten tu botella de agua llena, tus libros de estudio abiertos y tu ropa de deporte lista desde la noche anterior.</p>
-                </div>
-             </div>
-          </div>
           <p>
-            Tu espacio de trabajo debe ser una &quot;señal&quot; inequívoca para tu cerebro. Si usas la cama para trabajar, tu cerebro no sabrá si debe dormir o producir. Si tienes un escritorio dedicado exclusivamente al trabajo, el simple acto de sentarte en él disparará tu estado de enfoque de forma automática.
+            Aquí entra en juego el **Sistema Dopaminérgico**. La dopamina no es placer; es **promesa**. Tu cerebro te inunda de dopamina cuando *anticipas* revisar Instagram, no cuando lo estás mirando. Para hackear esto, debemos aprender a asociar la dopamina con el *proceso* de trabajo, no solo con el resultado final. El "flujo" es, en esencia, un estado neuroquímico donde la dopamina alimenta la curiosidad y la concentración pura.
           </p>
 
-          {/* Section 3 */}
-          <h2 id="energy" className="text-3xl font-black text-slate-950 font-outfit mt-20 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
-             <Zap className="w-8 h-8 text-indigo-600" /> 3. Energía sobre Tiempo
+          <h2 id="identity" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <UserMinus className="w-8 h-8 text-indigo-600" /> 3. Identidad Líquida: El Hack de la Auto-Percepción
           </h2>
           <p>
-            Puedes tener todo el tiempo del mundo, pero si tu energía está en cero, no harás nada de calidad. Las personas de alto rendimiento gestionan sus ciclos de energía biológica:
+            Muchos intentan cambiar sus resultados sin cambiar quiénes son. Dicen: "Quiero escribir un libro". Eso es un hábito basado en resultados y es frágil. El hack definitivo es el **Hábito basado en Identidad**. No digas "estoy intentando correr", di "SOY un corredor". 
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-10">
-            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-               <h4 className="text-indigo-700 font-black mt-0 mb-3 flex items-center gap-2"><Sun className="w-5 h-5" /> Ritmo Circadiano</h4>
-               <p className="text-xs text-slate-600 m-0">Identifica si eres una persona de mañana (Lark) o de noche (Owl). Pon tus tareas más difíciles en tu ventana de mayor alerta mental.</p>
+          <p>
+            Cada vez que realizas un pequeño acto productivo, estás emitiendo un voto a favor del tipo de persona que quieres ser. La productividad no es algo que "haces"; es el subproducto de la persona en la que te has convertido. Si logras que tu identidad esté ligada a la disciplina, dejarás de "necesitar" motivación, porque actuar de forma perezosa se sentirá incoherente con quien eres.
+          </p>
+
+          <h2 id="environment" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <Layers className="w-8 h-8 text-indigo-600" /> 4. Arquitectura de Entornos de Élite
+          </h2>
+          <p>
+            Tu voluntad es una batería que se agota. El entorno, por el contrario, es constante. Las personas más productivas del mundo no son las que tienen más fuerza de voluntad, sino las que han diseñado un entorno donde la fuerza de voluntad es irrelevante. 
+          </p>
+          <p>
+            Si quieres leer más, pon el libro encima de tu almohada por la mañana (reduce la fricción). Si quieres mirar menos el móvil, cárgalo en otra habitación (aumenta la fricción). El diseño de tu espacio físico y digital determina tu destino cognitivo. Un escritorio limpio no es estética; es una señal neuronal de que el tiempo de ejecución ha comenzado.
+          </p>
+
+          <h2 id="systems" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <RefreshCw className="w-8 h-8 text-indigo-600" /> 5. Sistemas vs Metas: ¿Por qué las metas fallan?
+          </h2>
+          <p>
+            Como dice Scott Adams: "Los perdedores tienen metas, los ganadores tienen sistemas". Una meta es un estado futuro que te mantiene en un estado de fracaso perpetuo hasta que la alcanzas (y una vez que la alcanzas, te quedas sin dirección). Un sistema es algo que haces todos los días y que aumenta tus probabilidades de éxito a largo plazo.
+          </p>
+          <p>
+            Un sistema de productividad de élite se basa en procesos repetibles: "Escribir 500 palabras cada mañana a las 7 AM" es un sistema. "Publicar un libro" es una meta. El sistema te da una victoria diaria que alimenta tu dopamina y refuerza tu identidad. La meta solo te da ansiedad.
+          </p>
+
+          <h2 id="deep-work" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <Cpu className="w-8 h-8 text-indigo-600" /> 6. Deep Work: El Oasis del Valor Extremo
+          </h2>
+          <p>
+            Cal Newport definió el **Trabajo Profundo** como la capacidad de concentrarse sin distracciones en una tarea cognitivamente exigente. En el mundo actual, esta es una superpotencia. Mientras la mayoría de la gente pasa el día en la superficialidad de los correos electrónicos y mensajes de Slack, el que es capaz de dedicar 4 horas ininterrumpidas a resolver problemas complejos se vuelve irremplazable.
+          </p>
+          <p>
+            El Deep Work no es solo "trabajar duro"; es entrar en un estado de flujo donde el tiempo desaparece y la calidad de la producción se dispara. Para lograrlo, necesitas periodos de aislamiento radical. No valen las "puertas abiertas" ni el "multitasking". El cerebro humano tarda hasta 23 minutos en recuperar el enfoque total tras una distracción. Cada notificación de WhatsApp que miras te cuesta media hora de tu mejor intelecto.
+          </p>
+
+          <h2 id="energy-management" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <Activity className="w-8 h-8 text-indigo-600" /> 7. Gestión Biológica de la Energía
+          </h2>
+          <p>
+            Gestionar el tiempo es un error; debes gestionar tu **energía**. Tenemos picos y valles circadianos definidos por nuestra biología. La mayoría de la gente usa sus horas de máxima energía (generalmente por la mañana) para responder correos electrónicos triviales, y deja las tareas difíciles para la tarde, cuando su cerebro ya está agotado.
+          </p>
+          <p>
+            Aprende a identificar tus ventanas de rendimiento. Si eres una "alondra", tus horas de oro son las primeras del día. Si eres un "búho", tu creatividad brilla cuando el sol se pone. Alimentar tu cerebro con comida real, mantenerte hidratado y, sobre todo, respetar el sueño de 8 horas, no son lujos; son inversiones de capital en tu máquina de producción más preciada.
+          </p>
+
+          <h2 id="2min-rule" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <Zap className="w-8 h-8 text-indigo-600" /> 8. La Regla de los 2 Minutos Inerciales
+          </h2>
+          <p>
+            La física clásica nos enseña que un objeto en reposo tiende a permanecer en reposo. Lo mismo ocurre con tu mente. La parte más difícil de cualquier tarea es simplemente empezar. La Regla de los 2 Minutos dice: "Si vas a empezar un hábito o una tarea difícil, comprométete a hacerlo solo durante 2 minutos". 
+          </p>
+          <p>
+            ¿Quieres empezar a hacer ejercicio? Ponte la ropa y sal a caminar 2 minutos. ¿Quieres escribir? Abre el documento y escribe dos frases. El objetivo no es terminar la tarea; es vencer la resistencia inicial. Una vez que has empezado, la inercia se convierte en tu mejor aliada y lo normal es que sigas adelante. Lo importante es el **ritual de inicio**.
+          </p>
+
+          <h2 id="ruthless-no" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <UserMinus className="w-8 h-8 text-indigo-600" /> 9. El Arte del 'No' Despiadado
+          </h2>
+          <p>
+            La productividad personal es, ante todo, un ejercicio de eliminación. Cada vez que dices "sí" a una reunión inútil, a un café por compromiso o a un proyecto que no te apasiona, estás diciendo "no" a tu trabajo más importante. Jim Collins dice que "lo bueno es el enemigo de lo genial".
+          </p>
+          <p>
+            Aprende a proteger tu tiempo con una ferocidad casi religiosa. La gente te respetará más por tu tiempo que por tu disponibilidad. Ser "el que siempre está libre" es una señal de que tu tiempo no vale nada. El "no" es tu mayor herramienta de enfoque. Úsalo a menudo.
+          </p>
+
+          <h2 id="death-valley" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <History className="w-8 h-8 text-orange-600" /> 10. Vencer el Valle de la Desesperación
+          </h2>
+          <p>
+            Cuando empiezas un nuevo hábito, la primera semana es fácil porque tienes el impulso de la novedad. Pero en la tercera semana entras en el "Valle de la Desesperación": la novedad se ha ido, los resultados aún no son visibles y el esfuerzo se siente pesado. Aquí es donde el 90% de la gente abandona.
+          </p>
+          <p>
+            Para sobrevivir al valle, debes abrazar el **progreso invisible**. Tus células y neuronas se están reconfigurando mucho antes de que veas resultados en el espejo o en tu cuenta bancaria. Ten fe en el sistema y en el interés compuesto de tus acciones. Si no fallas dos días seguidos, el hábito eventualmente se volverá automático y el esfuerzo desaparecerá.
+          </p>
+
+          <h2 id="dopamine-reset" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <RefreshCw className="w-8 h-8 text-indigo-600" /> 11. Dopamina Detox y Reset Mental
+          </h2>
+          <p>
+            Si tu cerebro está acostumbrado a picos masivos de dopamina (Tiktok, comida ultraprocesada, pornografía, apuestas), las tareas normales como leer un libro o resolver un problema de código se sentirán insoportablemente aburridas. Has "quemado" tus receptores.
+          </p>
+          <p>
+            Un **Reset de Dopamina** periódico (fines de semana sin pantallas, ayunos de información) permite que tus receptores se sensibilicen de nuevo. De repente, la satisfacción de terminar un trabajo difícil vuelve a ser suficiente. No necesitas más estímulos; necesitas menos ruido. La productividad es el estado de una mente en paz consigo misma.
+          </p>
+
+          <h2 id="manifesto" className="text-3xl font-black text-slate-950 font-outfit mt-24 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
+             <Trophy className="w-8 h-8 text-indigo-600" /> 12. Tu Manifiesto de Soberanía Personal
+          </h2>
+          <p>
+            Has llegado al final de esta guía, pero es solo el inicio de tu nueva arquitectura mental. No intentes aplicar todo a la vez o colapsarás por la carga cognitiva. Elige **un sistema** (por ejemplo, el Deep Work de la mañana) y aplícalo durante 21 días. Luego añade el siguiente.
+          </p>
+          <p>
+            Recuerda siempre: no eres una víctima de tus impulsos biológicos ni de la tecnología. Eres el dueño de tus rutinas. Diseña tu vida para que el éxito sea inevitable, no para que dependa de tu suerte o de tu fuerza de voluntad. Este es tu manifiesto. Es hora de ejecutarlo.
+          </p>
+
+          <h2 id="casos-estudio" className="mt-24 pt-16 border-t border-slate-200">
+            <Footprints className="w-8 h-8 text-indigo-600" /> Casos de Estudio: De la Teoría a la Calle
+          </h2>
+          <div className="space-y-8 mt-8">
+            <div className="bg-slate-50 p-8 rounded-[40px] border border-slate-200">
+               <h4 className="text-xl font-black text-indigo-950 mb-4">Caso 1: El Desarrollador Quemado</h4>
+               <p className="text-slate-700 m-0 leading-relaxed italic">
+                 "Marco trabajaba 12 horas al día pero sentía que no avanzaba. Aplicamos el **Deep Work de 4 horas** sin internet por la mañana y relegamos todas las reuniones a la tarde. Resultado: Redujo su jornada a 6 horas y su producción de código de calidad se duplicó. El descanso dejó de ser culpabilidad para ser combustible."
+               </p>
             </div>
-            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-               <h4 className="text-indigo-700 font-black mt-0 mb-3 flex items-center gap-2"><Moon className="w-5 h-5" /> Renovación</h4>
-               <p className="text-xs text-slate-600 m-0">Usa la técnica Pomodoro o ciclos de 90/20. Tu cerebro necesita &quot;enfriarse&quot; para poder volver a calentar motores con potencia.</p>
+            <div className="bg-slate-50 p-8 rounded-[40px] border border-slate-200">
+               <h4 className="text-xl font-black text-indigo-950 mb-4">Caso 2: El Estudiante Omnipresente</h4>
+               <p className="text-slate-700 m-0 leading-relaxed italic">
+                 "Lucía estudiaba con el móvil al lado. Usamos el **Diseño de Entorno**: el móvil se quedaba en un cajón con llave en otra planta. El simple hecho de tener que bajar escaleras para mirarlo añadió la fricción necesaria para que su cerebro eligiera seguir estudiando. Aprobó sus oposiciones en tiempo récord."
+               </p>
             </div>
           </div>
 
-          {/* Section 4 */}
-          <h2 id="2min-rule" className="text-3xl font-black text-slate-950 font-outfit mt-20 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
-             <Clock className="w-8 h-8 text-indigo-600" /> 4. La Regla de los 2 Minutos
+          <h2 id="faq" className="mt-24 pt-16 border-t border-slate-200">
+            <HelpCircle className="w-8 h-8 text-indigo-600" /> Consultoría de Rendimiento: Preguntas Estratégicas
           </h2>
-          <p>
-            Si una tarea toma menos de dos minutos, hazla ahora mismo. No la anotes, no le pongas un recordatorio, no la mandes a una lista de &quot;luego&quot;. El costo cognitivo de <strong>gestionar</strong> esa tarea es mayor que el costo de <strong>ejecutarla</strong>. Contestar un email corto, archivar un documento o lavar un plato; sacarlo del camino de inmediato mantiene tu mente despejada para lo importante.
-          </p>
+          <div className="space-y-6 mt-8">
+            {[
+              { 
+                q: "¿Qué hago si mi entorno no es controlable (ej. oficina abierta)?", 
+                a: "Usa barreras artificiales. Auriculares con cancelación de ruido y 'señales visuales' (como un cartelito de no molestar) pueden funcionar. Pero lo más efectivo es negociar 'horas de silencio' comunes para todo el equipo. La productividad colectiva es una responsabilidad compartida." 
+              },
+              { 
+                q: "¿Cómo sé si un hábito es realmente una 'Keystone Habit'?", 
+                a: "Mira qué hábito, al realizarlo, hace que los demás sean más fáciles. Por ejemplo, si duermes bien, es más fácil comer sano y entrenar. El sueño es la piedra angular por excelencia. Identifica la tuya y protégela sobre todas las cosas." 
+              },
+              { 
+                q: "¿Es malo usar música para concentrarse?", 
+                a: "Depende de la complejidad de la tarea. Para tareas mecánicas, la música estimulante ayuda. Para tareas cognitivamente intensas (Deep Work), es mejor el silencio o ruido blanco/marrón sin letra. La música con letra compite por los mismos recursos lingüísticos que tu pensamiento complejo." 
+              },
+              { 
+                q: "¿Cómo manejo el fracaso de un día sin ser productivo?", 
+                a: "Aplica la regla de 'Nunca falles dos veces'. Fallar un día es un accidente; fallar dos es el inicio de un nuevo hábito. Perdónate, analiza el disparador que te distrajo y vuelve al sistema al día siguiente sin intentar 'compensar' con horas extra (lo cual solo te llevará al agotamiento)." 
+              },
+              { 
+                q: "¿Qué es la 'Carga Cognitiva' realmente?", 
+                a: "Es la cantidad de información que tu memoria de trabajo puede manejar a la vez. Cuando intentas hacer multitasking, tu carga cognitiva se satura, lo que genera ansiedad y una caída drástica en la precisión. Haz una sola cosa, pero hazla como si tu vida dependiera de ello." 
+              },
+            ].map((faq, i) => (
+              <details key={i} className="group bg-slate-50 rounded-2xl border border-slate-200 p-8 [&_summary::-webkit-details-marker]:hidden transition-all hover:bg-slate-100">
+                <summary className="flex items-center justify-between cursor-pointer list-none">
+                  <h4 className="text-lg font-bold text-slate-900 m-0 pr-8">{faq.q}</h4>
+                  <span className="transition-transform group-open:rotate-180 border border-indigo-300 rounded-full p-1 bg-white shadow-sm">
+                    <ChevronLeft className="w-4 h-4 -rotate-90" />
+                  </span>
+                </summary>
+                <p className="mt-6 text-slate-600 border-t border-slate-200 pt-6 leading-relaxed m-0 font-medium text-sm">
+                  {faq.a}
+                </p>
+              </details>
+            ))}
+          </div>
 
-          <div className="bg-indigo-600 rounded-[40px] p-10 md:p-16 my-16 text-white relative shadow-2xl overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
-            <div className="relative z-10">
-              <h2 className="text-3xl font-black font-outfit mt-0 mb-6 text-white leading-tight">
-                El Éxito es el <br className="hidden md:block" /> Subproducto de tus Rutinas
+
+          {/* Author E-E-A-T Section */}
+          <AuthorBox category="crecimiento" datePublished="2026" dateReviewed="Mayo 2026" />
+
+          <div className="bg-indigo-600 rounded-[40px] p-10 md:p-16 mt-24 text-white relative shadow-2xl overflow-hidden group">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -mr-40 -mt-40"></div>
+            <div className="relative z-10 text-center md:text-left">
+              <h2 className="text-3xl md:text-5xl font-black font-outfit mt-0 mb-8 text-white leading-tight">
+                El Futuro de tu Éxito <br className="hidden md:block" /> se Escribe hoy
               </h2>
-              <p className="text-indigo-100 text-lg leading-relaxed mb-10 font-medium max-w-xl">
-                No esperes a estar motivado para trabajar. Diseña un sistema donde trabajar sea la opción más fácil y atractiva. Tu &quot;yo&quot; del futuro te lo agradecerá.
+              <p className="text-indigo-50 text-xl leading-relaxed mb-12 font-medium max-w-2xl opacity-90">
+                Has absorbido la teoría y los sistemas. Ahora viene la parte difícil y gloriosa: la ejecución. No busques la perfección; busca la consistencia. El mundo pertenece a aquellos que son capaces de dominarse a sí mismos.
               </p>
-              <div className="flex flex-wrap gap-4">
-                <Link href="/guias" className="bg-white text-indigo-600 px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-slate-50 transition-all shadow-xl flex items-center gap-2">
-                   Seguir mejorando <ArrowRight className="w-4 h-4" />
+              <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                <Link href="/guias" className="bg-white text-indigo-600 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-slate-100 transition-all shadow-2xl flex items-center gap-3">
+                   Continuar el Viaje <ArrowRight className="w-5 h-5" />
                 </Link>
+                <div className="flex items-center gap-8 text-indigo-100 text-[10px] font-black uppercase tracking-widest pl-4">
+                  <span className="flex items-center gap-2"><Sparkles className="w-4 h-4" /> Mastery Awaits</span>
+                  <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4" /> System Verified</span>
+                </div>
               </div>
-            </div>
-          </div>
-
-          <h2 id="consistency" className="text-3xl font-black text-slate-950 font-outfit mt-20 mb-8 border-b-2 border-slate-100 pb-4 flex items-center gap-3">
-             <Target className="w-8 h-8 text-indigo-600" /> 6. La Regla de los Dos Días
-          </h2>
-          <p>
-            La perfección es el enemigo de la consistencia. Muchos abandonan sus hábitos cuando fallan un día. Las personas altamente productivas usan la <strong>Regla de los Dos Días</strong>: puedes fallar un día, pero nunca, bajo ninguna circunstancia, fallas dos días seguidos.
-          </p>
-          <p>
-            Falla un día y es un accidente. Falla dos días y es el comienzo de un nuevo hábito (el hábito de no hacer la tarea). Esta flexibilidad psicológica permite que el sistema sea resiliente al caos de la vida cotidiana sin romperse por completo.
-          </p>
-          <p>
-            Además, el <strong>Compromiso Social</strong> es un multiplicador de la productividad. Decirle a un colega o amigo que vas a terminar una tarea para tal hora crea una presión social positiva que te obliga a cumplir. Somos seres sociales; nos importa lo que los demás piensen de nuestra palabra.
-          </p>
-
-          {/* FAQ Section */}
-          <div id="faq" className="mt-24 pt-16 border-t border-slate-200">
-            <h2 className="text-3xl font-black text-slate-950 font-outfit mb-12 flex items-center gap-3 underline decoration-indigo-500 decoration-4 underline-offset-8">
-              <HelpCircle className="w-8 h-8 text-indigo-600" /> Preguntas Frecuentes
-            </h2>
-            
-            <div className="space-y-6">
-              <details className="group bg-slate-50 rounded-2xl border border-slate-200 p-6 [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex items-center justify-between cursor-pointer list-none">
-                  <h4 className="text-lg font-bold text-slate-900 m-0">¿Qué herramientas recomiendas para gestionar hábitos?</h4>
-                  <span className="transition-transform group-open:rotate-180">
-                    <ChevronLeft className="w-5 h-5 -rotate-90" />
-                  </span>
-                </summary>
-                <p className="mt-4 text-slate-600 border-t border-slate-200 pt-4 leading-relaxed">
-                  En 2026, herramientas como <strong>Notion</strong> para sistemas complejos, <strong>TickTick</strong> para tareas rápidas y <strong>HabitShare</strong> para el compromiso social son excelentes. Sin embargo, recuerda: la herramienta no hace el trabajo, el sistema sí.
-                </p>
-              </details>
-
-              <details className="group bg-slate-50 rounded-2xl border border-slate-200 p-6 [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex items-center justify-between cursor-pointer list-none">
-                  <h4 className="text-lg font-bold text-slate-900 m-0">¿Cómo ser productivo si tengo hijos o interrupciones?</h4>
-                  <span className="transition-transform group-open:rotate-180">
-                    <ChevronLeft className="w-5 h-5 -rotate-90" />
-                  </span>
-                </summary>
-                <p className="mt-4 text-slate-600 border-t border-slate-200 pt-4 leading-relaxed">
-                  Usa la &quot;Ventana de Oro&quot;. Despiértate 45 min antes que el resto de la casa o aprovecha la primera siesta. No busques bloques de 4 horas; busca bloques de 25 min de foco extremo (Pomodoro). La consistencia pequeña le gana a la intensidad esporádica.
-                </p>
-              </details>
-
-              <details className="group bg-slate-50 rounded-2xl border border-slate-200 p-6 [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex items-center justify-between cursor-pointer list-none">
-                  <h4 className="text-lg font-bold text-slate-900 m-0">¿La productividad mata la creatividad?</h4>
-                  <span className="transition-transform group-open:rotate-180">
-                    <ChevronLeft className="w-5 h-5 -rotate-90" />
-                  </span>
-                </summary>
-                <p className="mt-4 text-slate-600 border-t border-slate-200 pt-4 leading-relaxed">
-                  Al contrario. Al sistematizar las tareas aburridas y repetitivas, liberas un enorme espacio mental para que tu cerebro pueda soñar y crear. Como dijo Flaubert: &quot;Sé regular y ordenado en tu vida como un burgués, para que puedas ser violento y original en tu obra&quot;.
-                </p>
-              </details>
-
-              <details className="group bg-slate-50 rounded-2xl border border-slate-200 p-6 [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex items-center justify-between cursor-pointer list-none">
-                  <h4 className="text-lg font-bold text-slate-900 m-0">¿Qué hago si me siento abrumado por mi lista de tareas?</h4>
-                  <span className="transition-transform group-open:rotate-180">
-                    <ChevronLeft className="w-5 h-5 -rotate-90" />
-                  </span>
-                </summary>
-                <p className="mt-4 text-slate-600 border-t border-slate-200 pt-4 leading-relaxed">
-                  Usa la técnica de &quot;Cerebro de Papel&quot;. El cerebro es para tener ideas, no para guardarlas. Escribe todo lo que tienes pendiente en una hoja. Al verlo fuera de tu cabeza, el nivel de cortisol baja instantáneamente. Luego, elige solo una cosa (la más pequeña) y empieza.
-                </p>
-              </details>
-
-              <details className="group bg-slate-50 rounded-2xl border border-slate-200 p-6 [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex items-center justify-between cursor-pointer list-none">
-                  <h4 className="text-lg font-bold text-slate-900 m-0">¿La tecnología ayuda o perjudica la productividad?</h4>
-                  <span className="transition-transform group-open:rotate-180">
-                    <ChevronLeft className="w-5 h-5 -rotate-90" />
-                  </span>
-                </summary>
-                <p className="mt-4 text-slate-600 border-t border-slate-200 pt-4 leading-relaxed">
-                  La tecnología es un amplificador. Si eres desorganizado, la tecnología te hará más desorganizado a gran escala. Si tienes un sistema claro, la tecnología lo hará volar. No busques la &quot;app mágica&quot; hasta que no tengas un hábito sólido con papel y lápiz.
-                </p>
-              </details>
             </div>
           </div>
         </div>

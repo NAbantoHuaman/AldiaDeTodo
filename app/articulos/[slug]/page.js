@@ -68,7 +68,7 @@ export async function generateMetadata({ params }) {
     ...(isRSS && {
       robots: {
         index: false,
-        follow: true,
+        follow: false,
       },
     }),
     openGraph: {
@@ -352,10 +352,12 @@ export default async function ArticleDetailPage({ params }) {
             </div>
         )}
 
-        {/* Related Content / Footer Ad */}
+        {/* Related Content / Footer Ad — Only show on original content */}
+        {!isNews && (
         <div className="mt-20 pt-12 border-t border-slate-100">
              <AdsBanner slot="5566778899" format="horizontal" label="Más de AldiaDeTodo" />
         </div>
+        )}
 
         {/* Navigation */}
         <div className="mt-12 flex justify-center">

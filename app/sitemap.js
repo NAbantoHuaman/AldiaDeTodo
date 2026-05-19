@@ -25,12 +25,7 @@ export default async function sitemap() {
       changeFrequency: 'daily',
       priority: 0.9,
     },
-    {
-      url: `${BASE_URL}/noticias`,
-      lastModified: new Date(),
-      changeFrequency: 'hourly',
-      priority: 0.7,
-    },
+    // Removed /noticias - contains RSS scraped content that violates AdSense policies
     {
       url: `${BASE_URL}/categoria`,
       lastModified: new Date(),
@@ -102,6 +97,30 @@ export default async function sitemap() {
     priority: 0.9,
   }));
 
+  // All guide slugs (complete list)
+  const additionalGuides = [
+    'inversion-etfs-bolsa',
+    'psicologia-dinero',
+    'cripto-web3-seguro',
+    'gestion-tiempo-avanzada',
+    'liderazgo-remoto',
+    'aprender-a-aprender',
+    'optimizacion-sueno',
+    'entrenamiento-fuerza',
+    'ingenieria-prompts',
+    'desarrollo-serverless',
+    'typescript-maestro',
+    'ciberseguridad-personal',
+    'primeros-auxilios-emocionales',
+    'freelancing-profesional',
+    'lectura-veloz-retencion',
+  ].map(slug => ({
+    url: `${BASE_URL}/guias/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.9,
+  }));
+
   // Dynamic article pages from database (ORIGINAL content only — exclude RSS/news)
   const articles = await prisma.article.findMany({
     where: { isNews: false },
@@ -127,18 +146,5 @@ export default async function sitemap() {
     priority: 0.6,
   }));
 
-  // DB News (Original news hosted in our DB, distinct from RSS feed)
-  const dbNews = await prisma.article.findMany({
-    where: { isNews: true },
-    select: { slug: true, updatedAt: true },
-  });
-
-  const newsPages = dbNews.map((news) => ({
-    url: `${BASE_URL}/noticias/${news.slug}`,
-    lastModified: news.updatedAt,
-    changeFrequency: 'daily',
-    priority: 0.7,
-  }));
-
-  return [...staticPages, ...guidePages, ...articlePages, ...newsPages, ...categoryPages];
+  return [...staticPages, ...guidePages, ...additionalGuides, ...articlePages, ...categoryPages];
 }

@@ -4,12 +4,11 @@ import {
   CloudRain, Sunrise, Sunset, Microscope, 
   CloudSun, CloudFog, CloudDrizzle, Snowflake, 
   CloudHail, CloudLightning, Thermometer,
-  Zap, Eye, Gauge, ArrowDown, ArrowUp
+  Zap, Eye, Gauge, ArrowDown, ArrowUp, BookOpen, ArrowRight
 } from 'lucide-react';
 import { getWeatherData } from "@/lib/externalData";
-import { getRSSNews } from "@/lib/rss";
-import ArticleCard from "@/components/ArticleCard";
 import CitySearch from "@/components/CitySearch";
+import Link from 'next/link';
 
 export const metadata = {
   title: "El Tiempo - AldiaDeTodo",
@@ -34,11 +33,6 @@ export default async function WeatherPage({ searchParams }: { searchParams: any 
   const coords = lat && lon ? { lat: parseFloat(lat), lon: parseFloat(lon) } : null;
   const data = await getWeatherData(city, coords as any);
 
-  // Fetch real-time science/climate news
-  const allNews = await getRSSNews();
-  const scienceNews = allNews
-    .filter((item): item is NonNullable<typeof item> => item != null && (item.category === 'Ciencia' || item.category === 'Tecnología' || item.category === 'Actualidad'))
-    .slice(0, 3);
 
   if (!data) return (
     <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-10 text-center">
@@ -177,27 +171,20 @@ export default async function WeatherPage({ searchParams }: { searchParams: any 
           ))}
         </div>
 
-        {/* Science News Integration */}
+        {/* Original Content CTA */}
         <section className="mb-24">
-           <div className="flex items-center justify-between mb-12">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-indigo-100 rounded-2xl text-indigo-600">
-                   <Microscope className="w-6 h-6" />
-                </div>
-                <div>
-                  <h2 className="text-3xl font-black text-slate-900 uppercase italic tracking-tighter">Noticias de Ciencia y Clima</h2>
-                  <p className="text-slate-500 font-medium">Impacto global y descubrimientos recientes</p>
-                </div>
+           <div className="bg-slate-50 rounded-[40px] p-12 border border-slate-100 text-center">
+              <BookOpen className="w-12 h-12 text-indigo-600 mx-auto mb-6" />
+              <h2 className="text-3xl font-black text-slate-900 uppercase italic tracking-tighter mb-4">Optimiza tu bienestar</h2>
+              <p className="text-slate-500 font-medium mb-8 max-w-lg mx-auto">Descubre nuestras guías científicas sobre sueño, nutrición y longevidad para mejorar tu calidad de vida.</p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link href="/guias/optimizacion-sueno" className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-indigo-600 transition-all">
+                  Guía del Sueño <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link href="/guias/biohacking-longevidad" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-900 border border-slate-200 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-all">
+                  Biohacking <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
-           </div>
-           
-           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-             {scienceNews.map((article: any, index: number) => (
-               <div key={article.id} className="relative group">
-                 <div className="absolute inset-0 bg-indigo-600/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                 <ArticleCard article={article} variant="default" priority={index < 3} />
-               </div>
-             ))}
            </div>
         </section>
 
