@@ -2,6 +2,7 @@ export default function robots() {
   return {
     rules: [
       {
+        // AdSense crawler — block ALL non-original content paths
         userAgent: 'Mediapartners-Google',
         allow: '/',
         disallow: ['/noticias/', '/api/', '/data/', '/redaccion/'],

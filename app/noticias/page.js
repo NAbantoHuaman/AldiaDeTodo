@@ -1,56 +1,55 @@
 import Link from 'next/link';
-import ArticleCard from '../../components/ArticleCard';
-import AdsBanner from '../../components/AdsBanner';
-import { getRSSNews } from '../../lib/rss';
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 3600; // Cache for 1 hour
+import { ArrowRight, Newspaper, BookOpen } from 'lucide-react';
 
 export const metadata = {
-  title: "Últimas Noticias - Actualidad Mundial | AldiaDeTodo",
-  description: "Mantente informado con las últimas noticias de política, economía, tecnología y deportes en tiempo real.",
+  title: "Noticias - Próximamente | AldiaDeTodo",
+  description: "Estamos trabajando en una sección de noticias con análisis original y perspectiva editorial propia. Mientras tanto, explora nuestros artículos y guías.",
   robots: {
     index: false,
     follow: false,
-  },
-  openGraph: {
-    title: "Últimas Noticias - Actualidad Mundial",
-    description: "Noticias en tiempo real de las mejores fuentes internacionales.",
-    url: "https://aldiadetodo.com/noticias",
-    type: "website",
   },
   alternates: {
     canonical: '/noticias',
   },
 };
 
-async function getNews() {
-  const rssNews = await getRSSNews();
-  return rssNews;
-}
-
-export default async function NewsPage() {
-  const news = await getNews();
-
+export default function NewsPage() {
   return (
-    <div className="container mx-auto px-4 py-8 min-h-screen">
-       <div className="flex items-center justify-between mb-8 border-b border-gray-200 pb-4">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Últimas Noticias
-            <span className="block text-sm font-normal text-gray-500 mt-1">Actualidad mundial en tiempo real</span>
-          </h1>
-          <span className="bg-red-600 text-white px-3 py-1 text-xs font-bold uppercase rounded animate-pulse">En Vivo</span>
-       </div>
+    <div className="container mx-auto px-4 py-20 min-h-[60vh] flex flex-col items-center justify-center text-center font-inter">
+      <div className="w-20 h-20 bg-indigo-100 rounded-3xl flex items-center justify-center mb-8">
+        <Newspaper className="w-10 h-10 text-indigo-600" />
+      </div>
+      
+      <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 font-outfit tracking-tight">
+        Sección en Desarrollo
+      </h1>
+      
+      <p className="text-xl text-slate-500 max-w-2xl mx-auto mb-4 leading-relaxed">
+        Estamos trabajando en una sección de noticias con <strong className="text-slate-700">análisis original</strong> y perspectiva editorial propia.
+      </p>
+      
+      <p className="text-base text-slate-400 max-w-xl mx-auto mb-12 leading-relaxed">
+        Mientras tanto, te invitamos a explorar nuestros artículos originales y guías en profundidad sobre crecimiento personal, finanzas y tecnología.
+      </p>
 
-       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {news.length > 0 ? (
-             news.map(article => (
-                <ArticleCard key={article.id} article={article} />
-             ))
-          ) : (
-             <p className="col-span-full text-center text-gray-500">Cargando noticias...</p>
-          )}
-       </div>
+      <div className="flex flex-col sm:flex-row gap-4">
+        <Link 
+          href="/articulos" 
+          className="inline-flex items-center gap-3 px-8 py-4 bg-slate-950 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-indigo-600 transition-all shadow-xl active:scale-95"
+        >
+          <BookOpen className="w-4 h-4" />
+          Ver Artículos Originales
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+        
+        <Link 
+          href="/guias" 
+          className="inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm"
+        >
+          Explorar Guías
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
     </div>
   );
 }

@@ -13,7 +13,7 @@ const FeaturedArticle = ({ article }) => {
           src={article.image}
           alt={article.title}
           fill
-          unoptimized
+          unoptimized={false}
           sizes="100vw"
           priority
           className="object-cover group-hover:scale-110 transition-transform duration-[2000ms] ease-out"

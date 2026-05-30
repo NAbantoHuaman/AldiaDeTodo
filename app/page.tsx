@@ -15,11 +15,11 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 60;
 
 export const metadata = {
-  title: "AldiaDeTodo - Crecimiento Personal, Noticias y Finanzas",
-  description: "Tu fuente diaria de inspiración. Artículos sobre productividad, finanzas personales y las últimas noticias mundiales.",
+  title: "AldiaDeTodo - Crecimiento Personal, Finanzas y Productividad",
+  description: "Tu fuente diaria de inspiración. Artículos originales sobre productividad, finanzas personales, salud mental y crecimiento personal en español.",
   openGraph: {
-    title: "AldiaDeTodo - Crecimiento Personal, Noticias y Finanzas",
-    description: "Tu fuente diaria de inspiración. Artículos sobre productividad, finanzas personales y las últimas noticias mundiales.",
+    title: "AldiaDeTodo - Crecimiento Personal, Finanzas y Productividad",
+    description: "Tu fuente diaria de inspiración. Artículos originales sobre productividad, finanzas personales, salud mental y crecimiento personal en español.",
     url: "https://aldiadetodo.com",
     siteName: "AldiaDeTodo",
     locale: "es_ES",
@@ -28,7 +28,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AldiaDeTodo - Crecimiento Personal y Finanzas",
-    description: "Tu fuente diaria de inspiración y noticias.",
+    description: "Artículos originales sobre productividad, finanzas y bienestar en español.",
   },
 };
 
@@ -52,7 +52,7 @@ export default async function Home() {
     excerpt: a.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."
   }));
 
-  const evergreenArticles = allStatic.filter((a: any) => a.category !== "Noticias");
+  const evergreenArticles = allStatic.filter((a: any) => a.category !== "Noticias" && !a.isNews);
   const featuredOriginal = evergreenArticles[0];
   const latestArticles = evergreenArticles.slice(1, 5);
   const sidebarOriginals = evergreenArticles.slice(5, 13);
@@ -129,17 +129,17 @@ export default async function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: "Ahorro e Inversión", slug: "como-ahorrar-dinero", icon: TrendingUp, color: "text-emerald-500", bg: "bg-emerald-50" },
-              { title: "Python Moderno 2026", slug: "python-moderno", icon: Terminal, color: "text-indigo-500", bg: "bg-indigo-50" },
-              { title: "Bienestar Mental", slug: "bienestar-mental", icon: Heart, color: "text-rose-500", bg: "bg-rose-50" },
-              { title: "Hábitos Productivos", slug: "habitos-productivos", icon: Sparkles, color: "text-amber-500", bg: "bg-amber-50" }
+              { title: "Ahorro e Inversión", slug: "como-ahorrar-dinero", icon: TrendingUp, color: "text-emerald-500", bg: "bg-emerald-50", desc: "Estrategias probadas para construir hábitos financieros saludables, crear un fondo de emergencia y dar tus primeros pasos en inversión." },
+              { title: "Python Moderno 2026", slug: "python-moderno", icon: Terminal, color: "text-indigo-500", bg: "bg-indigo-50", desc: "Domina Python en la era de la IA: tipos estáticos, agentes autónomos, y las mejores prácticas del ecosistema actual." },
+              { title: "Bienestar Mental", slug: "bienestar-mental", icon: Heart, color: "text-rose-500", bg: "bg-rose-50", desc: "Técnicas basadas en psicología para manejar el estrés diario, construir resiliencia emocional y mejorar tu salud mental." },
+              { title: "Hábitos Productivos", slug: "habitos-productivos", icon: Sparkles, color: "text-amber-500", bg: "bg-amber-50", desc: "Rutinas y sistemas de las personas más exitosas del mundo. Frameworks para crear hábitos que perduren." }
             ].map(g => (
               <Link key={g.slug} href={`/guias/${g.slug}`} className="group bg-white p-8 rounded-[32px] border border-slate-100 hover:border-indigo-100 hover:shadow-2xl hover:shadow-indigo-500/5 transition-all">
                 <div className={`w-12 h-12 ${g.bg} ${g.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                   <g.icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-black text-slate-900 mb-2 font-outfit group-hover:text-indigo-600 transition-colors">{g.title}</h3>
-                <p className="text-xs text-slate-500 font-medium mb-0 tracking-tight leading-relaxed line-clamp-2">Guía maestra de 1,200+ palabras con sistemas prácticos para dominar el tema.</p>
+                <p className="text-xs text-slate-500 font-medium mb-0 tracking-tight leading-relaxed line-clamp-2">{g.desc}</p>
               </Link>
             ))}
           </div>
