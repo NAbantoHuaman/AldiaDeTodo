@@ -4,11 +4,7 @@ import { ChevronRight, Facebook, Twitter, TrendingUp, Calendar } from 'lucide-re
 import ArticleCard from '@/components/ArticleCard';
 import AdsBanner from '@/components/AdsBanner';
 import ShareButtons from '@/components/ShareButtons';
-import { transformNewsItem } from '@/lib/newsTransformer';
-import { generateArticleAnalysis } from '@/lib/ai';
-import { getCachedAnalysis, setCachedAnalysis } from '@/lib/cache';
 import prisma from '@/lib/prisma';
-import { getArticleBaseUrl, isNewsContent } from '@/lib/articleHelpers';
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -28,53 +24,34 @@ export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const { slug } = resolvedParams;
 
-  let dbArticle = await prisma.article.findUnique({
+  const dbArticle = await prisma.article.findUnique({
     where: { slug },
     include: { category: true }
   });
-  
-  let article = null;
-  
-  if (dbArticle) {
-    article = {
-      ...dbArticle,
-      category: dbArticle.category.name,
-      excerpt: dbArticle.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."
-    };
-  } else {
-    const { getRSSNews } = await import('@/lib/rss');
-    const news = await getRSSNews();
-    const dynamicArticle = news.find((n) => n.slug === slug);
-    if (dynamicArticle) {
-        article = dynamicArticle;
-    }
-  }
 
-  if (!article) {
+  if (!dbArticle) {
     return {
       title: 'Artículo no encontrado',
-      description: 'El artículo que buscas no existe o ha sido movido.'
+      description: 'El artículo que buscas no existe o ha sido movido.',
+      robots: { index: false, follow: false },
     };
   }
 
-  const isoDate = parseDateToISO(article.date);
+  const article = {
+    ...dbArticle,
+    category: dbArticle.category.name,
+    excerpt: dbArticle.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."
+  };
 
-  const isRSS = !dbArticle;
-  const baseUrl = getArticleBaseUrl(article);
+  const isoDate = parseDateToISO(article.date);
 
   return {
     title: article.title,
     description: article.excerpt || `Lee el artículo completo sobre ${article.title} en AldiaDeTodo.`,
-    ...(isRSS && {
-      robots: {
-        index: false,
-        follow: false,
-      },
-    }),
     openGraph: {
       title: article.title,
       description: article.excerpt || `Lee más sobre ${article.title}.`,
-      url: `https://aldiadetodo.com/${baseUrl}/${article.slug}`,
+      url: `https://aldiadetodo.com/articulos/${article.slug}`,
       type: 'article',
       images: [
         {
@@ -94,7 +71,7 @@ export async function generateMetadata({ params }) {
       images: [article.image || 'https://aldiadetodo.com/images/default-hero.jpg'],
     },
     alternates: {
-      canonical: `https://aldiadetodo.com/${baseUrl}/${article.slug}`,
+      canonical: `https://aldiadetodo.com/articulos/${article.slug}`,
     },
   };
 }
@@ -103,61 +80,37 @@ export default async function ArticleDetailPage({ params }) {
   const resolvedParams = await params;
   const { slug } = resolvedParams;
   
-  // 1. Try to find in Database Content
-  let dbArticle = await prisma.article.findUnique({
+  // Only serve original DB content — no RSS/scraped fallback
+  const dbArticle = await prisma.article.findUnique({
     where: { slug },
     include: { category: true }
   });
-  
-  let article = null;
-  let htmlContent = "";
-  let isNews = false;
 
-  if (dbArticle) {
-    article = {
-      ...dbArticle,
-      category: dbArticle.category.name,
-      excerpt: dbArticle.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."
-    };
-    htmlContent = dbArticle.content;
-    isNews = dbArticle.isNews;
-  } else {
-    // 2. Try to find in Dynamic RSS Content
-    const { getRSSNews } = await import('@/lib/rss');
-    const news = await getRSSNews();
-    const dynamicArticle = news.find((n) => n.slug === slug);
-    
-    if (dynamicArticle) {
-      article = dynamicArticle;
-      htmlContent = dynamicArticle.content || "";
-      isNews = true;
-    }
-  }
-
-  if (!article) {
+  if (!dbArticle) {
     return (
         <div className="flex flex-col items-center justify-center min-h-[50vh] p-8 text-center font-inter">
             <h2 className="text-2xl font-bold text-slate-800 mb-4 font-outfit">Artículo no encontrado</h2>
-            <p className="text-slate-600 mb-6">Lo sentimos, la noticia que buscas puede haber expirado o no está disponible.</p>
-            <Link href="/" className="px-8 py-3 bg-slate-900 text-white rounded-2xl hover:bg-indigo-600 transition shadow-xl">
-                Volver al Inicio
+            <p className="text-slate-600 mb-6">Lo sentimos, el artículo que buscas no existe o ha sido movido.</p>
+            <Link href="/articulos" className="px-8 py-3 bg-slate-900 text-white rounded-2xl hover:bg-indigo-600 transition shadow-xl">
+                Ver todos los artículos
             </Link>
         </div>
     );
   }
 
-  const NEWS_CATEGORIES = ["Actualidad", "Política", "Mundo", "Noticias", "Tecnología", "Deportes", "Entretenimiento", "Economía", "Negocios"];
-  
-  if (isNews && !htmlContent && article.excerpt) {
-      htmlContent = `<p>${article.excerpt}</p>`;
-  }
+  const article = {
+    ...dbArticle,
+    category: dbArticle.category.name,
+    excerpt: dbArticle.content.replace(/<[^>]+>/g, '').substring(0, 150) + "..."
+  };
+  const htmlContent = dbArticle.content;
+  const isNews = dbArticle.isNews;
 
-  const baseUrl = getArticleBaseUrl(article);
   const isoDate = parseDateToISO(article.date);
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': isNews ? 'NewsArticle' : 'Article',
+    '@type': 'Article',
     headline: article.title,
     image: [article.image || 'https://aldiadetodo.com/images/default-hero.jpg'],
     datePublished: isoDate,
@@ -178,7 +131,7 @@ export default async function ArticleDetailPage({ params }) {
     },
     mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': `https://aldiadetodo.com/${baseUrl}/${article.slug}`
+        '@id': `https://aldiadetodo.com/articulos/${article.slug}`
     }
   };
 
@@ -187,8 +140,8 @@ export default async function ArticleDetailPage({ params }) {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://aldiadetodo.com' },
-      { '@type': 'ListItem', position: 2, name: isNewsContent(article) ? 'Noticias' : 'Artículos', item: isNewsContent(article) ? 'https://aldiadetodo.com/noticias' : 'https://aldiadetodo.com/articulos' },
-      { '@type': 'ListItem', position: 3, name: article.title, item: `https://aldiadetodo.com/${baseUrl}/${article.slug}` }
+      { '@type': 'ListItem', position: 2, name: 'Artículos', item: 'https://aldiadetodo.com/articulos' },
+      { '@type': 'ListItem', position: 3, name: article.title, item: `https://aldiadetodo.com/articulos/${article.slug}` }
     ]
   };
 
@@ -300,7 +253,7 @@ export default async function ArticleDetailPage({ params }) {
             <div className="flex items-center gap-4">
                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] hidden md:block">Compartir</span>
                 <ShareButtons 
-                    url={`https://aldiadetodo.com/${baseUrl}/${article.slug}`} 
+                    url={`https://aldiadetodo.com/articulos/${article.slug}`} 
                     title={article.title} 
                 />
             </div>
@@ -361,9 +314,9 @@ export default async function ArticleDetailPage({ params }) {
 
         {/* Navigation */}
         <div className="mt-12 flex justify-center">
-            <Link href={isNews ? "/noticias" : "/articulos"} className="group inline-flex items-center gap-3 px-8 py-4 bg-white border border-slate-200 text-slate-600 text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-slate-50 hover:text-slate-900 transition-all shadow-sm">
+            <Link href="/articulos" className="group inline-flex items-center gap-3 px-8 py-4 bg-white border border-slate-200 text-slate-600 text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-slate-50 hover:text-slate-900 transition-all shadow-sm">
                 <ChevronRight className="w-5 h-5 rotate-180 group-hover:-translate-x-1 transition-transform" />
-                Volver al Feed de {isNews ? "Noticias" : "Artículos"}
+                Volver al Feed de Artículos
             </Link>
         </div>
       </div>

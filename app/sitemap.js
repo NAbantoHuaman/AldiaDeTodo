@@ -4,8 +4,12 @@ export const dynamic = 'force-dynamic';
 
 const BASE_URL = 'https://aldiadetodo.com';
 
+// Static publication dates for guides (avoid sending new Date() which signals fake freshness)
+const GUIDE_PUBLISH_DATE = new Date('2026-04-18');
+const SITE_LAUNCH_DATE = new Date('2026-03-01');
+
 export default async function sitemap() {
-  // Static pages
+  // Static pages — use realistic dates, not new Date()
   const staticPages = [
     {
       url: BASE_URL,
@@ -15,7 +19,7 @@ export default async function sitemap() {
     },
     {
       url: `${BASE_URL}/guias`,
-      lastModified: new Date(),
+      lastModified: GUIDE_PUBLISH_DATE,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
@@ -25,41 +29,42 @@ export default async function sitemap() {
       changeFrequency: 'daily',
       priority: 0.9,
     },
-    // Removed /noticias - contains RSS scraped content that violates AdSense policies
+    // Removed /noticias — contains RSS scraped content
+    // Removed /horoscopo, /deportes, /tiempo, /finanzas — API data pages with noindex
     {
       url: `${BASE_URL}/categoria`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
+      lastModified: SITE_LAUNCH_DATE,
+      changeFrequency: 'monthly',
+      priority: 0.6,
     },
     {
       url: `${BASE_URL}/acerca`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
+      lastModified: SITE_LAUNCH_DATE,
+      changeFrequency: 'yearly',
+      priority: 0.4,
     },
     {
       url: `${BASE_URL}/contacto`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
+      lastModified: SITE_LAUNCH_DATE,
+      changeFrequency: 'yearly',
+      priority: 0.4,
     },
     {
       url: `${BASE_URL}/privacidad`,
-      lastModified: new Date(),
+      lastModified: SITE_LAUNCH_DATE,
       changeFrequency: 'yearly',
-      priority: 0.3,
+      priority: 0.2,
     },
     {
       url: `${BASE_URL}/terms`,
-      lastModified: new Date(),
+      lastModified: SITE_LAUNCH_DATE,
       changeFrequency: 'yearly',
-      priority: 0.3,
+      priority: 0.2,
     },
   ];
 
-  // Guide pages (original content — high priority)
-  const guidePages = [
+  // All guide slugs (complete, deduplicated list — previously 'typescript-maestro' was duplicated)
+  const allGuideSlugs = [
     'python-moderno',
     'javascript-es2026',
     'seguridad-desarrolladores',
@@ -89,16 +94,7 @@ export default async function sitemap() {
     'estoicismo-practico',
     'cocina-nutricion-batch',
     'inversion-inmobiliaria',
-    'narrativa-storytelling'
-  ].map(slug => ({
-    url: `${BASE_URL}/guias/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.9,
-  }));
-
-  // All guide slugs (complete list)
-  const additionalGuides = [
+    'narrativa-storytelling',
     'inversion-etfs-bolsa',
     'psicologia-dinero',
     'cripto-web3-seguro',
@@ -109,7 +105,6 @@ export default async function sitemap() {
     'entrenamiento-fuerza',
     'ingenieria-prompts',
     'desarrollo-serverless',
-    'typescript-maestro',
     'ciberseguridad-personal',
     'primeros-auxilios-emocionales',
     'freelancing-profesional',
@@ -122,14 +117,17 @@ export default async function sitemap() {
     'espacios-trabajo-productivos',
     'privacidad-redes-sociales',
     'impuestos-freelance',
-  ].map(slug => ({
+  ];
+
+  // Guide pages (original content — high priority)
+  const guidePages = allGuideSlugs.map(slug => ({
     url: `${BASE_URL}/guias/${slug}`,
-    lastModified: new Date(),
+    lastModified: GUIDE_PUBLISH_DATE,
     changeFrequency: 'monthly',
     priority: 0.9,
   }));
 
-  // Dynamic article pages from database (ORIGINAL content only — exclude RSS/news)
+  // Dynamic article pages from database (ORIGINAL content only — exclude news)
   const articles = await prisma.article.findMany({
     where: { isNews: false },
     select: { slug: true, updatedAt: true },
@@ -142,17 +140,31 @@ export default async function sitemap() {
     priority: 0.7,
   }));
 
-  // Category pages from database
+  // Category pages — only include categories that have original articles (not news categories)
   const categories = await prisma.category.findMany({
+    where: {
+      articles: {
+        some: { isNews: false }
+      }
+    },
     select: { name: true },
   });
 
-  const categoryPages = categories.map((cat) => ({
-    url: `${BASE_URL}/categoria/${encodeURIComponent(cat.name.toLowerCase().replace(/\s+/g, '-'))}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.6,
-  }));
+  // Exclude news-only categories from sitemap
+  const NEWS_ONLY_CATEGORIES = [
+    'Actualidad', 'Política', 'Mundo', 'Noticias', 
+    'Deportes', 'Entretenimiento', 'Economía', 'Negocios', 
+    'Internacional', 'Perú', 'Ciencia'
+  ];
 
-  return [...staticPages, ...guidePages, ...additionalGuides, ...articlePages, ...categoryPages];
+  const categoryPages = categories
+    .filter(cat => !NEWS_ONLY_CATEGORIES.includes(cat.name))
+    .map((cat) => ({
+      url: `${BASE_URL}/categoria/${encodeURIComponent(cat.name.toLowerCase().replace(/\s+/g, '-'))}`,
+      lastModified: SITE_LAUNCH_DATE,
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    }));
+
+  return [...staticPages, ...guidePages, ...articlePages, ...categoryPages];
 }

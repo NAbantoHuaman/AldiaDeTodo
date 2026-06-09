@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   },
   description: "Tu dosis diaria de inspiración, consejos prácticos de productividad, finanzas personales, salud mental y crecimiento personal. Artículos originales en español.",
   keywords: ["crecimiento personal", "productividad", "finanzas personales", "salud mental", "autoestima", "hábitos", "motivación", "superación personal", "artículos en español"],
-  authors: [{ name: "AldiaDeTodo" }],
-  creator: "AldiaDeTodo",
+  authors: [{ name: "Nestor Abanto Huaman" }],
+  creator: "Nestor Abanto Huaman",
   metadataBase: new URL("https://aldiadetodo.com"),
   openGraph: {
     type: "website",

@@ -6,6 +6,10 @@ import Link from 'next/link';
 export const metadata = {
   title: "Dinero y Finanzas - AldiaDeTodo",
   description: "Tipo de cambio, criptomonedas y noticias económicas en tiempo real.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function FinancePage() {

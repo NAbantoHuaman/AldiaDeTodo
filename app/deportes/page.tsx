@@ -7,6 +7,10 @@ import Link from 'next/link';
 export const metadata = {
   title: "Deportes - AldiaDeTodo",
   description: "Resultados en vivo, calendarios y tablas de posiciones deportivas.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function SportsPage() {

@@ -7,6 +7,10 @@ import ArticleCard from "@/components/ArticleCard";
 export const metadata = {
   title: "Horóscopo Diario - AldiaDeTodo",
   description: "Tu predicción diaria astrológica: amor, salud y dinero para todos los signos. Además, guía completa de elementos zodiacales y compatibilidad entre signos.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 function getElementInfo(sign: string) {

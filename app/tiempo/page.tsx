@@ -13,6 +13,10 @@ import Link from 'next/link';
 export const metadata = {
   title: "El Tiempo - AldiaDeTodo",
   description: "Pronóstico detallado del tiempo y clima actual en tiempo real.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 const WeatherIcon = ({ icon, className }: { icon: string; className: string }) => {

@@ -6,39 +6,14 @@ const AuthorBox = ({
   datePublished = "2026",
   dateReviewed = "2026"
 }) => {
-  // Author profiles mapped by category
-  const authors = {
-    tecnologia: {
-      name: "Equipo de Tecnología — AldiaDeTodo",
-      initials: "ET",
-      role: "Redacción Técnica Senior",
-      bio: "Nuestro equipo de redacción técnica cuenta con más de 10 años de experiencia combinada en ingeniería de software, arquitectura de sistemas y divulgación tecnológica. Cada guía pasa por un proceso de investigación, redacción original y revisión editorial antes de su publicación.",
+  // Use real author name for all categories
+  const author = {
+      name: "Nestor Abanto Huaman",
+      initials: "NA",
+      role: "Editor Principal & Especialista",
+      bio: "Apasionado por la tecnología, el bienestar y el desarrollo continuo. Investigo y documento profundamente cada tema para ofrecer guías prácticas, verificadas y de alto valor para nuestros lectores.",
       color: "indigo"
-    },
-    bienestar: {
-      name: "Equipo de Bienestar — AldiaDeTodo",
-      initials: "EB",
-      role: "Redacción de Salud y Bienestar",
-      bio: "Nuestro equipo de bienestar investiga y redacta contenido basado en evidencia científica sobre salud física, mental y nutricional. Consultamos fuentes académicas y publicaciones indexadas para asegurar la precisión de cada recomendación.",
-      color: "emerald"
-    },
-    crecimiento: {
-      name: "Equipo Editorial — AldiaDeTodo",
-      initials: "EE",
-      role: "Redacción de Crecimiento Personal",
-      bio: "Nuestro equipo editorial especializado en desarrollo humano redacta guías prácticas basadas en psicología aplicada, productividad y liderazgo. Cada artículo refleja investigación profunda y experiencia real en los temas tratados.",
-      color: "violet"
-    },
-    finanzas: {
-      name: "Equipo de Finanzas — AldiaDeTodo",
-      initials: "EF",
-      role: "Redacción Financiera",
-      bio: "Nuestro equipo financiero crea contenido educativo sobre ahorro, inversión y economía personal. Nos basamos en datos de mercado reales y consultamos fuentes regulatorias para ofrecer información precisa y actualizada.",
-      color: "amber"
-    }
   };
-
-  const author = authors[category] || authors.tecnologia;
 
   const colorMap = {
     indigo: { bg: "bg-indigo-100", text: "text-indigo-600", border: "border-indigo-200", bgLight: "bg-indigo-50" },
